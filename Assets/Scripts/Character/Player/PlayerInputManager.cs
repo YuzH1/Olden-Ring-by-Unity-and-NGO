@@ -11,7 +11,10 @@ namespace SG
         //2.根据这些值来移动角色
         PlayerControls playerControls;
 
-        [SerializeField] Vector2 movement;
+        [SerializeField] Vector2 movementInput;//存储输入的移动值
+        public float verticalInput;//存储垂直输入值
+        public float horizontalInput;//存储水平输入值
+        public float moveAmount;//存储移动量
 
         private void Awake()
         {
@@ -57,7 +60,7 @@ namespace SG
 
                 playerControls.PlayerMovement.Movement.performed += ctx =>
                 {
-                    movement = ctx.ReadValue<Vector2>();
+                    movementInput = ctx.ReadValue<Vector2>();
                 };
                 //获取输入值，语法：+= ctx => { movement = ctx.ReadValue<Vector2>(); };lambda表达式
                 //为什么用+=而不是=？因为这是事件订阅的语法，允许多个方法响应同一事件
@@ -71,6 +74,45 @@ namespace SG
         private void OnDestroy()
         {
             SceneManager.activeSceneChanged -= OnSceneChange;//取消订阅场景切换事件，防止内存泄漏
+        }
+
+        private void OnApplicationFocus(bool focus)//应用程序获得或失去焦点时调用，焦点是什么？就是程序是否在前台运行
+        {
+            if(enabled)
+            {
+                if(focus)
+                {
+                    playerControls.Enable();
+                }
+                else
+                {
+                    playerControls.Disable();
+                }
+            }
+        }
+
+        private void Update()
+        {
+            HandleMovementInput();
+        }
+
+        private void HandleMovementInput()
+        {
+            verticalInput = movementInput.y;
+            horizontalInput = movementInput.x;
+
+            //计算移动量，范围0到1，移动量：水平和垂直输入的绝对值之和，最大值为1，
+            //有什么用：控制角色的移动速度
+            moveAmount = Mathf.Clamp01(Mathf.Abs(horizontalInput) + Mathf.Abs(verticalInput));
+
+            if(moveAmount <= 0.5 && moveAmount > 0)
+            {
+                moveAmount = 0.5f; //慢走
+            }
+            else if(moveAmount > 0.5f && moveAmount <= 1)
+            {
+                moveAmount = 1f; //快走或跑
+            }
         }
     }
 }

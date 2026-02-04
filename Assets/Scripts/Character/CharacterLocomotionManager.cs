@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class CharacterLocomotionManager : MonoBehaviour
+namespace SG
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class CharacterLocomotionManager : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        protected virtual void Awake()
+        {
+            // Base locomotion initialization can go here
+        }
     }
 }
