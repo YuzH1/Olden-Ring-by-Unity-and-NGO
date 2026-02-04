@@ -33,5 +33,10 @@ namespace SG
 
             yield return null; //等待一帧，确保加载操作开始
         }
+
+        public int GetWorldSceneIndex()//获取世界场景索引
+        {
+            return worldSceneIndex;
+        }
     }
 }
