@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.854
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -95,7 +95,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.8
+  m_Height: 1.79
   m_Radius: 0.23
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -156,8 +156,11 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   networkPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
+  networkRotation:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
   networkPositionVelocity: {x: 0, y: 0, z: 0}
   networkPositionSmoothTime: 0.1
+  networkRotationSmoothTime: 0.1
 --- !u!114 &8590906403361115599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,3 +178,4 @@ MonoBehaviour:
   moveAmount: 0
   walkingSpeed: 2
   runningSpeed: 5
+  rotationSpeed: 15

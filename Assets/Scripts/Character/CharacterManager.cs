@@ -41,5 +41,10 @@ namespace SG
             }
 
         }
+
+        protected virtual void LateUpdate()//在Update之后调用，适合处理摄像机跟随等需要在所有对象更新后执行的逻辑
+        {
+            // Base character late update logic can go here
+        }
     }
 }

@@ -11,10 +11,16 @@ namespace SG
         //2.根据这些值来移动角色
         PlayerControls playerControls;
 
+        [Header("Player Movement Input")]
         [SerializeField] Vector2 movementInput;//存储输入的移动值
         public float verticalInput;//存储垂直输入值
         public float horizontalInput;//存储水平输入值
         public float moveAmount;//存储移动量
+
+        [Header("Camera Movement Input")]
+        [SerializeField] Vector2 cameraInput;//存储输入的摄像机控制值
+        public float cameraVerticalInput;
+        public float cameraHorizontalInput;
 
         private void Awake()
         {
@@ -58,10 +64,9 @@ namespace SG
             {
                 playerControls = new PlayerControls();
 
-                playerControls.PlayerMovement.Movement.performed += ctx =>
-                {
-                    movementInput = ctx.ReadValue<Vector2>();
-                };
+                playerControls.PlayerMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+                playerControls.PlayerCamera.Movement.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
+                
                 //获取输入值，语法：+= ctx => { movement = ctx.ReadValue<Vector2>(); };lambda表达式
                 //为什么用+=而不是=？因为这是事件订阅的语法，允许多个方法响应同一事件
                 //为什么用performed？因为它表示输入操作完成时触发
@@ -93,10 +98,11 @@ namespace SG
 
         private void Update()
         {
-            HandleMovementInput();
+            HandlePlayerMovementInput();
+            HandleCameraMovementInput();
         }
 
-        private void HandleMovementInput()
+        private void HandlePlayerMovementInput()
         {
             verticalInput = movementInput.y;
             horizontalInput = movementInput.x;
@@ -113,6 +119,12 @@ namespace SG
             {
                 moveAmount = 1f; //快走或跑
             }
+        }
+    
+        private void HandleCameraMovementInput()
+        {
+            cameraVerticalInput = cameraInput.y;
+            cameraHorizontalInput = cameraInput.x;
         }
     }
 }
