@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 namespace SG
 {
@@ -42,6 +43,10 @@ namespace SG
             character.canMove = canMove;//更新角色的移动能力标志
 
             //告诉server或host我们播放了动画，这样其他客户端就可以同步动画状态
+            character.characterNetworkManager.NotifyActionAnimationServerRpc(
+                NetworkManager.Singleton.LocalClientId, 
+                targetAnimation, 
+                applyRootMotion);
         }
 
     }
