@@ -23,6 +23,29 @@ namespace SG
             player = GetComponent<PlayerManager>();
         }
 
+        override protected void Update()
+        {
+            base.Update();
+            //可以在这里添加一些每帧更新的逻辑
+            if(player.IsOwner)//只有拥有该对象的客户端才处理移动
+            {
+                player.characterNetworkManager.verticalMovement.Value = verticalMovement;
+                player.characterNetworkManager.horizontalMovement.Value = horizontalMovement;
+                player.characterNetworkManager.moveAmount.Value = moveAmount;
+            }
+            else//如果不是拥有者，则从网络变量中获取移动输入值
+            {
+                verticalMovement = player.characterNetworkManager.verticalMovement.Value;
+                horizontalMovement = player.characterNetworkManager.horizontalMovement.Value;
+                moveAmount = player.characterNetworkManager.moveAmount.Value;
+
+                //如果没有锁定目标，则水平输入设为0，只使用moveAmount来控制前进、后退、原地等动画的切换
+                player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+                //如果锁定目标，则传递正常的水平与垂直输入值
+            }
+
+        }
+
         public void HandleAllMovement()
         {
             //Grounded movement
@@ -31,16 +54,17 @@ namespace SG
             //Aerial movement(jumping/falling) can be added later
         }
 
-        private void GetverticalAndHorizontalInput()
+        private void GetMovementValue()
         {
             verticalMovement = PlayerInputManager.instance.verticalInput;
             horizontalMovement = PlayerInputManager.instance.horizontalInput;
+            moveAmount = PlayerInputManager.instance.moveAmount;
         }
 
         private void HandleGroundedMovement()
         {
             // Grounded movement logic for the player
-            GetverticalAndHorizontalInput();
+            GetMovementValue();
 
             //根据摄像机方向来移动
             moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;

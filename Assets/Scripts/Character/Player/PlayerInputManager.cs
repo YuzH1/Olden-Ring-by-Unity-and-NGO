@@ -6,6 +6,8 @@ namespace SG
     public class PlayerInputManager : MonoBehaviour
     {
         public static PlayerInputManager instance;
+        public PlayerManager player;
+
         //分步骤实现目标
         //1.找到一个方法获取手柄或键盘的输入值
         //2.根据这些值来移动角色
@@ -119,6 +121,14 @@ namespace SG
             {
                 moveAmount = 1f; //快走或跑
             }
+            //引用动画参数，根据输入值来控制动画的切换
+            if(player == null)
+                return;
+            //这里将horizontalInput设为0，因为在角色未锁定目标前，应该只会处于前进、后退、原地等状态，不会有左右移动的动画
+            //如果没有锁定，只使用moveAmount来控制前进、后退、原地等动画的切换，horizontalInput不参与动画参数的设置
+            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+            //如果有锁定目标，才使用horizontalInput来控制左右移动的动画切换
+
         }
     
         private void HandleCameraMovementInput()

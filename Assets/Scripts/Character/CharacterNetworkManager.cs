@@ -12,6 +12,11 @@ namespace SG
         public Vector3 networkPositionVelocity;//用于平滑位置更新的速度变量
         public float networkPositionSmoothTime = 0.1f;//移动平滑时间参数
         public float networkRotationSmoothTime = 0.1f;//旋转平滑时间参数
+
+        [Header("Animation")]
+        public NetworkVariable<float> horizontalMovement = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<float> moveAmount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     }    
     
 }

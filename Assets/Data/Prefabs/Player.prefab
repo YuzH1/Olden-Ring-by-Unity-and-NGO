@@ -61,6 +61,9 @@ PrefabInstance:
       addedObject: {fileID: 349065639061371327}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6338853814013115005}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 3900739185996957260}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
       insertIndex: -1
@@ -71,6 +74,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8590906403361115599}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7609025570108840428}
   m_SourcePrefab: {fileID: 100100000, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
 --- !u!1 &4466224658561527379 stripped
 GameObject:
@@ -102,6 +108,28 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!95 &6338853814013115005
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4466224658561527379}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0ad932253e8dc8841948afa5d1a0d051, type: 3}
+  m_Controller: {fileID: 9100000, guid: 86ada077b7c52964fa166303978f8a4d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3900739185996957260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,3 +207,15 @@ MonoBehaviour:
   walkingSpeed: 2
   runningSpeed: 5
   rotationSpeed: 15
+--- !u!114 &7609025570108840428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4466224658561527379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c20cce1be71d56e4a9689bd012bdefb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

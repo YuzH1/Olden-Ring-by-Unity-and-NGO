@@ -8,5 +8,10 @@ namespace SG
         {
             // Base locomotion initialization can go here
         }
+
+        protected virtual void Update()
+        {
+            // Base locomotion update logic can go here
+        }
     }
 }

@@ -5,12 +5,14 @@ namespace SG
 {
     public class PlayerManager : CharacterManager
     {
-        PlayerLocomotionManager playerLocomotionManager;
+        [HideInInspector]public PlayerAnimatorManager playerAnimatorManager;
+        [HideInInspector]public PlayerLocomotionManager playerLocomotionManager;
         protected override void Awake()
         {
             base.Awake();
             // PlayerManager specific initialization can go here
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+            playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
         }
 
         protected override void Update()
@@ -39,6 +41,7 @@ namespace SG
             if(IsOwner)
             {
                 PlayerCamera.instance.player = this; //将玩家管理器的引用传递给摄像机
+                PlayerInputManager.instance.player = this; //将玩家管理器的引用传递给输入管理器
             }
         }
     }

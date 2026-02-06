@@ -184,6 +184,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   cameraObject: {fileID: 6369088082011464783}
+  cameraPivotTransform: {fileID: 4582463343239832695}
+  collideWithLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  cameraSmoothSpeed: 1
+  leftAndRightRotationSpeed: 220
+  upAndDownRotationSpeed: 220
+  minimumPivot: -30
+  maximumPivot: 60
+  cameraCollisionRadius: 0.2
+  cameraVelocity: {x: 0, y: 0, z: 0}
+  leftAndRightLookAngle: 0
+  upAndDownLookAngle: 0
 --- !u!1 &7346750827134337132
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 7346750827134337132}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

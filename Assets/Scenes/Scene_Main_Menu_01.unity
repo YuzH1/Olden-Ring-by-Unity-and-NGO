@@ -1313,7 +1313,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5566894930895130876, guid: 52a46516d9a501447b5cdcb96f9ea346, type: 3}
       propertyPath: m_Name
-      value: Player Camera
+      value: Player Camera (Left & Right)
       objectReference: {fileID: 0}
     - target: {fileID: 7081013978136746620, guid: 52a46516d9a501447b5cdcb96f9ea346, type: 3}
       propertyPath: m_LocalPosition.x
