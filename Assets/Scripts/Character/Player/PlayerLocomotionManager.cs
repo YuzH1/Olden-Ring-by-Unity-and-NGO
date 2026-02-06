@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace SG
@@ -6,16 +7,19 @@ namespace SG
     {
         PlayerManager player;
 
-        public float verticalMovement;
-        public float horizontalMovement;
-        public float moveAmount;
+        [HideInInspector]public float verticalMovement;
+        [HideInInspector]public float horizontalMovement;
+        [HideInInspector]public float moveAmount;
 
+        [Header("Movement Settings")]
         private Vector3 moveDirection;//为什么用Vector3？因为移动方向是三维的
         private Vector3 targetRotationDirection;
-
         [SerializeField] float walkingSpeed = 2f;
         [SerializeField] float runningSpeed = 5f;
         [SerializeField] float rotationSpeed = 15f;
+
+        [Header("Dodge Settings")]
+        [SerializeField] Vector3 rollDirection;//为什么用Vector3？因为闪避方向也是三维的
 
         protected override void Awake()
         {
@@ -63,6 +67,9 @@ namespace SG
 
         private void HandleGroundedMovement()
         {
+
+            if(!player.canMove)
+                return;//如果角色不能移动，直接返回，不执行移动逻辑
             // Grounded movement logic for the player
             GetMovementValue();
 
@@ -88,6 +95,8 @@ namespace SG
     
         private void HandleRotation()
         {
+            if(!player.canRotate)
+                return;//如果角色不能旋转，直接返回，不执行旋转逻辑
             targetRotationDirection = Vector3.zero;//目标方向初始化为零向量
             //根据摄像机的前方向乘以垂直输入来确定前后方向
             targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
@@ -107,6 +116,29 @@ namespace SG
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = targetRotation;
 
+        }
+
+        public void AttemptToPerformDodge() //尝试闪避，因为闪避可能会被体力等条件限制。
+        {
+            if(player.isPerformingAction)
+                return;//如果正在执行动作，不能闪避
+            if(moveAmount > 0)
+            {
+                rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;//根据摄像机的前方向乘以垂直输入来确定前后方向
+                rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;//根据摄像机的右方向乘以水平输入来确定左右方向
+
+                rollDirection.y = 0;
+                Quaternion playerRotation = Quaternion.LookRotation(rollDirection);//计算玩家朝向，面向闪避方向
+                player.transform.rotation = playerRotation;//旋转玩家，使其面向闪避方向
+                
+                //播放一个滚动动画
+                player.playerAnimatorManager.PlayTargetActionAnimation("Roll_Forward_01", true, true);
+            }
+            else
+            {
+                //播放一个后撤步动画
+                player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+            }
         }
     }
 }

@@ -24,6 +24,9 @@ namespace SG
         public float cameraVerticalInput;
         public float cameraHorizontalInput;
 
+        [Header("Player Action Input")]
+        [SerializeField] bool dodgeInput = false;//存储闪避输入状态
+
         private void Awake()
         {
             if(instance == null)
@@ -68,6 +71,7 @@ namespace SG
 
                 playerControls.PlayerMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
+                playerControls.PlayerActions.Dodge.performed += ctx => dodgeInput = true;
                 
                 //获取输入值，语法：+= ctx => { movement = ctx.ReadValue<Vector2>(); };lambda表达式
                 //为什么用+=而不是=？因为这是事件订阅的语法，允许多个方法响应同一事件
@@ -100,10 +104,15 @@ namespace SG
 
         private void Update()
         {
-            HandlePlayerMovementInput();
-            HandleCameraMovementInput();
+            HandleAllInputs();
         }
 
+        private void HandleAllInputs()
+        {
+            HandlePlayerMovementInput();
+            HandleCameraMovementInput();
+            HandleDodgeInput();
+        }
         private void HandlePlayerMovementInput()
         {
             verticalInput = movementInput.y;
@@ -136,5 +145,22 @@ namespace SG
             cameraVerticalInput = cameraInput.y;
             cameraHorizontalInput = cameraInput.x;
         }
+    
+        private void HandleDodgeInput()
+        {
+            //这里可以根据需要添加闪避输入的处理逻辑，例如监听特定按键的按下事件来触发闪避动作
+            if(dodgeInput)
+            {
+                dodgeInput = false; //重置闪避输入状态，防止持续触发闪避动作
+
+                //如果在menu或者ui界面，不触发闪避动作（return）
+
+                //如果在游戏中，触发闪避动作（调用玩家的闪避方法）
+                player.playerLocomotionManager.AttemptToPerformDodge();
+
+            }
+        }
+    
+    
     }
 }

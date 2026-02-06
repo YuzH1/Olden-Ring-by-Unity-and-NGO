@@ -10,6 +10,12 @@ namespace SG
         [HideInInspector] public Animator animator;
         [HideInInspector] public CharacterNetworkManager characterNetworkManager;
 
+        [Header("Flags")]
+        public bool isPerformingAction = false;//这个标志可以用来控制角色在执行动作时不能移动或攻击等，确保动作的完整性和连贯性
+        public bool applyRootMotion = false;//这个标志可以用来控制角色是否应用根运动，根运动是指动画本身带有的位移和旋转
+        public bool canRotate = true;//这个标志可以用来控制角色是否可以旋转，比如在某些动画状态下可能不允许旋转
+        public bool canMove = true;//这个标志可以用来控制角色是否可以移动，比如在某些动画状态下可能不允许移动
+
         protected virtual void Awake()
         {
             DontDestroyOnLoad(this); //确保在场景切换时不销毁此对象

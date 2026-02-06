@@ -101,13 +101,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.79
+  m_Height: 1.75
   m_Radius: 0.23
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 0.95, z: 0}
 --- !u!95 &6338853814013115005
 Animator:
   serializedVersion: 7
@@ -169,6 +169,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   characterController: {fileID: 0}
+  animator: {fileID: 0}
+  characterNetworkManager: {fileID: 0}
+  isPerformingAction: 0
+  applyRootMotion: 0
+  canRotate: 1
+  canMove: 1
+  playerAnimatorManager: {fileID: 0}
+  playerLocomotionManager: {fileID: 0}
 --- !u!114 &-8187560119198712573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +197,12 @@ MonoBehaviour:
   networkPositionVelocity: {x: 0, y: 0, z: 0}
   networkPositionSmoothTime: 0.1
   networkRotationSmoothTime: 0.1
+  horizontalMovement:
+    m_InternalValue: 0
+  verticalMovement:
+    m_InternalValue: 0
+  moveAmount:
+    m_InternalValue: 0
 --- !u!114 &8590906403361115599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,9 +218,10 @@ MonoBehaviour:
   verticalMovement: 0
   horizontalMovement: 0
   moveAmount: 0
-  walkingSpeed: 2
-  runningSpeed: 5
+  walkingSpeed: 1.4
+  runningSpeed: 3.5
   rotationSpeed: 15
+  rollDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &7609025570108840428
 MonoBehaviour:
   m_ObjectHideFlags: 0
