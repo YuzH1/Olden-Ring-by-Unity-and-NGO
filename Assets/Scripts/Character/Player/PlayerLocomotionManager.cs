@@ -16,6 +16,7 @@ namespace SG
         private Vector3 targetRotationDirection;
         [SerializeField] float walkingSpeed = 2f;
         [SerializeField] float runningSpeed = 5f;
+        [SerializeField] float sprintSpeed = 7f;
         [SerializeField] float rotationSpeed = 15f;
 
         [Header("Dodge Settings")]
@@ -80,17 +81,26 @@ namespace SG
             moveDirection.Normalize();//归一化，防止斜着走比直着走快
             moveDirection.y = 0;//确保y轴不变，防止角色飞起来
 
-            if(PlayerInputManager.instance.moveAmount > 0.5)
+            if(player.playerNetworkManager.isSprinting.Value)
             {
-                //以奔跑速度移动
-                //moveDirection * runningSpeed * Time.deltaTime指的是每秒钟移动的距离
-                player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                player.characterController.Move(moveDirection * sprintSpeed * Time.deltaTime);
             }
-            else if(PlayerInputManager.instance.moveAmount > 0 && PlayerInputManager.instance.moveAmount <= 0.5)
+            else
             {
-                //以行走速度移动
-                player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                if(PlayerInputManager.instance.moveAmount > 0.5)
+                {
+                    //以奔跑速度移动
+                    //moveDirection * runningSpeed * Time.deltaTime指的是每秒钟移动的距离
+                    player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                }
+                else if(PlayerInputManager.instance.moveAmount > 0 && PlayerInputManager.instance.moveAmount <= 0.5)
+                {
+                    //以行走速度移动
+                    player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                }
+                
             }
+
         }
     
         private void HandleRotation()
@@ -139,6 +149,28 @@ namespace SG
                 //播放一个后撤步动画
                 player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
             }
+        }
+
+        public void HandleSprinting()
+        {
+            if(player.isPerformingAction)
+            {
+                player.playerNetworkManager.isSprinting.Value = false;//如果正在执行动作，不能冲刺，设置网络变量为false
+                
+            }
+            //这里可以添加一些条件来限制冲刺，例如体力值、是否在地面等
+            
+            //如果满足条件，执行冲刺逻辑，例如增加移动速度、播放冲刺动画等
+            //if在移动，set sprinting状态为true，增加移动速度，播放冲刺动画；
+            if(moveAmount >= 0.5)
+            {
+                player.playerNetworkManager.isSprinting.Value = true;
+            }
+            else
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+            }
+            // 如果不在移动，set sprinting状态为false，
         }
     }
 }

@@ -26,6 +26,7 @@ namespace SG
 
         [Header("Player Action Input")]
         [SerializeField] bool dodgeInput = false;//存储闪避输入状态
+        [SerializeField] bool sprintInput = false;//存储冲刺输入状态
 
         private void Awake()
         {
@@ -72,10 +73,14 @@ namespace SG
                 playerControls.PlayerMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += ctx => dodgeInput = true;
+
+                playerControls.PlayerActions.Sprint.performed += ctx => sprintInput = true;
+                playerControls.PlayerActions.Sprint.canceled += ctx => sprintInput = false;
                 
                 //获取输入值，语法：+= ctx => { movement = ctx.ReadValue<Vector2>(); };lambda表达式
                 //为什么用+=而不是=？因为这是事件订阅的语法，允许多个方法响应同一事件
                 //为什么用performed？因为它表示输入操作完成时触发
+                //为什么用canceled？因为它表示输入操作取消时触发，例如松开按键时触发
 
                 playerControls.Enable();
 
@@ -112,7 +117,10 @@ namespace SG
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
-        }
+            HandleSprintingInput();
+        }   
+
+        //移动
         private void HandlePlayerMovementInput()
         {
             verticalInput = movementInput.y;
@@ -146,6 +154,7 @@ namespace SG
             cameraHorizontalInput = cameraInput.x;
         }
     
+        //动作
         private void HandleDodgeInput()
         {
             //这里可以根据需要添加闪避输入的处理逻辑，例如监听特定按键的按下事件来触发闪避动作
@@ -161,6 +170,21 @@ namespace SG
             }
         }
     
-    
+        private void HandleSprintingInput()
+        {
+            //这里可以根据需要添加冲刺输入的处理逻辑，例如监听特定按键的按下事件来触发冲刺动作
+            if(sprintInput)
+            {
+                //如果在menu或者ui界面，不触发冲刺动作（return）
+
+                //如果在游戏中，触发冲刺动作（调用玩家的冲刺方法）
+                player.playerLocomotionManager.HandleSprinting();
+
+            }
+            else
+            {
+                player.playerNetworkManager.isSprinting.Value = false;//如果没有按下冲刺键，确保网络变量isSprinting为false
+            }
+        }
     }
 }

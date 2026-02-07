@@ -7,12 +7,15 @@ namespace SG
     {
         CharacterManager character;
 
-        float Vertical;
-        float Horizontal;
+        int verticalParameterHash;
+        int horizontalParameterHash;
 
         protected virtual void Awake()
         {
             character = GetComponent<CharacterManager>();
+
+            verticalParameterHash = Animator.StringToHash("Vertical");
+            horizontalParameterHash = Animator.StringToHash("Horizontal");
         }
 
         public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue)
@@ -20,8 +23,19 @@ namespace SG
             // Implementation for updating animator parameters
             //方法1：直接设置Animator参数，这种方法简单直接，但可能会导致动画切换不够平滑，特别是在输入值变化较大时
             //0.1f是阻尼时间，Time.deltaTime确保每帧都平滑过渡
-            character.animator.SetFloat("Horizontal", horizontalValue, 0.1f, Time.deltaTime);
-            character.animator.SetFloat("Vertical", verticalValue, 0.1f, Time.deltaTime);
+            float horizontal = horizontalValue;
+            float vertical = verticalValue;
+            
+            if(character.characterNetworkManager.isSprinting.Value)
+            {
+                vertical = 2f;//如果正在冲刺，将垂直输入值设为2，触发冲刺动画
+            }
+
+
+            character.animator.SetFloat(horizontalParameterHash, horizontal, 0.1f, Time.deltaTime);
+            character.animator.SetFloat(verticalParameterHash, vertical, 0.1f, Time.deltaTime);
+
+
 
         }
 
