@@ -16,6 +16,8 @@ namespace SG
         public bool canRotate = true;//这个标志可以用来控制角色是否可以旋转，比如在某些动画状态下可能不允许旋转
         public bool canMove = true;//这个标志可以用来控制角色是否可以移动，比如在某些动画状态下可能不允许移动
 
+        
+
         protected virtual void Awake()
         {
             DontDestroyOnLoad(this); //确保在场景切换时不销毁此对象
@@ -54,5 +56,8 @@ namespace SG
         {
             // Base character late update logic can go here
         }
+
+        
+
     }
 }

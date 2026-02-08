@@ -18,9 +18,11 @@ namespace SG
         [SerializeField] float runningSpeed = 5f;
         [SerializeField] float sprintSpeed = 7f;
         [SerializeField] float rotationSpeed = 15f;
+        [SerializeField] float sprintStaminaCost = 2;//每秒消耗的体力值
 
         [Header("Dodge Settings")]
         [SerializeField] Vector3 rollDirection;//为什么用Vector3？因为闪避方向也是三维的
+        [SerializeField] int rollStaminaCost = 20;//闪避消耗的体力值
 
         protected override void Awake()
         {
@@ -132,6 +134,8 @@ namespace SG
         {
             if(player.isPerformingAction)
                 return;//如果正在执行动作，不能闪避
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
+                return;//如果体力值不足，不能闪避
             if(moveAmount > 0)
             {
                 rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;//根据摄像机的前方向乘以垂直输入来确定前后方向
@@ -149,6 +153,9 @@ namespace SG
                 //播放一个后撤步动画
                 player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
             }
+
+            //消耗体力
+            player.playerNetworkManager.currentStamina.Value -= rollStaminaCost;
         }
 
         public void HandleSprinting()
@@ -159,7 +166,13 @@ namespace SG
                 
             }
             //这里可以添加一些条件来限制冲刺，例如体力值、是否在地面等
-            
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
+            {
+                player.playerNetworkManager.isSprinting.Value = false;//如果体力值为0，不能冲刺，设置网络变量为false
+                return;//如果体力值为0，不能冲刺，直接返回，不执行冲刺逻辑
+            }
+
+
             //如果满足条件，执行冲刺逻辑，例如增加移动速度、播放冲刺动画等
             //if在移动，set sprinting状态为true，增加移动速度，播放冲刺动画；
             if(moveAmount >= 0.5)
@@ -168,9 +181,14 @@ namespace SG
             }
             else
             {
+                // 如果不在移动，set sprinting状态为false   
                 player.playerNetworkManager.isSprinting.Value = false;
             }
-            // 如果不在移动，set sprinting状态为false，
+
+            if(player.playerNetworkManager.isSprinting.Value)
+            {
+                player.playerNetworkManager.currentStamina.Value -= sprintStaminaCost * Time.deltaTime;
+            }
         }
     }
 }

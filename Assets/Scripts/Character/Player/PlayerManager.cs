@@ -8,6 +8,7 @@ namespace SG
         [HideInInspector]public PlayerAnimatorManager playerAnimatorManager;
         [HideInInspector]public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
+        [HideInInspector] public PlayerStatsManager playerStatsManager;
         protected override void Awake()
         {
             base.Awake();
@@ -15,6 +16,7 @@ namespace SG
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
             playerNetworkManager = GetComponent<PlayerNetworkManager>();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
         }
 
         protected override void Update()
@@ -23,7 +25,12 @@ namespace SG
             // Player-specific update logic
             if(!IsOwner)//只有拥有该对象的客户端才处理移动
                 return;
+            
+            //处理移动
             playerLocomotionManager.HandleAllMovement();
+
+            //处理耐力恢复
+            playerStatsManager.RegenerateStamina();
         }
 
         protected override void LateUpdate()
@@ -44,6 +51,14 @@ namespace SG
             {
                 PlayerCamera.instance.player = this; //将玩家管理器的引用传递给摄像机
                 PlayerInputManager.instance.player = this; //将玩家管理器的引用传递给输入管理器
+
+                playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.Instance.playerUIHudManager.SetNewStaminaValue; //更新UI中的耐力值
+                playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenerationTimer; //重置耐力恢复计时器
+
+                //在SL时，这个会被移除
+                playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value); //在玩家生成时中的最大耐力值
+                playerNetworkManager.currentStamina.Value = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
+                PlayerUIManager.Instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value); //在玩家生成时更新UI中的最大耐力值
             }
         }
     }
