@@ -3,10 +3,10 @@ using UnityEngine;
 namespace SG
 {
     [System.Serializable] //这个是为了让这个类可以被序列化，以便保存和加载数据
-    public class CharacterSaveData : MonoBehaviour
+    public class CharacterSaveData
     {
         [Header("Character Info")]
-        public string characterName; //角色名字
+        public string characterName = "player"; //角色名字
 
         [Header("Time Played")]
         public float secondsPlayed; //游戏时间，单位为秒

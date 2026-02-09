@@ -51,6 +51,7 @@ namespace SG
             {
                 PlayerCamera.instance.player = this; //将玩家管理器的引用传递给摄像机
                 PlayerInputManager.instance.player = this; //将玩家管理器的引用传递给输入管理器
+                WorldSaveGameManager.Instance.player = this; //将玩家管理器的引用传递给世界保存游戏管理器，方便保存和加载玩家数据
 
                 playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.Instance.playerUIHudManager.SetNewStaminaValue; //更新UI中的耐力值
                 playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenerationTimer; //重置耐力恢复计时器
