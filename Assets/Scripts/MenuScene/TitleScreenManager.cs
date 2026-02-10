@@ -15,10 +15,18 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
         [SerializeField] Button mainMenuNewGameButton; //新游戏按钮对象
         [SerializeField] Button loadMenuReturnButton; //返回按钮对象
         [SerializeField] Button mainMenuLoadGameButton; //主菜单加载游戏按钮对象
+        [SerializeField] Button noFreeSlotsOkayButton; //没有空余槽位弹出窗口的确认按钮对象
+        [SerializeField] Button deleteCharacterSlotConfirmButton; //删除角色槽位确认弹出窗口的确认按钮对象
 
         [Header("Pop Ups")]
         [SerializeField] GameObject noFreeSlotsPopup; //没有空余槽位的弹出窗口对象
-        [SerializeField] Button noFreeSlotsOkayButton; //没有空余槽位弹出窗口的确认按钮对象
+        [SerializeField] GameObject deleteCharacterSlotPopUp; //删除角色槽位的确认弹出窗口对象
+
+
+        [Header("Character Slots")]
+        public CharacterSlots currentCharacterSlot = CharacterSlots.No_Slot; //当前角色槽位对象
+
+        
 
         private void Awake()
         {
@@ -45,16 +53,18 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
             //因为WorldSaveGameManager是单例模式，可以通过Instance访问其公共方法
         }
 
-
         public void OpenLoadGameMenu()
         {
             titleScreenMainMenu.SetActive(false); //隐藏主菜单
             titleScreenLoadMenu.SetActive(true); //显示加载菜单
 
+            
             //自动选择返回按键
             loadMenuReturnButton.Select();
 
         }
+
+        
 
         public void CloseLoadGameMenu()
         {
@@ -63,6 +73,7 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
 
             //自动选择加载游戏按键
             mainMenuLoadGameButton.Select();
+            currentCharacterSlot = CharacterSlots.No_Slot;
         }
 
         public void DisplayNoFreeSlotsPopup()
@@ -75,6 +86,41 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
         {
             noFreeSlotsPopup.SetActive(false); //隐藏没有空余槽位的弹出窗口
             mainMenuNewGameButton.Select(); //自动选择新游戏按键
+        }
+    
+        public void SelectCharacterSlot(CharacterSlots characterSlot)
+        {
+            currentCharacterSlot = characterSlot; //设置当前角色槽位为选择的槽位
+        }
+
+        public void SelectNoSlot()
+        {
+            currentCharacterSlot = CharacterSlots.No_Slot; //设置当前角色槽位为无槽位
+        }
+    
+        public void AttemptToDeleteCharacterSlot()
+        {
+            if(currentCharacterSlot != CharacterSlots.No_Slot)
+            {
+                deleteCharacterSlotPopUp.SetActive(true); //显示删除角色槽位的确认弹出窗口
+                deleteCharacterSlotConfirmButton.Select(); //自动选择确认按钮
+            }
+        }
+
+        public void DeleteCharacterSlot()
+        {
+            deleteCharacterSlotPopUp.SetActive(false); //隐藏删除角色槽位的确认弹出窗口
+            WorldSaveGameManager.Instance.DeleteGame(currentCharacterSlot); //调用世界保存游戏管理器的删除角色槽位方法，删除玩家选择的角色槽位数据
+            
+            titleScreenLoadMenu.SetActive(false); //隐藏加载菜单
+            titleScreenLoadMenu.SetActive(true); //显示主菜单
+            loadMenuReturnButton.Select(); //自动选择返回按钮
+        }
+
+        public void CloseDeleteCharacterSlotPopUp()
+        {
+            deleteCharacterSlotPopUp.SetActive(false); //隐藏删除角色槽位的确认弹出窗口
+            loadMenuReturnButton.Select(); //自动选择返回按钮
         }
     }
 }

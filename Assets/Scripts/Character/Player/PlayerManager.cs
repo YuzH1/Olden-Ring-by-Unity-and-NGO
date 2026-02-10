@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace SG
@@ -67,6 +68,7 @@ namespace SG
         //ref是C#中的一个关键字，用于将参数以引用的方式传递给方法。这意味着在方法内部对该参数的修改会影响到调用该方法的外部变量。
         public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterSaveData)
         {
+            currentCharacterSaveData.sceneIndex = SceneManager.GetActiveScene().buildIndex; //保存当前场景索引
             currentCharacterSaveData.characterName = playerNetworkManager.characterName.Value.ToString(); //保存角色名字
             currentCharacterSaveData.secondsPlayed = Time.timeSinceLevelLoad; //保存游戏时间，单位为秒
             currentCharacterSaveData.xPos = transform.position.x; //保存角色在世界中的X
@@ -77,7 +79,7 @@ namespace SG
         public void LoadGameDataFromCurrentCharacterData(ref CharacterSaveData currentCharacterSaveData)
         {
             playerNetworkManager.characterName.Value = currentCharacterSaveData.characterName; //加载角色名字
-            //游戏时间不需要加载，因为它是从玩家进入世界场景开始计算的
+            
             Vector3 myPos = new Vector3(currentCharacterSaveData.xPos, currentCharacterSaveData.yPos, currentCharacterSaveData.zPos); //从保存数据中获取角色在世界中的坐标
             transform.position = myPos; //将角色移动到保存数据中的位置
         }

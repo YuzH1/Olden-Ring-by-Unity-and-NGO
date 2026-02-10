@@ -5,6 +5,9 @@ namespace SG
     [System.Serializable] //这个是为了让这个类可以被序列化，以便保存和加载数据
     public class CharacterSaveData
     {
+        [Header("Scene Index")]
+        public int sceneIndex = 1; //场景索引
+
         [Header("Character Info")]
         public string characterName = "player"; //角色名字
 

@@ -214,6 +214,54 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""cb4e3141-8c39-42cf-bc6f-438ce5d65244"",
+            ""actions"": [
+                {
+                    ""name"": ""GamePad_X"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ed5f0984-0f38-4782-baa8-85ea4105db1b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyBoard_Backspace"",
+                    ""type"": ""Button"",
+                    ""id"": ""4fd3c25c-07fe-4074-8eda-338f7b0db968"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a71313e1-ba9e-4957-a41c-159a974a813c"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamePad_X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""769268ac-8b64-48bb-86fc-ce7820a739a5"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""KeyBoard_Backspace"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -228,6 +276,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
         m_PlayerActions_Dodge = m_PlayerActions.FindAction("Dodge", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_GamePad_X = m_UI.FindAction("GamePad_X", throwIfNotFound: true);
+        m_UI_KeyBoard_Backspace = m_UI.FindAction("KeyBoard_Backspace", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -235,6 +287,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_PlayerMovement.enabled, "This will cause a leak and performance issues, PlayerControls.PlayerMovement.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerCamera.enabled, "This will cause a leak and performance issues, PlayerControls.PlayerCamera.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_PlayerActions.enabled, "This will cause a leak and performance issues, PlayerControls.PlayerActions.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerControls.UI.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -438,6 +491,60 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActionsActions @PlayerActions => new PlayerActionsActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_GamePad_X;
+    private readonly InputAction m_UI_KeyBoard_Backspace;
+    public struct UIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @GamePad_X => m_Wrapper.m_UI_GamePad_X;
+        public InputAction @KeyBoard_Backspace => m_Wrapper.m_UI_KeyBoard_Backspace;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @GamePad_X.started += instance.OnGamePad_X;
+            @GamePad_X.performed += instance.OnGamePad_X;
+            @GamePad_X.canceled += instance.OnGamePad_X;
+            @KeyBoard_Backspace.started += instance.OnKeyBoard_Backspace;
+            @KeyBoard_Backspace.performed += instance.OnKeyBoard_Backspace;
+            @KeyBoard_Backspace.canceled += instance.OnKeyBoard_Backspace;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @GamePad_X.started -= instance.OnGamePad_X;
+            @GamePad_X.performed -= instance.OnGamePad_X;
+            @GamePad_X.canceled -= instance.OnGamePad_X;
+            @KeyBoard_Backspace.started -= instance.OnKeyBoard_Backspace;
+            @KeyBoard_Backspace.performed -= instance.OnKeyBoard_Backspace;
+            @KeyBoard_Backspace.canceled -= instance.OnKeyBoard_Backspace;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IPlayerMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -450,5 +557,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnDodge(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnGamePad_X(InputAction.CallbackContext context);
+        void OnKeyBoard_Backspace(InputAction.CallbackContext context);
     }
 }

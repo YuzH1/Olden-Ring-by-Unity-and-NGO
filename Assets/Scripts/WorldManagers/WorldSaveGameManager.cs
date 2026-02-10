@@ -143,7 +143,94 @@ namespace SG
                 StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
                 return;
             }
+
+            //检查是否能创建保存文件
+            saveFileDataWriter.dataSaveFileName = DecideCharacterFileNameBasedOnCurrentCharacterSlot(CharacterSlots.characterSlot_03); //根据当前角色槽位决定保存文件名
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
+                currentCharacterSlot = CharacterSlots.characterSlot_03; //将当前角色槽位设置为角色槽位01
+                currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
+                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                return;
+            }
+
+            //检查是否能创建保存文件
+            saveFileDataWriter.dataSaveFileName = DecideCharacterFileNameBasedOnCurrentCharacterSlot(CharacterSlots.characterSlot_04); //根据当前角色槽位决定保存文件名
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
+                currentCharacterSlot = CharacterSlots.characterSlot_04; //将当前角色槽位设置为角色槽位01
+                currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
+                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                return;
+            }
             
+            //检查是否能创建保存文件
+            saveFileDataWriter.dataSaveFileName = DecideCharacterFileNameBasedOnCurrentCharacterSlot(CharacterSlots.characterSlot_05); //根据当前角色槽位决定保存文件名
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
+                currentCharacterSlot = CharacterSlots.characterSlot_05; //将当前角色槽位设置为角色槽位01
+                currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
+                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                return;
+            }
+
+            //检查是否能创建保存文件
+            saveFileDataWriter.dataSaveFileName = DecideCharacterFileNameBasedOnCurrentCharacterSlot(CharacterSlots.characterSlot_06); //根据当前角色槽位决定保存文件名
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
+                currentCharacterSlot = CharacterSlots.characterSlot_06; //将当前角色槽位设置为角色槽位01
+                currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
+                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                return;
+            }
+
+            //检查是否能创建保存文件
+            saveFileDataWriter.dataSaveFileName = DecideCharacterFileNameBasedOnCurrentCharacterSlot(CharacterSlots.characterSlot_07); //根据当前角色槽位决定保存文件名
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
+                currentCharacterSlot = CharacterSlots.characterSlot_07; //将当前角色槽位设置为角色槽位01
+                currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
+                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                return;
+            }
+
+            //检查是否能创建保存文件
+            saveFileDataWriter.dataSaveFileName = DecideCharacterFileNameBasedOnCurrentCharacterSlot(CharacterSlots.characterSlot_08); //根据当前角色槽位决定保存文件名
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
+                currentCharacterSlot = CharacterSlots.characterSlot_08; //将当前角色槽位设置为角色槽位01
+                currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
+                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                return;
+            }
+
+            //检查是否能创建保存文件
+            saveFileDataWriter.dataSaveFileName = DecideCharacterFileNameBasedOnCurrentCharacterSlot(CharacterSlots.characterSlot_09); //根据当前角色槽位决定保存文件名
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
+                currentCharacterSlot = CharacterSlots.characterSlot_09; //将当前角色槽位设置为角色槽位01
+                currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
+                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                return;
+            }
+
+            //检查是否能创建保存文件
+            saveFileDataWriter.dataSaveFileName = DecideCharacterFileNameBasedOnCurrentCharacterSlot(CharacterSlots.characterSlot_10); //根据当前角色槽位决定保存文件名
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
+                currentCharacterSlot = CharacterSlots.characterSlot_10; //将当前角色槽位设置为角色槽位01
+                currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
+                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                return;
+            }
             
             
             //如果没有空余的槽位，通知玩家
@@ -180,6 +267,16 @@ namespace SG
             saveFileDataWriter.CreateNewChracterSaveFile(currentCharacterData); //将当前角色数据保存到保存文件中
         }
 
+        public void DeleteGame(CharacterSlots characterSlot)
+        {
+            //根据当前角色槽位来选择删除的文件
+            saveFileDataWriter = new SaveFileDataWriter(); //创建一个新的保存文件数据写入器对象
+            saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
+           saveFileDataWriter.dataSaveFileName = DecideCharacterFileNameBasedOnCurrentCharacterSlot(characterSlot); 
+
+            saveFileDataWriter.DeleteSaveFile(); //删除保存文件
+        }
+        
         //当游戏开始时在设备中加载所有角色资料
         public void LoadAllChracterProfiles()
         {
@@ -225,7 +322,14 @@ namespace SG
             //异步加载是指在加载场景时，不会阻塞主线程，
             //允许游戏继续运行，避免卡顿和冻结的情况发生。
             //使用异步加载可以提供更流畅的游戏体验，尤其是在加载大型场景时。
-            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex); //异步加载新游戏场景，原因：避免卡顿
+            //异步加载新游戏场景，原因：避免卡顿
+
+            //如果只有一个游戏世界场景，可以直接加载这个场景，无需根据保存数据中的场景索引来加载不同的场景
+            // AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
+            
+            //如果使用不同场景，需要保存场景索引，以便在加载游戏时能够正确加载到之前保存的场景
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex ); 
+
 
             //从当前角色数据中加载游戏数据到玩家管理器中，
             //原因：在场景加载时就将玩家数据加载到玩家管理器中，确保玩家数据在进入世界场景时已经准备好

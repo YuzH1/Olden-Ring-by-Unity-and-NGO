@@ -192,6 +192,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "cb4e3141-8c39-42cf-bc6f-438ce5d65244",
+            "actions": [
+                {
+                    "name": "GamePad_X",
+                    "type": "PassThrough",
+                    "id": "ed5f0984-0f38-4782-baa8-85ea4105db1b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeyBoard_Backspace",
+                    "type": "Button",
+                    "id": "4fd3c25c-07fe-4074-8eda-338f7b0db968",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a71313e1-ba9e-4957-a41c-159a974a813c",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GamePad_X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "769268ac-8b64-48bb-86fc-ce7820a739a5",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyBoard_Backspace",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
