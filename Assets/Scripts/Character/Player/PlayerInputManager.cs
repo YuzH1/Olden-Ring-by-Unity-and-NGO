@@ -27,6 +27,7 @@ namespace SG
         [Header("Player Action Input")]
         [SerializeField] bool dodgeInput = false;//存储闪避输入状态
         [SerializeField] bool sprintInput = false;//存储冲刺输入状态
+        [SerializeField] bool jumpInput = false;//存储跳跃输入状态
 
         private void Awake()
         {
@@ -73,6 +74,7 @@ namespace SG
                 playerControls.PlayerMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += ctx => dodgeInput = true;
+                playerControls.PlayerActions.Jump.performed += ctx => jumpInput = true;
 
                 playerControls.PlayerActions.Sprint.performed += ctx => sprintInput = true;
                 playerControls.PlayerActions.Sprint.canceled += ctx => sprintInput = false;
@@ -118,6 +120,7 @@ namespace SG
             HandleCameraMovementInput();
             HandleDodgeInput();
             HandleSprintingInput();
+            HandleJumpInput();
         }   
 
         //移动
@@ -184,6 +187,19 @@ namespace SG
             else
             {
                 player.playerNetworkManager.isSprinting.Value = false;//如果没有按下冲刺键，确保网络变量isSprinting为false
+            }
+        }
+    
+        private void HandleJumpInput()
+        {
+            if(jumpInput)
+            {
+                jumpInput = false; //重置跳跃输入状态，防止左脚踩右脚
+
+                //如果在menu或者ui界面，不触发跳跃动作（return）
+                
+                //如果在游戏中，尝试触发跳跃动作（调用玩家的跳跃方法）
+                player.playerLocomotionManager.AttemptToPerformJump();
             }
         }
     }

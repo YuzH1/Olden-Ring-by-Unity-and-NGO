@@ -22,7 +22,14 @@ namespace SG
 
         [Header("Dodge Settings")]
         [SerializeField] Vector3 rollDirection;//为什么用Vector3？因为闪避方向也是三维的
-        [SerializeField] int rollStaminaCost = 20;//闪避消耗的体力值
+        [SerializeField] float rollStaminaCost = 20;//闪避消耗的体力值
+
+        [Header("Jumping Settings")]
+        [SerializeField] float jumpHeight = 3f;//跳跃高度，决定了角色能够跳多高，影响跳跃的感觉和游戏的可玩性
+        [SerializeField] float jumpForwardVelocity = 5;//跳跃的水平速度
+        [SerializeField] float freeFallForwardVelocity = 2f;//自由落体的水平速度，决定了角色在空中时的移动能力，影响跳跃和落地的感觉
+        [SerializeField] float jumpStaminaCost = 15;//跳跃消耗的体力值
+        private Vector3 jumpDirection;
 
         protected override void Awake()
         {
@@ -36,6 +43,7 @@ namespace SG
             //可以在这里添加一些每帧更新的逻辑
             if(player.IsOwner)//只有拥有该对象的客户端才处理移动
             {
+                GetMovementValue();
                 player.characterNetworkManager.verticalMovement.Value = verticalMovement;
                 player.characterNetworkManager.horizontalMovement.Value = horizontalMovement;
                 player.characterNetworkManager.moveAmount.Value = moveAmount;
@@ -59,6 +67,8 @@ namespace SG
             HandleGroundedMovement();
             HandleRotation();
             //Aerial movement(jumping/falling) can be added later
+            HandleJumpMovement();
+            HandleFreeFallMovement();
         }
 
         private void GetMovementValue()
@@ -74,10 +84,8 @@ namespace SG
             if(!player.canMove)
                 return;//如果角色不能移动，直接返回，不执行移动逻辑
             // Grounded movement logic for the player
-            GetMovementValue();
-
             //根据摄像机方向来移动
-            moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
+            moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;//根据摄像机的前方向乘以垂直输入来确定前后方向
             //这一步是为了让角色能左右移动，否则只能前后移动
             moveDirection = moveDirection + PlayerCamera.instance.transform.right * horizontalMovement;
             moveDirection.Normalize();//归一化，防止斜着走比直着走快
@@ -89,13 +97,13 @@ namespace SG
             }
             else
             {
-                if(PlayerInputManager.instance.moveAmount > 0.5)
+                if(moveAmount > 0.5)
                 {
                     //以奔跑速度移动
                     //moveDirection * runningSpeed * Time.deltaTime指的是每秒钟移动的距离
                     player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
                 }
-                else if(PlayerInputManager.instance.moveAmount > 0 && PlayerInputManager.instance.moveAmount <= 0.5)
+                else if(moveAmount > 0 && moveAmount <= 0.5)
                 {
                     //以行走速度移动
                     player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
@@ -105,6 +113,31 @@ namespace SG
 
         }
     
+        private void HandleJumpMovement()
+        {
+            if(player.isJumping)
+            {
+                player.characterController.Move(jumpDirection * jumpForwardVelocity * Time.deltaTime);
+            }
+        }
+       
+        private void HandleFreeFallMovement()
+        {
+            // Free fall movement logic for the player can be added here
+            if(!player.isGrounded)
+            {
+                Vector3 freeFallDirection;
+
+                //根据摄像机方向和输入来确定下落的水平方向
+                freeFallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;//根据摄像机的前方向乘以垂直输入来确定前后方向
+                //根据摄像机的右方向乘以水平输入来确定左右方向
+                freeFallDirection = freeFallDirection + PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;
+                freeFallDirection.y = 0;
+
+                player.characterController.Move(freeFallDirection * freeFallForwardVelocity * Time.deltaTime);
+            }
+        }
+
         private void HandleRotation()
         {
             if(!player.canRotate)
@@ -128,34 +161,6 @@ namespace SG
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = targetRotation;
 
-        }
-
-        public void AttemptToPerformDodge() //尝试闪避，因为闪避可能会被体力等条件限制。
-        {
-            if(player.isPerformingAction)
-                return;//如果正在执行动作，不能闪避
-            if(player.playerNetworkManager.currentStamina.Value <= 0)
-                return;//如果体力值不足，不能闪避
-            if(moveAmount > 0)
-            {
-                rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;//根据摄像机的前方向乘以垂直输入来确定前后方向
-                rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;//根据摄像机的右方向乘以水平输入来确定左右方向
-
-                rollDirection.y = 0;
-                Quaternion playerRotation = Quaternion.LookRotation(rollDirection);//计算玩家朝向，面向闪避方向
-                player.transform.rotation = playerRotation;//旋转玩家，使其面向闪避方向
-                
-                //播放一个滚动动画
-                player.playerAnimatorManager.PlayTargetActionAnimation("Roll_Forward_01", true, true);
-            }
-            else
-            {
-                //播放一个后撤步动画
-                player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
-            }
-
-            //消耗体力
-            player.playerNetworkManager.currentStamina.Value -= rollStaminaCost;
         }
 
         public void HandleSprinting()
@@ -190,5 +195,91 @@ namespace SG
                 player.playerNetworkManager.currentStamina.Value -= sprintStaminaCost * Time.deltaTime;
             }
         }
+        
+        public void AttemptToPerformDodge() //尝试闪避，因为闪避可能会被体力等条件限制。
+        {
+            if(player.isPerformingAction)
+                return;//如果正在执行动作，不能闪避
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
+                return;//如果体力值不足，不能闪避
+            if(moveAmount > 0)
+            {
+                rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;//根据摄像机的前方向乘以垂直输入来确定前后方向
+                rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;//根据摄像机的右方向乘以水平输入来确定左右方向
+
+                rollDirection.y = 0;
+                Quaternion playerRotation = Quaternion.LookRotation(rollDirection);//计算玩家朝向，面向闪避方向
+                player.transform.rotation = playerRotation;//旋转玩家，使其面向闪避方向
+                
+                //播放一个滚动动画
+                player.playerAnimatorManager.PlayTargetActionAnimation("Roll_Forward_01", true, true);
+            }
+            else
+            {
+                //播放一个后撤步动画
+                player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+            }
+
+            //消耗体力
+            player.playerNetworkManager.currentStamina.Value -= rollStaminaCost;
+        }
+
+        public void AttemptToPerformJump() //尝试跳跃，因为跳跃可能会被体力等条件限制。
+        {
+
+            //如果正在执行一个动作，不能跳跃
+            if(player.isPerformingAction)
+                return;//如果正在执行动作，不能闪避
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
+                return;//如果体力值不足，不能闪避
+            
+            if(player.isJumping)
+                return;//如果已经在跳跃，不能再次跳跃
+            if(!player.isGrounded)
+                return;
+
+            //播放一个跳跃动画
+            player.playerAnimatorManager.PlayTargetActionAnimation("Main_jump_01", false, true, true);
+            player.isJumping = true;//设置跳跃状态为true，表示正在跳跃
+
+            //消耗体力
+            player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+
+            //根据摄像机方向和输入来确定跳跃的水平方向
+            jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;//根据摄像机的前方向乘以垂直输入来确定前后方向
+            jumpDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;//根据摄像机的右方向乘以水平输入来确定左右方向
+            jumpDirection.y = 0;
+
+            if(jumpDirection != Vector3.zero)
+            {
+                if(player.playerNetworkManager.isSprinting.Value)
+                {
+                    jumpDirection *= 1;//如果在冲刺，增加跳跃的水平速度
+                }
+                else
+                {
+                    if(moveAmount > 0.5)
+                    {
+                        jumpDirection *= 0.5f;//如果在奔跑，增加跳跃的水平速度
+                    }
+                    else if(moveAmount > 0 && moveAmount <= 0.5)
+                    {
+                        jumpDirection *= 0.25f;//如果在行走，增加跳跃的水平速度
+                    }
+                }
+            }
+        
+            //应用跳跃的方向
+            
+        
+        }
+
+        public void ApplyJumpingVelocity()//在动画事件中调用
+        {
+            //添加一个向上的速度
+            yVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravityForce);//根据跳跃高度和重力计算初始跳跃速度，确保角色能够跳到指定的高度
+        }
+
+        
     }
 }
