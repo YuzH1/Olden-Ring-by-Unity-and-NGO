@@ -330,6 +330,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5489449173854239899}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8782950198321149696}
   m_SourcePrefab: {fileID: 100100000, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
 --- !u!1 &4466224658561527379 stripped
 GameObject:
@@ -473,7 +476,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.75
+  m_Height: 1.8
   m_Radius: 0.23
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -661,7 +664,6 @@ MonoBehaviour:
   runningSpeed: 3.5
   sprintSpeed: 7
   rotationSpeed: 15
-  airRotationSpeedMultiplier: 0.3
   sprintStaminaCost: 2
   rollDirection: {x: 0, y: 0, z: 0}
   rollStaminaCost: 20
@@ -707,3 +709,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staminaRegenerationAmount: 2
   staminaRegenerationDelay: 2
+--- !u!114 &-8782950198321149696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4466224658561527379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f583134eaf1a384b89bae31803a6393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectToTest: {fileID: 11400000, guid: 5079b0d2b3318d64fba20cb9f693ad9d, type: 2}
+  applyEffect: 0

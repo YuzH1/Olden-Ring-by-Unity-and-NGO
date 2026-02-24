@@ -18,6 +18,16 @@ namespace SG
         {
             character = GetComponent<CharacterManager>();
         }
+
+        public int CalculateHealthBasedOnVitalityLevel(int vitality)//根据体力等级计算生命值
+        {
+            float health = 0;
+
+            //制作一个equation来计算生命值，
+            health = vitality * 10;
+
+            return Mathf.RoundToInt(health);
+        }
         public int CalculateStaminaBasedOnEnduranceLevel(int endurance)//根据耐力等级计算耐力值
         {
             float stamina = 0;

@@ -9,10 +9,17 @@ namespace SG
         //持续处理效果（如中毒、燃烧等）
 
         //静态处理效果（如增加或移除Buff等）
+        CharacterManager character;
 
-        public void ProcessInstantEffect()//处理即时效果
+        protected virtual void Awake()
         {
-            
+            character = GetComponent<CharacterManager>();
+        }
+
+
+        public virtual void ProcessInstantEffect(InstantCharacterEffect effect)//处理即时效果
+        {
+            effect.ProcessEffect(character);
         }
             
         
