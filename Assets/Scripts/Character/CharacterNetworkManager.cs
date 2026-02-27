@@ -28,10 +28,10 @@ namespace SG
         public NetworkVariable<int> vitality = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         
         [Header("Resource Values")]
-        public NetworkVariable<float> maxStamina = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<int> maxStamina = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<float> currentStamina = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-        public NetworkVariable<float> maxHealth = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-        public NetworkVariable<float> currentHealth = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<int> maxHealth = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<int> currentHealth = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
         
         protected virtual void Awake()
@@ -43,10 +43,7 @@ namespace SG
         // 这样可以确保只有拥有该对象的客户端才能更新网络变量，其他客户端只能读取网络变量，
         // 从而实现了基本的权限控制，防止了其他客户端恶意修改网络变量导致游戏状态不一致的问题
         [ServerRpc]
-        public void NotifyActionAnimationServerRpc(
-            ulong clientID, 
-            string animationID, 
-            bool applyRootMotion)
+        public void NotifyActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion)
         {
             //如果这个角色是服务器或主机，那么就处理动画通知，可以根据clientID来确定是哪个客户端发送的通知
             if(IsServer)
@@ -61,10 +58,7 @@ namespace SG
         // 这样可以确保服务器可以通知所有客户端某个事件的发生,
         // 比如某个玩家播放了一个动画，其他客户端需要同步这个动画状态
         [ClientRpc]
-        public void PlayActionAnimationForClientRpc(
-            ulong clientID,
-            string animationID,
-            bool applyRootMotion)
+        public void PlayActionAnimationForClientRpc(ulong clientID,string animationID,bool applyRootMotion)
         {
             //确认不是本地客户端再执行动画播放逻辑
             if(clientID != NetworkManager.Singleton.LocalClientId)
@@ -82,6 +76,22 @@ namespace SG
 
         }
     
+        public void CheckHP(int oldValue, int newValue)
+        {
+            if(currentHealth.Value <= 0)
+            {
+                StartCoroutine(character.ProcessDeathEvent());
+            }
+
+            if(character.IsOwner)
+            {
+                if(currentHealth.Value > maxHealth.Value)
+                {
+                    currentHealth.Value = maxHealth.Value; //确保当前生命值不会超过最大生命值
+                }
+            }
+        }
+
     }    
     
 }

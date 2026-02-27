@@ -23,7 +23,7 @@ namespace SG
         public float zPos; //角色在世界中的Z坐标
 
         [Header("Resources")]
-        public float currentHealth; //当前生命值
+        public int currentHealth; //当前生命值
         public float currentStamina; //当前耐力值
 
         [Header("Character Stats")]

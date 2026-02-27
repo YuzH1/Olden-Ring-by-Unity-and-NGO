@@ -10,11 +10,13 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
         [Header("Menus")]
         [SerializeField] GameObject titleScreenMainMenu; //标题屏幕主菜单对象
         [SerializeField] GameObject titleScreenLoadMenu; //标题屏幕加载菜单对象
+        [SerializeField] ScrollRect loadMenuScrollRect; //加载菜单的 ScrollRect，用于滚动到顶部
 
         [Header("Buttons")]
         [SerializeField] Button mainMenuNewGameButton; //新游戏按钮对象
         [SerializeField] Button loadMenuReturnButton; //返回按钮对象
         [SerializeField] Button mainMenuLoadGameButton; //主菜单加载游戏按钮对象
+        [SerializeField] Button firstCharacterSlotButton; //第一个存档槽位按钮，用于自动选择
         [SerializeField] Button noFreeSlotsOkayButton; //没有空余槽位弹出窗口的确认按钮对象
         [SerializeField] Button deleteCharacterSlotConfirmButton; //删除角色槽位确认弹出窗口的确认按钮对象
 
@@ -58,10 +60,22 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
             titleScreenMainMenu.SetActive(false); //隐藏主菜单
             titleScreenLoadMenu.SetActive(true); //显示加载菜单
 
-            
-            //自动选择返回按键
-            loadMenuReturnButton.Select();
+            //将 ScrollView 滚动到顶部，确保看到第一个存档
+            if(loadMenuScrollRect != null)
+            {
+                loadMenuScrollRect.verticalNormalizedPosition = 1f; //1.0 = 顶部，0.0 = 底部
+            }
 
+            //自动选择第一个存档槽位
+            if(firstCharacterSlotButton != null)
+            {
+                firstCharacterSlotButton.Select();
+            }
+            else
+            {
+                //若未设置，则选择返回按钮
+                loadMenuReturnButton.Select();
+            }
         }
 
         

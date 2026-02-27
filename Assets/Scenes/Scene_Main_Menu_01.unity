@@ -3049,9 +3049,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleScreenMainMenu: {fileID: 930072829}
   titleScreenLoadMenu: {fileID: 1685591245}
+  loadMenuScrollRect: {fileID: 0}
   mainMenuNewGameButton: {fileID: 6290376}
   loadMenuReturnButton: {fileID: 6848405008035062263}
   mainMenuLoadGameButton: {fileID: 931589391}
+  firstCharacterSlotButton: {fileID: 0}
   noFreeSlotsOkayButton: {fileID: 257933249}
   deleteCharacterSlotConfirmButton: {fileID: 978955830}
   noFreeSlotsPopup: {fileID: 728058134}
@@ -6078,7 +6080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 815294077618856437, guid: 5fc900f052494f841a37cafd0d1e40b0, type: 3}
       propertyPath: m_FillAmount
-      value: 1
+      value: 0.866
       objectReference: {fileID: 0}
     - target: {fileID: 815294077618856437, guid: 5fc900f052494f841a37cafd0d1e40b0, type: 3}
       propertyPath: m_RaycastTarget
@@ -6167,6 +6169,10 @@ PrefabInstance:
     - target: {fileID: 3280183314663745120, guid: 5fc900f052494f841a37cafd0d1e40b0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4263880884279760909, guid: 5fc900f052494f841a37cafd0d1e40b0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00018310547
       objectReference: {fileID: 0}
     - target: {fileID: 4475984853165181117, guid: 5fc900f052494f841a37cafd0d1e40b0, type: 3}
       propertyPath: m_AnchorMax.x

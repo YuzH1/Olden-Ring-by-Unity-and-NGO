@@ -20,19 +20,19 @@ namespace SG
             staminaBar.SetStat(Mathf.RoundToInt(newValue));
         }
 
-        public void SetMaxStaminaValue(float maxStamina)
+        public void SetMaxStaminaValue(int maxStamina)
         {
-            staminaBar.SetMaxStat(Mathf.RoundToInt(maxStamina));
+            staminaBar.SetMaxStat(maxStamina);
         }
 
-        public void SetNewHealthValue(float oldValue, float newValue)
+        public void SetNewHealthValue(int oldValue, int newValue)
         {
-            healthBar.SetStat(Mathf.RoundToInt(newValue));
+            healthBar.SetStat(newValue);
         }
 
-        public void SetMaxHealthValue(float maxHealth)
+        public void SetMaxHealthValue(int maxHealth)
         {
-            healthBar.SetMaxStat(Mathf.RoundToInt(maxHealth));
+            healthBar.SetMaxStat(maxHealth);
         }
 
     }

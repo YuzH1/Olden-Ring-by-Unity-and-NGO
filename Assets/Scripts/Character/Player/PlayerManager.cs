@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,8 @@ namespace SG
 {
     public class PlayerManager : CharacterManager
     {
+        [Header("DEBUG MENU")]
+        [SerializeField] bool respawnCharacter = false; //是否在角色死亡后自动重生
         [HideInInspector]public PlayerAnimatorManager playerAnimatorManager;
         [HideInInspector]public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
@@ -41,6 +44,9 @@ namespace SG
             base.LateUpdate();
 
             PlayerCamera.instance.HandleAllCameraActions(); //调用摄像机的处理函数，确保在所有对象更新后执行摄像机相关逻辑
+
+            //debug
+            DebugMenu();
         }
 
         public override void OnNetworkSpawn()
@@ -66,6 +72,37 @@ namespace SG
 
                 
             }
+
+            playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP; //检查生命值是否为0，触发死亡事件
+        }
+
+        public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+        {
+            if(IsOwner)
+            {
+                PlayerUIManager.Instance.playerUIPopUpManager.SendYouDiedPopUp();
+            }
+            return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+
+            //检查是否还有玩家存活，如果没有，触发游戏结束逻辑
+
+        }
+
+        public override void ReviveCharacter()
+        {
+            base.ReviveCharacter();
+
+            if(IsOwner)
+            {
+                playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value; //将当前生命值设置为最大生命值，确保角色重生时是满血状态
+                playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value; //将当前耐力值设置为最大耐力值，确保角色重生时是满耐力状态
+                
+                //重启焦点
+
+                //播放重生动画
+                playerAnimatorManager.PlayTargetActionAnimation("Empty", false); //播放重生动画，第二个参数表示是否使用根运动，第三个参数表示是否允许旋转
+            }
+
         }
 
         //ref是什么？
@@ -112,6 +149,16 @@ namespace SG
             PlayerUIManager.Instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value); //在玩家生成时更新UI中的最大生命值
             PlayerUIManager.Instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value); //在玩家生成时更新UI中的最大耐力值
            
+        }
+
+        //Debug, 之后删除
+        private void DebugMenu()
+        {
+            if(respawnCharacter)
+            {
+                respawnCharacter = false; //重置flag，确保只在一次按键事件中触发重生
+                ReviveCharacter(); //调用重生函数，重生角色
+            }
         }
     }
 }

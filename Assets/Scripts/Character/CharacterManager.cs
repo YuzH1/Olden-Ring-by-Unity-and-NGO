@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using NUnit.Framework;
+using System.Collections;
 
 namespace SG
 {   
@@ -18,6 +19,7 @@ namespace SG
         [HideInInspector] public Animator animator;
         [HideInInspector] public CharacterNetworkManager characterNetworkManager;
         [HideInInspector] public CharacterEffectsManager characterEffectsManager;
+        [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
 
         [Header("Flags")]
         public bool isPerformingAction = false;//这个标志可以用来控制角色在执行动作时不能移动或攻击等，确保动作的完整性和连贯性
@@ -35,6 +37,7 @@ namespace SG
             animator = GetComponent<Animator>();
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
             characterEffectsManager = GetComponent<CharacterEffectsManager>();
+            characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         }
 
         protected virtual void Update()
@@ -69,7 +72,33 @@ namespace SG
             // Base character late update logic can go here
         }
 
-        
+        public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+        {
+            if(IsOwner)
+            {
+                characterNetworkManager.currentHealth.Value = 0; //将当前生命值设置为0，确保所有客户端都知道角色已经死亡
+                isDead.Value = true; //将死亡状态设置为true，触发相关的死亡逻辑
 
+                //重置需要重置的flag
+
+                //如果不在地面上，播放空中死亡动画
+                if(!manuallySelectDeathAnimation)
+                {
+                    characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true); //播放死亡动画，第二个参数表示是否使用根运动，第三个参数表示是否允许旋转
+                }
+            }
+
+            //播放死亡音效
+
+            yield return new WaitForSeconds(5); //等待5秒，确保死亡动画和音效播放完毕
+
+            //死亡惩罚（掉落卢恩）
+            //关闭角色控制，禁用碰撞体等，确保角色无法再进行任何操作
+        }
+
+        public virtual void ReviveCharacter()
+        {
+            
+        }
     }
 }
