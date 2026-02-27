@@ -35,7 +35,7 @@ namespace SG
 
             if(scaleBarLengthWithStats)
             {
-                //基础宽度 + 属性值增长部分，并限制最大宽度，防止血条过长
+                //基础宽度 + 属性值增长部分，
                 float newWidth = baseWidth + (maxValue * widthScaleMultiplier);
                 rectTransform.sizeDelta = new Vector2(newWidth, rectTransform.sizeDelta.y);
                 PlayerUIManager.Instance.playerUIHudManager.RefreshHUD(); //调整数据条的位置，确保它们在UI中正确对齐
