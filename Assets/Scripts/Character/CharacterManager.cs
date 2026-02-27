@@ -6,9 +6,18 @@ namespace SG
 {   
     public class CharacterManager : NetworkBehaviour
     {
+        [Header("Status")]
+        //角色是否死亡的网络变量，所有客户端都可以访问和修改这个变量，
+        //当角色死亡时，isDead会被设置为true，触发相关的死亡逻辑，比如播放死亡动画、禁用角色控制等
+        //为什么这个变量放在这个文件而不是NetworkManager文件里？
+        // 因为这个变量是角色的状态，直接放在角色管理器里更方便管理和访问，而不是放在网络管理器里，
+        // 这样可以避免网络管理器过于臃肿，同时也更符合面向对象的设计原则，将角色相关的状态和逻辑封装在角色管理器中
+        public NetworkVariable<bool> isDead = new NetworkVariable<bool>(false); 
+
         [HideInInspector] public CharacterController characterController;
         [HideInInspector] public Animator animator;
         [HideInInspector] public CharacterNetworkManager characterNetworkManager;
+        [HideInInspector] public CharacterEffectsManager characterEffectsManager;
 
         [Header("Flags")]
         public bool isPerformingAction = false;//这个标志可以用来控制角色在执行动作时不能移动或攻击等，确保动作的完整性和连贯性
@@ -17,8 +26,6 @@ namespace SG
         public bool applyRootMotion = false;//这个标志可以用来控制角色是否应用根运动，根运动是指动画本身带有的位移和旋转
         public bool canRotate = true;//这个标志可以用来控制角色是否可以旋转，比如在某些动画状态下可能不允许旋转
         public bool canMove = true;//这个标志可以用来控制角色是否可以移动，比如在某些动画状态下可能不允许移动
-
-
         
 
         protected virtual void Awake()
@@ -27,6 +34,7 @@ namespace SG
             characterController = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
+            characterEffectsManager = GetComponent<CharacterEffectsManager>();
         }
 
         protected virtual void Update()

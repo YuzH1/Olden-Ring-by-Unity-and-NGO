@@ -99,10 +99,17 @@ namespace SG
 
             playerNetworkManager.maxHealth.Value = playerStatsManager.CalculateHealthBasedOnVitalityLevel(playerNetworkManager.vitality.Value); //在玩家生成时中的最大生命值
             playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value); //在玩家生成时中的最大耐力值
-            playerNetworkManager.currentHealth.Value = currentCharacterSaveData.currentHealth; //加载当前生命值
-            playerNetworkManager.currentStamina.Value = currentCharacterSaveData.currentStamina; //加载当前耐力值
             
-            // PlayerUIManager.Instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value); //在玩家生成时更新UI中的最大生命值
+            //如果存档中的生命值为0（新游戏），则设置为满血；否则从存档加载
+            playerNetworkManager.currentHealth.Value = currentCharacterSaveData.currentHealth > 0 
+                ? currentCharacterSaveData.currentHealth 
+                : playerNetworkManager.maxHealth.Value;
+            //如果存档中的耐力值为0（新游戏），则设置为满耐力；否则从存档加载
+            playerNetworkManager.currentStamina.Value = currentCharacterSaveData.currentStamina > 0 
+                ? currentCharacterSaveData.currentStamina 
+                : playerNetworkManager.maxStamina.Value;
+            
+            PlayerUIManager.Instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value); //在玩家生成时更新UI中的最大生命值
             PlayerUIManager.Instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value); //在玩家生成时更新UI中的最大耐力值
            
         }

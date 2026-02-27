@@ -12,7 +12,9 @@ namespace SG
         
         [Header("Bar Options")]
         [SerializeField] protected bool scaleBarLengthWithStats = true; //是否根据当前数值与最大数值的比例来缩放数据条的长度
-        [SerializeField] protected float widthScaleMultiplier = 1f; //数据条长度的缩放倍率，默认为1，即不缩放
+        [SerializeField] protected float baseWidth = 200f; //数据条的基础宽度，确保初始长度合适
+        [SerializeField] protected float widthScaleMultiplier = 1f; //数据条长度的缩放倍率
+        
 
 
         protected virtual void Awake()
@@ -33,8 +35,9 @@ namespace SG
 
             if(scaleBarLengthWithStats)
             {
-                //根据当前数值与最大数值的比例来缩放数据条的长度
-                rectTransform.sizeDelta = new Vector2(maxValue * widthScaleMultiplier, rectTransform.sizeDelta.y); //调整数据条的长度，保持高度不变
+                //基础宽度 + 属性值增长部分，并限制最大宽度，防止血条过长
+                float newWidth = baseWidth + (maxValue * widthScaleMultiplier);
+                rectTransform.sizeDelta = new Vector2(newWidth, rectTransform.sizeDelta.y);
                 PlayerUIManager.Instance.playerUIHudManager.RefreshHUD(); //调整数据条的位置，确保它们在UI中正确对齐
             }
         }

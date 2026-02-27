@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using SG;
 using UnityEngine;
 
 public class WorldCharacterEffectsManager : MonoBehaviour
 {
     public static WorldCharacterEffectsManager Instance;
 
+    [Header("Damage")]
+    public TakeDamageEffect takeDamageEffect;
     [SerializeField] List<InstantCharacterEffect> instantEffectsList; //即时效果列表
 
     private void Awake()

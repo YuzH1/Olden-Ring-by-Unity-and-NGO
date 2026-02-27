@@ -241,8 +241,7 @@ namespace SG
 
         public void NewGame()
         {
-            SaveGame(); //保存当前游戏数据到保存文件中
-            StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+            StartCoroutine(LoadWorldScene(true)); //开始加载世界场景的协程，参数true表示新游戏需要在场景加载完成后保存
         }
 
         public void LoadGame()
@@ -256,7 +255,7 @@ namespace SG
             saveFileDataWriter.dataSaveFileName = saveFileName; //设置保存文件名，根据当前角色槽位决定
             currentCharacterData = saveFileDataWriter.LoadSaveFile(); //从保存文件中加载角色数据，并将其赋值给当前角色数据
 
-            StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+            StartCoroutine(LoadWorldScene(false)); //开始加载世界场景的协程，false表示是加载存档而非新游戏
         }
 
         public void SaveGame()
@@ -322,26 +321,27 @@ namespace SG
 
         }
 
-        public IEnumerator LoadWorldScene()//协程方法，用于异步加载新游戏场景
+        public IEnumerator LoadWorldScene(bool isNewGame = false)//协程方法，用于异步加载新游戏场景
         {
-            //什么是异步加载？为什么要使用异步加载？
-            //异步加载是指在加载场景时，不会阻塞主线程，
-            //允许游戏继续运行，避免卡顿和冻结的情况发生。
-            //使用异步加载可以提供更流畅的游戏体验，尤其是在加载大型场景时。
-            //异步加载新游戏场景，原因：避免卡顿
+            //如果是新游戏，直接使用worldSceneIndex加载世界场景
+            //如果是加载存档，使用存档中保存的sceneIndex
+            int sceneToLoad = isNewGame ? worldSceneIndex : currentCharacterData.sceneIndex;
 
-            //如果只有一个游戏世界场景，可以直接加载这个场景，无需根据保存数据中的场景索引来加载不同的场景
-            // AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
-            
-            //如果使用不同场景，需要保存场景索引，以便在加载游戏时能够正确加载到之前保存的场景
-            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex ); 
+            //异步加载场景，避免卡顿
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
 
+            //等待场景加载完成
+            yield return loadOperation;
 
             //从当前角色数据中加载游戏数据到玩家管理器中，
-            //原因：在场景加载时就将玩家数据加载到玩家管理器中，确保玩家数据在进入世界场景时已经准备好
+            //原因：在场景加载完成后将玩家数据加载到玩家管理器中，确保玩家数据在进入世界场景时已经准备好
             player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
 
-            yield return null; //等待一帧，确保加载操作开始
+            //如果是新游戏，等场景加载完成后再保存，此时sceneIndex会正确记录为世界场景索引
+            if(isNewGame)
+            {
+                SaveGame();
+            }
         }
 
         public int GetWorldSceneIndex()//获取世界场景索引
