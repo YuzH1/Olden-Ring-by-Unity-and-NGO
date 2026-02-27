@@ -19,6 +19,11 @@ namespace SG
             character = GetComponent<CharacterManager>();
         }
 
+        protected virtual void Start()
+        {
+            
+        }
+
         public int CalculateHealthBasedOnVitalityLevel(int vitality)//根据体力等级计算生命值
         {
             float health = 0;

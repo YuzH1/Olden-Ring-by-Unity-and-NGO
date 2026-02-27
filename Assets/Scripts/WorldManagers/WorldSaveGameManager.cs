@@ -129,7 +129,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_01; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
 
@@ -140,7 +140,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_02; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
 
@@ -151,7 +151,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_03; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
 
@@ -162,7 +162,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_04; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
             
@@ -173,7 +173,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_05; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
 
@@ -184,7 +184,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_06; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
 
@@ -195,7 +195,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_07; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
 
@@ -206,7 +206,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_08; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
 
@@ -217,7 +217,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_09; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
 
@@ -228,7 +228,7 @@ namespace SG
                 //如果不存在保存文件，使用这个槽位来创建一个新的游戏，
                 currentCharacterSlot = CharacterSlots.characterSlot_10; //将当前角色槽位设置为角色槽位01
                 currentCharacterData = new CharacterSaveData(); //创建一个新的角色数据对象，并初始化默认值
-                StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
+                NewGame(); //调用新游戏的方法，开始加载世界场景的协程
                 return;
             }
             
@@ -237,6 +237,12 @@ namespace SG
             TitleScreenManager.instance.DisplayNoFreeSlotsPopup(); //调用标题屏幕管理器的显示没有空余槽位弹出窗口的方法，通知玩家没有空余的槽位可以创建新游戏
             
 
+        }
+
+        public void NewGame()
+        {
+            SaveGame(); //保存当前游戏数据到保存文件中
+            StartCoroutine(LoadWorldScene()); //开始加载世界场景的协程
         }
 
         public void LoadGame()

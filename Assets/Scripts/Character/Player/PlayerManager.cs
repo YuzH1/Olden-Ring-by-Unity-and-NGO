@@ -54,15 +54,17 @@ namespace SG
                 PlayerInputManager.instance.player = this; //将玩家管理器的引用传递给输入管理器
                 WorldSaveGameManager.Instance.player = this; //将玩家管理器的引用传递给世界保存游戏管理器，方便保存和加载玩家数据
 
+                //更新数据值，当数据变化时，
+                //语法：networkVariable.OnValueChanged += YourMethod; //当网络变量的值发生变化时，调用YourMethod方法来处理这个变化
+                playerNetworkManager.vitality.OnValueChanged += playerNetworkManager.SetNewMaxHealthValue; //更新UI中的最大生命值
+                playerNetworkManager.endurance.OnValueChanged += playerNetworkManager.SetNewMaxStaminaValue; //更新UI中的最大耐力值
+
+                //更新UI中的数据条
+                playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.Instance.playerUIHudManager.SetNewHealthValue; //更新UI中的生命值
                 playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.Instance.playerUIHudManager.SetNewStaminaValue; //更新UI中的耐力值
                 playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenerationTimer; //重置耐力恢复计时器
 
-                //在SL时，这个会被移除
-                playerNetworkManager.maxHealth.Value = playerStatsManager.CalculateHealthBasedOnVitalityLevel(playerNetworkManager.vitality.Value); //在玩家生成时中的最大生命值
-                playerNetworkManager.currentHealth.Value = playerStatsManager.CalculateHealthBasedOnVitalityLevel(playerNetworkManager.vitality.Value);
-                playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value); //在玩家生成时中的最大耐力值
-                playerNetworkManager.currentStamina.Value = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
-                PlayerUIManager.Instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value); //在玩家生成时更新UI中的最大耐力值
+                
             }
         }
 
@@ -76,6 +78,13 @@ namespace SG
             currentCharacterSaveData.xPos = transform.position.x; //保存角色在世界中的X
             currentCharacterSaveData.yPos = transform.position.y; //保存角色在世界中的Y
             currentCharacterSaveData.zPos = transform.position.z; //保存角色在世界中的Z
+
+            currentCharacterSaveData.currentHealth = playerNetworkManager.currentHealth.Value; //保存当前生命值
+            currentCharacterSaveData.currentStamina = playerNetworkManager.currentStamina.Value; //保存当前耐力值
+
+            currentCharacterSaveData.vitality = playerNetworkManager.vitality.Value; //保存角色的体质等级
+            currentCharacterSaveData.endurance = playerNetworkManager.endurance.Value; //保存角色的耐力等级
+
         }
 
         public void LoadGameDataFromCurrentCharacterData(ref CharacterSaveData currentCharacterSaveData)
@@ -84,6 +93,18 @@ namespace SG
             
             Vector3 myPos = new Vector3(currentCharacterSaveData.xPos, currentCharacterSaveData.yPos, currentCharacterSaveData.zPos); //从保存数据中获取角色在世界中的坐标
             transform.position = myPos; //将角色移动到保存数据中的位置
+
+            playerNetworkManager.vitality.Value = currentCharacterSaveData.vitality; //加载角色的体质等级
+            playerNetworkManager.endurance.Value = currentCharacterSaveData.endurance; //加载角色的耐力等级
+
+            playerNetworkManager.maxHealth.Value = playerStatsManager.CalculateHealthBasedOnVitalityLevel(playerNetworkManager.vitality.Value); //在玩家生成时中的最大生命值
+            playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value); //在玩家生成时中的最大耐力值
+            playerNetworkManager.currentHealth.Value = currentCharacterSaveData.currentHealth; //加载当前生命值
+            playerNetworkManager.currentStamina.Value = currentCharacterSaveData.currentStamina; //加载当前耐力值
+            
+            // PlayerUIManager.Instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value); //在玩家生成时更新UI中的最大生命值
+            PlayerUIManager.Instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value); //在玩家生成时更新UI中的最大耐力值
+           
         }
     }
 }
