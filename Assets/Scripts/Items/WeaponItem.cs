@@ -15,7 +15,7 @@ namespace SG
         public int faithREQ = 0;//信仰需求
 
         [Header("Weapon Base Damage")]
-        public int PhysicalDamage = 0;
+        public int physicalDamage = 0;
         public int magicDamage = 0;
         public int fireDamage = 0;
         public int lightningDamage = 0;

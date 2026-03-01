@@ -5,6 +5,9 @@ using UnityEngine.TextCore.Text;
 
 public class DamageCollider : MonoBehaviour
 {
+    [Header("Collider")]
+    protected Collider damageCollider; //伤害碰撞器组件
+
     [Header("Damage")]
     public float physicalDamage = 0;//未来会拓展为普通物理伤害、重击伤害、切割伤害、穿刺伤害等不同类型的物理伤害
     public float magicDamage = 0;//魔法伤害
@@ -56,4 +59,17 @@ public class DamageCollider : MonoBehaviour
 
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect); //将伤害效果应用到目标角色身上
     }
+
+    public virtual void EnableDamageCollider()
+    {
+        damageCollider.enabled = true;
+    }
+
+    public virtual void DisableDamageCollider()
+    {
+        damageCollider.enabled = false;
+        charactersDamaged.Clear(); //禁用伤害碰撞器时清空已经造成过伤害的角色列表，以便下一次启用时可以重新造成伤害
+    }
+
+
 }

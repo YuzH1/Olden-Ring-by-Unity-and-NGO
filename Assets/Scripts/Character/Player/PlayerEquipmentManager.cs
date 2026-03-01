@@ -9,6 +9,9 @@ namespace SG
         public WeaponModelInstantiationSlot rightHandSlot;
         public WeaponModelInstantiationSlot leftHandSlot;
 
+        [SerializeField] WeaponManager rightHandWeaponManager;
+        [SerializeField] WeaponManager leftHandWeaponManager;
+
         public GameObject rightHandWeaponModel;
         public GameObject leftHandWeaponModel;
 
@@ -29,7 +32,7 @@ namespace SG
             LoadWeaponsOnBothHands();
         }
 
-        private void InitializeWeaponSlots()
+        private void InitializeWeaponSlots()//在Awake里获取槽位信息，避免在Start里获取槽位信息时槽位还没有被初始化
         {
             WeaponModelInstantiationSlot[] weaponSlots = GetComponentsInChildren<WeaponModelInstantiationSlot>();
 
@@ -58,6 +61,10 @@ namespace SG
             {
                 rightHandWeaponModel = Instantiate(player.playerInventoryManager.currentRightHandWeapon.weaponModel);
                 rightHandSlot.LoadWeapon(rightHandWeaponModel);
+                rightHandWeaponManager = rightHandWeaponModel.GetComponent<WeaponManager>();//获取武器管理器组件
+                //将武器的伤害属性传递给武器管理器组件，以便武器管理器组件可以将伤害属性传递给伤害碰撞器组件，最终实现武器造成伤害的功能
+                rightHandWeaponManager.SetWeaponDamage(player.playerInventoryManager.currentRightHandWeapon);
+                //
             }
         }
 
@@ -67,8 +74,14 @@ namespace SG
             {
                 leftHandWeaponModel = Instantiate(player.playerInventoryManager.currentLeftHandWeapon.weaponModel);
                 leftHandSlot.LoadWeapon(leftHandWeaponModel);
+                leftHandWeaponManager = leftHandWeaponModel.GetComponent<WeaponManager>();//获取武器管理器组件
+                //将武器的伤害属性传递给武器管理器组件，以便武器管理器组件可以将伤害属性传递给伤害碰撞器组件，最终实现武器造成伤害的功能
+                leftHandWeaponManager.SetWeaponDamage(player.playerInventoryManager.currentLeftHandWeapon);
             }
         }
+    
+
+    
     }
 }
 

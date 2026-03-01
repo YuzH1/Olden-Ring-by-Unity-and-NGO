@@ -18,11 +18,14 @@ namespace SG
         {
             //启用后期处理效果
 
+            StopAllCoroutines();
+
             youDiedPopUpGameObject.SetActive(true); //显示你死了弹窗
+            youDiedPopUpCanvasGroup.alpha = 0;
             youDiedPopUpBackgroundText.characterSpacing = 0; //重置背景文本的字符间距，确保它在弹窗显示时正确对齐
             //文本拉长，淡入
-            StartCoroutine(StretchPopUpOverTime(youDiedPopUpBackgroundText, 8, 20)); //将背景文本的字符间距在1秒内从0平滑过渡到20，达到文本拉长的效果
-            StartCoroutine(FadeInPopUpOverTime(youDiedPopUpCanvasGroup, 5)); //将弹窗的alpha值在1秒内从0平滑过渡到1，达到淡入的效果
+            StartCoroutine(StretchPopUpOverTime(youDiedPopUpBackgroundText, 12, 15)); //将背景文本的字符间距在1秒内从0平滑过渡到20，达到文本拉长的效果
+            StartCoroutine(FadeInPopUpOverTime(youDiedPopUpCanvasGroup, 3)); //将弹窗的alpha值在1秒内从0平滑过渡到1，达到淡入的效果
 
             //一段时间后淡出
             //将弹窗的alpha值在1秒内从1平滑过渡到0，达到淡出的效果，延迟3秒后开始淡出
@@ -35,16 +38,20 @@ namespace SG
             {
                 text.characterSpacing = 0; //重置文本的字符间距，确保它在弹窗显示时正确对齐
                 float timer = 0;
+                float startSpacing = text.characterSpacing;
 
                 yield return null;
 
                 while(timer < duration)
                 {
                     timer = timer + Time.deltaTime;
+                    float t = Mathf.Clamp01(timer / duration);
                     //使用线性插值函数来平滑字符间距的变化，达到文本拉长的效果，duration越大，拉长的速度越慢
-                    text.characterSpacing = Mathf.Lerp(text.characterSpacing, strechAmount, duration * (Time.deltaTime / 20));
+                    text.characterSpacing = Mathf.Lerp(startSpacing, strechAmount, t);
                     yield return null; //等待一帧，继续下一次循环
                 }
+
+                text.characterSpacing = strechAmount;
             }
         }
 
@@ -54,14 +61,16 @@ namespace SG
             {
                 canvasGroup.alpha = 0; //重置CanvasGroup的alpha值，确保它在弹窗显示时正确对齐
                 float timer = 0;
+                float startAlpha = canvasGroup.alpha;
 
                 yield return null;
 
                 while(timer < duration)
                 {
                     timer = timer + Time.deltaTime;
+                    float t = Mathf.Clamp01(timer / duration);
                     //使用线性插值函数来平滑alpha值的变化，达到淡入的效果，duration越大，淡入的速度越慢
-                    canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1, duration * Time.deltaTime);
+                    canvasGroup.alpha = Mathf.Lerp(startAlpha, 1, t);
                     yield return null; //等待一帧，继续下一次循环
                 }
             }
@@ -81,16 +90,17 @@ namespace SG
                     yield return null; //等待一帧，直到延迟时间结束
                 }
 
-                canvasGroup.alpha = 1; //重置CanvasGroup的alpha值，确保它在弹窗显示时正确对齐
                 float timer = 0;
+                float startAlpha = canvasGroup.alpha;
 
                 yield return null;
 
                 while(timer < duration)
                 {
                     timer = timer + Time.deltaTime;
+                    float t = Mathf.Clamp01(timer / duration);
                     //使用线性插值函数来平滑alpha值的变化，达到淡出的效果，duration越大，淡出的速度越慢
-                    canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 0, duration * Time.deltaTime);
+                    canvasGroup.alpha = Mathf.Lerp(startAlpha, 0, t);
                     yield return null; //等待一帧，继续下一次循环
                 }
 

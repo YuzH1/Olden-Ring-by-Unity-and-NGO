@@ -16,7 +16,7 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: f617b3c31b497a041ba3d4bd5187ed14, type: 3}
   itemDescription: "\u4E00\u628A\u7528\u4E8E\u6D4B\u8BD5\u7684\u76F4\u5251"
   itemID: 0
-  weaponModel: {fileID: 7676615874565401376, guid: d7e67ff5daed3494fbe6d1904e928589, type: 3}
+  weaponModel: {fileID: 1348259950162714, guid: 8afdd7955c67e7b4c81d9e9ca88092fa, type: 3}
   strengthREQ: 10
   dexhREQ: 10
   intREQ: 0
