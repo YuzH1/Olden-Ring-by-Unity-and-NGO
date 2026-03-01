@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9c1b77427df5ae47b8820efd2b52d9e, type: 3}
-  m_Name: Straight Sword (Test)
+  m_Name: Unarmed
   m_EditorClassIdentifier: 
-  itemName: "\u76F4\u5251\uFF08\u6D4B\u8BD5\uFF09"
-  itemIcon: {fileID: 21300000, guid: 768f512996982f748ae9d611a958cfd4, type: 3}
-  itemDescription: "\u4E00\u628A\u7528\u4E8E\u6D4B\u8BD5\u7684\u76F4\u5251"
-  itemID: 1
-  weaponModel: {fileID: 1631607032641582, guid: 0c14f3ea30af4174ba288b3c2042f665, type: 3}
-  strengthREQ: 10
-  dexhREQ: 10
+  itemName: 
+  itemIcon: {fileID: 0}
+  itemDescription: 
+  itemID: 0
+  weaponModel: {fileID: 7513431096480487682, guid: e37676930dca2f346aff2625ce9d472b, type: 3}
+  strengthREQ: 0
+  dexhREQ: 0
   intREQ: 0
   faithREQ: 0
-  physicalDamage: 100
+  physicalDamage: 10
   magicDamage: 0
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
-  poiseDamage: 25
-  baseStaminaCost: 20
+  poiseDamage: 10
+  baseStaminaCost: 5

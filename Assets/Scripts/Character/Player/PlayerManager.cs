@@ -9,11 +9,14 @@ namespace SG
     {
         [Header("DEBUG MENU")]
         [SerializeField] bool respawnCharacter = false; //是否在角色死亡后自动重生
+        [SerializeField] bool switchRightWeapon = false; //是否切换右手武器
+
         [HideInInspector]public PlayerAnimatorManager playerAnimatorManager;
         [HideInInspector]public PlayerLocomotionManager playerLocomotionManager;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
         [HideInInspector] public PlayerStatsManager playerStatsManager;
         [HideInInspector] public PlayerInventoryManager playerInventoryManager;
+        [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
         protected override void Awake()
         {
             base.Awake();
@@ -23,6 +26,7 @@ namespace SG
             playerNetworkManager = GetComponent<PlayerNetworkManager>();
             playerStatsManager = GetComponent<PlayerStatsManager>();
             playerInventoryManager = GetComponent<PlayerInventoryManager>();
+            playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         }
 
         protected override void Update()
@@ -74,8 +78,14 @@ namespace SG
 
                 
             }
-
+            
+            //数据
             playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP; //检查生命值是否为0，触发死亡事件
+
+            //装备
+            playerNetworkManager.currentRightHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentRightHandWeaponChanged; //当当前右手武器ID变化时，更新右手武器数据和模型
+            playerNetworkManager.currentLeftHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentLeftHandWeaponChanged; //当当前左手武器ID变化时，更新左手武器数据和模型    
+        
         }
 
         public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
@@ -161,6 +171,12 @@ namespace SG
                 respawnCharacter = false; //重置flag，确保只在一次按键事件中触发重生
                 ReviveCharacter(); //调用重生函数，重生角色
             }
+            if(switchRightWeapon)
+            {
+                switchRightWeapon = false; //重置flag，确保只在一次按键事件中触发切换武器
+                playerEquipmentManager.SwitchRightWeapon(); //调用切换右手武器函数，切换武器
+            }
         }
+
     }
 }

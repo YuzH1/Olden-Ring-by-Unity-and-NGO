@@ -22,7 +22,12 @@ public class DamageCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        CharacterManager damageTarget = other.GetComponent<CharacterManager>();
+        CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
+
+        if(damageTarget == null)
+        {
+            damageTarget = other.GetComponent<CharacterManager>();
+        }
 
         if(damageTarget != null)
         {

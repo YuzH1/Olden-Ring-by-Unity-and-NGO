@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9c1b77427df5ae47b8820efd2b52d9e, type: 3}
-  m_Name: Straight Sword (Test)
+  m_Name: Broad Sword
   m_EditorClassIdentifier: 
-  itemName: "\u76F4\u5251\uFF08\u6D4B\u8BD5\uFF09"
-  itemIcon: {fileID: 21300000, guid: 768f512996982f748ae9d611a958cfd4, type: 3}
-  itemDescription: "\u4E00\u628A\u7528\u4E8E\u6D4B\u8BD5\u7684\u76F4\u5251"
-  itemID: 1
-  weaponModel: {fileID: 1631607032641582, guid: 0c14f3ea30af4174ba288b3c2042f665, type: 3}
-  strengthREQ: 10
-  dexhREQ: 10
+  itemName: "\u957F\u5251"
+  itemIcon: {fileID: 21300000, guid: b58c10e5379e5d5419cbc848eeb48ac8, type: 3}
+  itemDescription: "\u4E00\u628A\u957F\u5251"
+  itemID: 2
+  weaponModel: {fileID: 3213851043470871558, guid: a89e2e03d222449439e730de64b4862b, type: 3}
+  strengthREQ: 15
+  dexhREQ: 12
   intREQ: 0
   faithREQ: 0
-  physicalDamage: 100
+  physicalDamage: 125
   magicDamage: 0
   fireDamage: 0
   lightningDamage: 0
   holyDamage: 0
-  poiseDamage: 25
-  baseStaminaCost: 20
+  poiseDamage: 15
+  baseStaminaCost: 25
