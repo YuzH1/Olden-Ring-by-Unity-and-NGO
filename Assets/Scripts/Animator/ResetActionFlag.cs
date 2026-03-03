@@ -24,7 +24,11 @@ namespace SG
             //character.animator.applyRootMotion = false;
             character.applyRootMotion = false;//禁用根运动，让代码控制角色移动，确保角色位置正常
 
-            character.isJumping = false;//重置跳跃状态，允许角色再次跳跃
+            if(character.IsOwner)
+            {
+                character.characterNetworkManager.isSprinting.Value = false;//重置冲刺状态，允许角色再次冲刺
+            }
+            
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

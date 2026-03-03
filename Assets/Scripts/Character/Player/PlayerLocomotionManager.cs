@@ -115,7 +115,7 @@ namespace SG
     
         private void HandleJumpMovement()
         {
-            if(player.isJumping)
+            if(player.playerNetworkManager.isJumping.Value)
             {
                 player.characterController.Move(jumpDirection * jumpForwardVelocity * Time.deltaTime);
             }
@@ -233,14 +233,14 @@ namespace SG
             if(player.playerNetworkManager.currentStamina.Value <= 0)
                 return;//如果体力值不足，不能闪避
             
-            if(player.isJumping)
+            if(player.playerNetworkManager.isJumping.Value)
                 return;//如果已经在跳跃，不能再次跳跃
             if(!player.isGrounded)
                 return;
 
             //播放一个跳跃动画
             player.playerAnimatorManager.PlayTargetActionAnimation("Main_jump_01", false, true, true);
-            player.isJumping = true;//设置跳跃状态为true，表示正在跳跃
+            player.playerNetworkManager.isJumping.Value = true;//设置跳跃状态为true，表示正在跳跃
 
             //消耗体力
             player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;

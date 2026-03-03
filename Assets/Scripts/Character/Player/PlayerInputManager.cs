@@ -49,6 +49,10 @@ namespace SG
 
             SceneManager.activeSceneChanged += OnSceneChange;//订阅场景切换事件, 当场景切换时调用OnSceneChange方法
             instance.enabled = false;//初始时禁用输入管理器
+            if(playerControls != null)
+            {
+                playerControls.Disable();//初始时禁用输入系统，防止在菜单场景中角色移动
+            }
         }
 
         private void OnSceneChange(Scene oldScene, Scene newScene)//场景切换时调用, oldScene是旧场景，newScene是新场景
@@ -56,12 +60,22 @@ namespace SG
             if(newScene.buildIndex == WorldSaveGameManager.Instance.GetWorldSceneIndex())//如果新场景是世界场景
             {
                 instance.enabled = true;//启用输入管理器
+
+                if(playerControls != null)
+                {
+                    playerControls.Enable();//启用输入系统，允许在世界场景中角色移动
+                }
             }
             //如果当前场景为非世界场景，禁用输入管理器
             //这样可以防止在菜单场景中角色移动
             else
             {
                 instance.enabled = false;//禁用输入管理器
+
+                if(playerControls != null)
+                {
+                    playerControls.Disable();//禁用输入系统，防止在菜单场景中角色移动
+                }
             }
         }
 

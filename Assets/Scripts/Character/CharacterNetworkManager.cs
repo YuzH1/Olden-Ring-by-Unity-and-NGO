@@ -22,11 +22,14 @@ namespace SG
 
         [Header("Flags")]
         public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    
 
         [Header("Stats")]
         public NetworkVariable<int> endurance = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<int> vitality = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         
+
         [Header("Resource Values")]
         public NetworkVariable<int> maxStamina = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<float> currentStamina = new NetworkVariable<float>(100f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -78,7 +81,8 @@ namespace SG
     
         public void CheckHP(int oldValue, int newValue)
         {
-            if(currentHealth.Value <= 0)
+            // 使用 newValue 参数而非 currentHealth.Value，避免潜在的同步问题
+            if(newValue <= 0)
             {
                 StartCoroutine(character.ProcessDeathEvent());
             }

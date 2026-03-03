@@ -47,7 +47,7 @@ namespace SG
             }
             else
             {
-                if(!character.isJumping && fallingVelocityAsBeenSet == false)
+                if(!character.characterNetworkManager.isJumping.Value && fallingVelocityAsBeenSet == false)
                 {
                     fallingVelocityAsBeenSet = true;//设置标志，表示已经设置了下落速度
                     yVelocity.y = fallStartYVelocity;//当角色开始下落时，设置一个向下的速度，确保角色能够正常下落

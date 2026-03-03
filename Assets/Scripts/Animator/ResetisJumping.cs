@@ -13,7 +13,11 @@ namespace SG
                 character = animator.GetComponent<CharacterManager>();
             }
 
-            character.isJumping = false;//重置跳跃状态，允许角色再次跳跃
+            if(character.IsOwner)
+            {
+                character.characterNetworkManager.isJumping.Value = false;//重置跳跃状态，允许角色再次跳跃
+            }
+            
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
