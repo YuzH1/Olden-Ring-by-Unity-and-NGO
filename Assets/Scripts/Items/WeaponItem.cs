@@ -37,6 +37,9 @@ namespace SG
 
 
         //物品基础动作（轻攻击，重攻击，防御，战技）
+        [Header("Actions")]
+        public WeaponItemAction OH_RB_Action;//单手rb攻击动作
+
         //战灰
 
         //防御音效

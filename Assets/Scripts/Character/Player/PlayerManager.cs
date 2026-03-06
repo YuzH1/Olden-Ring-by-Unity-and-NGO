@@ -17,6 +17,8 @@ namespace SG
         [HideInInspector] public PlayerStatsManager playerStatsManager;
         [HideInInspector] public PlayerInventoryManager playerInventoryManager;
         [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
+        [HideInInspector] public PlayerCombatManager playerCombatManager;
+
         protected override void Awake()
         {
             base.Awake();
@@ -27,6 +29,7 @@ namespace SG
             playerStatsManager = GetComponent<PlayerStatsManager>();
             playerInventoryManager = GetComponent<PlayerInventoryManager>();
             playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
+            playerCombatManager = GetComponent<PlayerCombatManager>();
         }
 
         protected override void Update()
@@ -85,7 +88,8 @@ namespace SG
             //装备
             playerNetworkManager.currentRightHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentRightHandWeaponChanged; //当当前右手武器ID变化时，更新右手武器数据和模型
             playerNetworkManager.currentLeftHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentLeftHandWeaponChanged; //当当前左手武器ID变化时，更新左手武器数据和模型    
-        
+            playerNetworkManager.currentWeaponBeingUsedID.OnValueChanged += playerNetworkManager.OnCurrentWeaponBeingUsedChanged; //当当前正在使用的武器ID变化时，更新当前正在使用的武器数据
+
             //在连接之后，如果是客户端但不是服务器，从保存数据中加载角色数据，确保角色数据在连接后正确加载
             if(IsOwner && !IsServer)
             {

@@ -202,6 +202,17 @@ namespace SG
                 return;//如果正在执行动作，不能闪避
             if(player.playerNetworkManager.currentStamina.Value <= 0)
                 return;//如果体力值不足，不能闪避
+            
+            //修复一个bug：如果在跳跃状态下翻滚，isJumping会一直为true，导致角色持续朝跳跃方向滑动，并且无法再次跳跃。解决方法是在尝试闪避时重置跳跃状态。
+            //如果在跳跃状态下翻滚，需要重置跳跃状态，否则isJumping会一直为true，导致：
+            //1. 角色持续朝跳跃方向滑动（HandleJumpMovement会一直执行）
+            //2. 无法再次跳跃（AttemptToPerformJump会检查isJumping并直接返回）
+            if(player.playerNetworkManager.isJumping.Value)
+            {
+                player.playerNetworkManager.isJumping.Value = false;
+            }
+            
+
             if(moveAmount > 0)
             {
                 rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;//根据摄像机的前方向乘以垂直输入来确定前后方向

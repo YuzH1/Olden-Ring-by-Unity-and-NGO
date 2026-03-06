@@ -28,6 +28,7 @@ namespace SG
         [SerializeField] bool dodgeInput = false;//存储闪避输入状态
         [SerializeField] bool sprintInput = false;//存储冲刺输入状态
         [SerializeField] bool jumpInput = false;//存储跳跃输入状态
+        [SerializeField] bool lightAttackInput = false;//存储右手攻击输入状态
 
         private void Awake()
         {
@@ -89,6 +90,7 @@ namespace SG
                 playerControls.PlayerCamera.Movement.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += ctx => dodgeInput = true;
                 playerControls.PlayerActions.Jump.performed += ctx => jumpInput = true;
+                playerControls.PlayerActions.LightAttack.performed += ctx => lightAttackInput = true;
 
                 playerControls.PlayerActions.Sprint.performed += ctx => sprintInput = true;
                 playerControls.PlayerActions.Sprint.canceled += ctx => sprintInput = false;
@@ -135,6 +137,7 @@ namespace SG
             HandleDodgeInput();
             HandleSprintingInput();
             HandleJumpInput();
+            HandleLightAttackInput();
         }   
 
         //移动
@@ -216,5 +219,23 @@ namespace SG
                 player.playerLocomotionManager.AttemptToPerformJump();
             }
         }
+    
+        private void HandleLightAttackInput()
+        {
+            if(lightAttackInput)
+            {
+                lightAttackInput = false; //重置攻击输入状态，防止持续触发攻击动作
+
+                //TODO:如果在menu或者ui界面，不触发攻击动作（return）
+
+                //如果在游戏中，尝试触发攻击动作（调用玩家的攻击方法）
+                player.playerNetworkManager.SetCharacterActionHand(true); //设置当前使用右手动作，更新网络变量，通知所有客户端当前使用右手动作
+
+                //TODO:如果双手握持武器，该怎样做
+
+                player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.OH_RB_Action, player.playerInventoryManager.currentRightHandWeapon); //调用玩家战斗管理器的函数，传入右手武器的攻击动作和右手武器数据，执行攻击动作
+            }
+        }
+
     }
 }

@@ -11,14 +11,32 @@ namespace SG
         public NetworkVariable<FixedString64Bytes> characterName = new NetworkVariable<FixedString64Bytes>("Player", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); //角色名字，默认值为"Player"，所有客户端可读，只有拥有者可写
 
         [Header("Equipment")]
+        public NetworkVariable<int> currentWeaponBeingUsedID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); //当前正在使用的武器ID，默认值为0表示没有武器，所有客户端可读，只有拥有者可写
         public NetworkVariable<int> currentRightHandWeaponID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); //当前右手武器的ID，默认值为0表示没有武器，所有客户端可读，只有拥有者可写
         public NetworkVariable<int> currentLeftHandWeaponID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); //当前左手武器的ID，默认值为0表示没有武器，所有客户端可读，只有拥有者可写
+        public NetworkVariable<bool> isUsingRightHand = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); //当前是否使用右手武器，默认值为true，所有客户端可读，只有拥有者可写
+        public NetworkVariable<bool> isUsingLeftHand = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner); //当前是否使用左手武器，默认值为true，所有客户端可读，只有拥有者可写
+
 
         protected override void Awake()
         {
             base.Awake();
 
             player = GetComponent<PlayerManager>();
+        }
+
+        public void SetCharacterActionHand(bool rightHandAction)
+        {
+            if(rightHandAction)
+            {
+                isUsingLeftHand.Value = false; //如果选择使用右手动作，确保左手动作状态为false
+                isUsingRightHand.Value = true; //设置右手动作状态为true
+            }
+            else
+            {
+                isUsingRightHand.Value = false; //如果选择使用左手动作，确保右手动作状态为false
+                isUsingLeftHand.Value = true; //设置左手动作状态为true
+            }
         }
 
         public void SetNewMaxHealthValue(int oldVitality, int newVitality)
@@ -42,11 +60,18 @@ namespace SG
             player.playerInventoryManager.currentRightHandWeapon = newWeapon; //更新玩家的当前右手武器数据
             player.playerEquipmentManager.LoadRightWeapon(); //加载新的右手武器模型和属性
         }
+        
         public void OnCurrentLeftHandWeaponChanged(int oldWeaponID, int newWeaponID)
         {
             WeaponItem newWeapon =  Instantiate(WorldItemDatabase.instance.GetWeaponByID(newWeaponID)); //根据新的武器ID从物品数据库中获取对应的武器数据
             player.playerInventoryManager.currentLeftHandWeapon = newWeapon; //更新玩家的当前左手武器数据
             player.playerEquipmentManager.LoadLeftWeapon(); //加载新的左手武器模型和属性
+        }
+
+        public void OnCurrentWeaponBeingUsedChanged(int oldWeaponID, int newWeaponID)
+        {
+            WeaponItem newWeapon = Instantiate(WorldItemDatabase.instance.GetWeaponByID(newWeaponID)); //根据新的武器ID从物品数据库中获取对应的武器数据
+            player.playerCombatManager.currentWeaponBeingUsed = newWeapon; //更新玩家当前正在使用的武器数据
         }
     }
 }

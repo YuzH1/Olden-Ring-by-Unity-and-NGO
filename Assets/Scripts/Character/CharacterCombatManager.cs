@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class CharacterCombatManager : MonoBehaviour
+namespace SG
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class CharacterCombatManager : MonoBehaviour
     {
-        
+        protected virtual void Awake() {
+            
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
