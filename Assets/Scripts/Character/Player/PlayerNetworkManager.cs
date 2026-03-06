@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using Unity.Collections;
+using UnityEditor.PackageManager;
 
 namespace SG
 {
@@ -73,5 +74,43 @@ namespace SG
             WeaponItem newWeapon = Instantiate(WorldItemDatabase.instance.GetWeaponByID(newWeaponID)); //根据新的武器ID从物品数据库中获取对应的武器数据
             player.playerCombatManager.currentWeaponBeingUsed = newWeapon; //更新玩家当前正在使用的武器数据
         }
+    
+        #region ITEM ACTIONS
+            
+        [ServerRpc]
+        public void NotifyServerWeaponActionServerRPC(ulong clientID, int actionID, int weaponID)
+        {
+            if(IsServer)
+            {
+                NotifyServerWeaponClientRPC(clientID, actionID, weaponID); //通知所有客户端执行武器动作
+            }
+        }
+
+        [ClientRpc]
+        private void NotifyServerWeaponClientRPC(ulong clientID, int actionID, int weaponID)
+        {
+            if(clientID != NetworkManager.Singleton.LocalClientId)
+            {
+                PerformWeaponBasedAction(actionID, weaponID); //在其他客户端上执行武器动作
+            }
+        }
+
+        private void PerformWeaponBasedAction(int actionID, int weaponID)
+        {
+            WeaponItemAction weaponAction = WorldActionManager.instance.GetWeaponItemActionByID(actionID); //从世界动作管理器中获取对应ID的武器动作数据
+
+            if(weaponAction != null)
+            {
+                weaponAction.AttemptToPerformAction(player, WorldItemDatabase.instance.GetWeaponByID(weaponID)); //如果找到了对应的武器动作数据，尝试执行这个动作，传入玩家对象和武器数据
+            }
+            else
+            {
+                Debug.LogWarning("没找到对应的武器动作数据" + weaponID); //如果没有找到对应的武器动作数据，输出警告日志
+            }
+        }
+
+
+        #endregion
+    
     }
 }

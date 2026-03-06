@@ -6,6 +6,7 @@ namespace SG
     {
         CharacterManager character;
         [Header("Ground Check & Jumping")]
+        
         [SerializeField] protected float gravityForce = -5.5f;//重力加速度，决定了角色下落的速度和跳跃的高度
         [SerializeField] LayerMask groundLayer;//地面层，用于地面检测，确保角色只能与地面发生碰撞，而不会与其他物体发生碰撞
         [SerializeField] protected float groundCheckRadius = 1;//地面检测的半径，决定了角色与地面接触的范围

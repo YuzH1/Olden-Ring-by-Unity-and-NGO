@@ -1,5 +1,6 @@
 using System.Xml.Serialization;
 using UnityEngine;
+using Unity.Netcode;
 
 namespace SG
 {
@@ -16,10 +17,14 @@ namespace SG
         }
        public void PerformWeaponBasedAction(WeaponItemAction weaponAction, WeaponItem weaponPerformingAction)
        {
-            //执行武器动作，传入动作和正在执行动作的武器数据
-            weaponAction.AttemptToPerformAction(player, weaponPerformingAction); //调用武器动作的执行函数，传入玩家和正在执行动作的武器数据
+            if(player.IsOwner)
+            {
+                //执行武器动作，传入动作和正在执行动作的武器数据
+                weaponAction.AttemptToPerformAction(player, weaponPerformingAction); //调用武器动作的执行函数，传入玩家和正在执行动作的武器数据
 
-            //通知服务器执行了武器动作，服务器可以根据需要进行验证和处理，例如广播给其他客户端、应用伤害等
+                //通知服务器执行了武器动作，服务器可以根据需要进行验证和处理，例如广播给其他客户端、应用伤害等
+                player.playerNetworkManager.NotifyServerWeaponActionServerRPC(NetworkManager.Singleton.LocalClientId, weaponAction.actionID, weaponPerformingAction.itemID); //调用玩家网络管理器的服务器RPC函数，传入本地客户端ID、武器动作ID和正在执行动作的武器ID
+            }
        }
     }
 }

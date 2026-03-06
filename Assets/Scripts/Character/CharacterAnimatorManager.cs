@@ -63,5 +63,31 @@ namespace SG
                 applyRootMotion);
         }
 
+        public virtual void PlayTargetAttackActionAnimation(
+            string targetAnimation, //要播放的目标动画的名称
+            bool isPerformingAction, //这个参数可以用来控制角色在执行动作时不能移动或攻击等，确保动作的完整性和连贯性
+            bool applyRootMotion = true, //是否启用根运动，默认为true，表示动画控制角色移动；如果为false，则允许代码控制角色移动
+            bool canRotate = false, //这个参数可以用来控制角色在执行动作时是否可以旋转，默认为false，表示在执行动作时不允许旋转；如果为true，则允许旋转
+            bool canMove = false) //这个参数可以用来控制角色在执行动作时是否可以移动，默认为false，表示在执行动作时不允许移动；如果为true，则允许移动
+        {
+            //连击：追踪最后一个攻击是否播放
+            //追踪当前的攻击类型（轻攻击、重攻击等）
+            //根据武器类型更新当前武器动画
+            //决定，如果我们的攻击能被格挡
+            //告诉网络“Attacking”标志被激活（为了反击和格挡等）
+
+            character.applyRootMotion = applyRootMotion;//如果正在执行动作，启用根运动，让动画控制角色移动；否则禁用根运动，允许代码控制角色移动
+            character.animator.CrossFade(targetAnimation, 0.2f);//平滑过渡到目标动画，0.2f是过渡时间，可以根据需要调整
+            character.isPerformingAction = isPerformingAction;//更新角色的动作状态标志
+            character.canRotate = canRotate;//更新角色的旋转能力标志
+            character.canMove = canMove;//更新角色的移动能力标志
+
+            //告诉server或host我们播放了动画，这样其他客户端就可以同步动画状态
+            character.characterNetworkManager.NotifyServerAttackActionAnimationServerRpc(
+                NetworkManager.Singleton.LocalClientId, 
+                targetAnimation, 
+                applyRootMotion);
+        }
+
     }
 }

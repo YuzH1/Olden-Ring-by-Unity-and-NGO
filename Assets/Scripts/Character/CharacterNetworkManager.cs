@@ -42,6 +42,23 @@ namespace SG
             character = GetComponent<CharacterManager>();
         }
 
+        public void CheckHP(int oldValue, int newValue)
+        {
+            // 使用 newValue 参数而非 currentHealth.Value，避免潜在的同步问题
+            if(newValue <= 0)
+            {
+                StartCoroutine(character.ProcessDeathEvent());
+            }
+
+            if(character.IsOwner)
+            {
+                if(currentHealth.Value > maxHealth.Value)
+                {
+                    currentHealth.Value = maxHealth.Value; //确保当前生命值不会超过最大生命值
+                }
+            }
+        }
+
         //ServerRpc是指这个方法只能由客户端调用，并且会在服务器上执行，
         // 这样可以确保只有拥有该对象的客户端才能更新网络变量，其他客户端只能读取网络变量，
         // 从而实现了基本的权限控制，防止了其他客户端恶意修改网络变量导致游戏状态不一致的问题
@@ -79,22 +96,37 @@ namespace SG
 
         }
     
-        public void CheckHP(int oldValue, int newValue)
+        [ServerRpc]
+        public void NotifyServerAttackActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion)
         {
-            // 使用 newValue 参数而非 currentHealth.Value，避免潜在的同步问题
-            if(newValue <= 0)
+            //如果这个角色是服务器或主机，那么就处理动画通知，可以根据clientID来确定是哪个客户端发送的通知
+            if(IsServer)
             {
-                StartCoroutine(character.ProcessDeathEvent());
-            }
-
-            if(character.IsOwner)
-            {
-                if(currentHealth.Value > maxHealth.Value)
-                {
-                    currentHealth.Value = maxHealth.Value; //确保当前生命值不会超过最大生命值
-                }
+                //在服务器上处理动画通知，可以根据clientID来确定是哪个客户端发送的通知
+                //然后可以在服务器上执行一些逻辑，比如验证动画ID是否合法，或者广播给其他客户端等
+                PlayAttackActionAnimationForClientRpc(clientID, animationID, applyRootMotion);
             }
         }
+
+        [ClientRpc]
+        public void PlayAttackActionAnimationForClientRpc(ulong clientID,string animationID,bool applyRootMotion)
+        {
+            //确认不是本地客户端再执行动画播放逻辑
+            if(clientID != NetworkManager.Singleton.LocalClientId)
+            {
+                PerformAttackActionAnimationFromServer(animationID, applyRootMotion);
+            }
+        }
+
+        private void PerformAttackActionAnimationFromServer(string animationID, bool applyRootMotion)
+        {
+            //在本地客户端执行动画播放逻辑，可以根据animationID来确定要播放哪个动画
+            //然后调用角色的动画管理器来播放动画，并根据applyRootMotion参数来控制是否启用根运动
+            character.applyRootMotion = applyRootMotion;
+            character.animator.CrossFade(animationID, 0.2f);
+
+        }
+    
 
     }    
     
