@@ -63,7 +63,7 @@ namespace SG
                 applyRootMotion);
         }
 
-        public virtual void PlayTargetAttackActionAnimation(
+        public virtual void PlayTargetAttackActionAnimation(AttackType attackType,
             string targetAnimation, //要播放的目标动画的名称
             bool isPerformingAction, //这个参数可以用来控制角色在执行动作时不能移动或攻击等，确保动作的完整性和连贯性
             bool applyRootMotion = true, //是否启用根运动，默认为true，表示动画控制角色移动；如果为false，则允许代码控制角色移动
@@ -75,7 +75,7 @@ namespace SG
             //根据武器类型更新当前武器动画
             //决定，如果我们的攻击能被格挡
             //告诉网络“Attacking”标志被激活（为了反击和格挡等）
-
+            character.characterCombatManager.currentAttackType = attackType;//更新当前攻击类型，这样其他系统就可以根据这个信息来决定伤害、格挡等逻辑
             character.applyRootMotion = applyRootMotion;//如果正在执行动作，启用根运动，让动画控制角色移动；否则禁用根运动，允许代码控制角色移动
             character.animator.CrossFade(targetAnimation, 0.2f);//平滑过渡到目标动画，0.2f是过渡时间，可以根据需要调整
             character.isPerformingAction = isPerformingAction;//更新角色的动作状态标志

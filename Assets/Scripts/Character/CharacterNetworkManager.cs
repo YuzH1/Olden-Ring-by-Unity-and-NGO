@@ -96,6 +96,9 @@ namespace SG
 
         }
     
+
+        #region ATTACK ANIMATION
+            
         [ServerRpc]
         public void NotifyServerAttackActionAnimationServerRpc(ulong clientID, string animationID, bool applyRootMotion)
         {
@@ -127,7 +130,85 @@ namespace SG
 
         }
     
+        #endregion
 
+        #region DAMAGE
+            
+        // [ServerRpc(RequireOwnership = false)]//过时了
+        [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+        public void NotifyServerCharacterDamageServerRpc(
+            ulong damagedCharacterID,
+            ulong characterCausingDamageID,
+            float physicalDamage,
+            float magicDamage,
+            float fireDamage,
+            float lightningDamage,
+            float holyDamage,
+            float poiseDamage,
+            float angleHitFrom,
+            float contactPointX,
+            float contactPointY,
+            float contactPointZ)
+        {
+            if(IsServer)
+            {
+                NotifyServerCharacterDamageClientRpc(damagedCharacterID, characterCausingDamageID, physicalDamage, magicDamage, fireDamage, lightningDamage, holyDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
+            }
+        }
+
+        [ClientRpc]
+        public void NotifyServerCharacterDamageClientRpc(
+            ulong damagedCharacterID,
+            ulong characterCausingDamageID,
+            float physicalDamage,
+            float magicDamage,
+            float fireDamage,
+            float lightningDamage,
+            float holyDamage,
+            float poiseDamage,
+            float angleHitFrom,
+            float contactPointX,
+            float contactPointY,
+            float contactPointZ)      
+        {
+            ProcessCharacterDamageFromServer(damagedCharacterID, characterCausingDamageID, physicalDamage, magicDamage, fireDamage, lightningDamage, holyDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
+        }
+
+        public void ProcessCharacterDamageFromServer(
+            ulong damagedCharacterID,
+            ulong characterCausingDamageID,
+            float physicalDamage,
+            float magicDamage,
+            float fireDamage,
+            float lightningDamage,
+            float holyDamage,
+            float poiseDamage,
+            float angleHitFrom,
+            float contactPointX,
+            float contactPointY,
+            float contactPointZ)      
+        {
+            CharacterManager damagedCharacter = NetworkManager.Singleton.SpawnManager.SpawnedObjects[damagedCharacterID].GetComponent<CharacterManager>();
+            CharacterManager characterCausingDamage = NetworkManager.Singleton.SpawnManager.SpawnedObjects[characterCausingDamageID].GetComponent<CharacterManager>();
+
+            TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.Instance.takeDamageEffect); //创建一个伤害效果实例
+            
+            damageEffect.physicalDamage = physicalDamage;
+            damageEffect.magicDamage = magicDamage;
+            damageEffect.fireDamage = fireDamage;
+            damageEffect.lightningDamage = lightningDamage;
+            damageEffect.holyDamage = holyDamage;
+            damageEffect.poiseDamage = poiseDamage;
+            damageEffect.angleHitFrom = angleHitFrom;
+            damageEffect.contactPoint = new Vector3(contactPointX, contactPointY, contactPointZ); //将伤害接触点的位置传递给伤害效果
+            damageEffect.characterCausingDamage = characterCausingDamage; //将造成伤害的角色传递给伤害效果
+
+            damagedCharacter.characterEffectsManager.ProcessInstantEffect(damageEffect); //将伤害效果应用到目标角色身上
+        }
+
+
+        #endregion
+    
     }    
     
 }

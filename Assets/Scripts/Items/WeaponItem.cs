@@ -27,12 +27,16 @@ namespace SG
         public float poiseDamage = 10;
         //特殊武器攻击时增加自身韧性
 
-        //武器战灰升级
+        //武器伤害修正
+        [Header("Attack Modifiers")]
+        public float light_Attack_01_Multiplier = 1.1f;//轻攻击伤害倍率
+
         //锋利，厚重，轻便
 
-        [Header("Stamina Costs")]
+        [Header("Stamina Cost Modifiers")]
         public int baseStaminaCost = 20;
         //体力消耗修正
+        public float lightAttackStaminaCostMultiplier = 0.9f;//轻攻击体力消耗倍率
         //锋利，厚重，轻便
 
 

@@ -38,7 +38,7 @@ namespace SG
             //执行轻攻击的具体逻辑，例如播放动画、应用伤害等
             if(playerPerformingAction.playerNetworkManager.isUsingRightHand.Value)
             {
-                playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(light_Attack_01, true); //播放右手轻攻击动画
+                playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01,light_Attack_01, true); //播放右手轻攻击动画
             }
             if(playerPerformingAction.playerNetworkManager.isUsingLeftHand.Value)
             {

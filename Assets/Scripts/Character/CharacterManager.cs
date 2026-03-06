@@ -14,13 +14,14 @@ namespace SG
         //为什么这个变量放在这个文件而不是NetworkManager文件里？
         // 因为这个变量是角色的状态，直接放在角色管理器里更方便管理和访问，而不是放在网络管理器里，
         // 这样可以避免网络管理器过于臃肿，同时也更符合面向对象的设计原则，将角色相关的状态和逻辑封装在角色管理器中
-        public NetworkVariable<bool> isDead = new NetworkVariable<bool>(false);
+        public NetworkVariable<bool> isDead = new NetworkVariable<bool>(false,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
         [HideInInspector] public CharacterController characterController;
         [HideInInspector] public Animator animator;
         [HideInInspector] public CharacterNetworkManager characterNetworkManager;
         [HideInInspector] public CharacterEffectsManager characterEffectsManager;
         [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
+        [HideInInspector] public CharacterCombatManager characterCombatManager;
 
         [Header("Flags")]
         public bool isPerformingAction = false;//这个标志可以用来控制角色在执行动作时不能移动或攻击等，确保动作的完整性和连贯性
@@ -39,6 +40,7 @@ namespace SG
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
             characterEffectsManager = GetComponent<CharacterEffectsManager>();
             characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+            characterCombatManager = GetComponent<CharacterCombatManager>();
         }
 
         protected virtual void Start()

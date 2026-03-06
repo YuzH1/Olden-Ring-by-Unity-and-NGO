@@ -186,6 +186,37 @@ namespace SG
 
         #endregion
 
+        #region 伤害碰撞
+            
+        public void OpenDamageCollider()//动画事件调用
+        {
+            if(player.playerNetworkManager.isUsingRightHand.Value)
+            {
+                rightHandWeaponManager.meleeDamageCollider.EnableDamageCollider();
+            }
+            else if(player.playerNetworkManager.isUsingLeftHand.Value)
+            {
+                leftHandWeaponManager.meleeDamageCollider.EnableDamageCollider();
+            }
+        } 
+
+        public void CloseDamageCollider()//动画事件调用
+        {
+            if(player.playerNetworkManager.isUsingRightHand.Value)
+            {
+                rightHandWeaponManager.meleeDamageCollider.DisableDamageCollider();
+            }
+            else if(player.playerNetworkManager.isUsingLeftHand.Value)
+            {
+                leftHandWeaponManager.meleeDamageCollider.DisableDamageCollider();
+            }
+        } 
+
+
+
+
+        #endregion
+
     
     }
 }

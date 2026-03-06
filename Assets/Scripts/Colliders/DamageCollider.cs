@@ -6,7 +6,7 @@ using UnityEngine.TextCore.Text;
 public class DamageCollider : MonoBehaviour
 {
     [Header("Collider")]
-    protected Collider damageCollider; //伤害碰撞器组件
+    [SerializeField]protected Collider damageCollider; //伤害碰撞器组件
 
     [Header("Damage")]
     public float physicalDamage = 0;//未来会拓展为普通物理伤害、重击伤害、切割伤害、穿刺伤害等不同类型的物理伤害
@@ -15,12 +15,17 @@ public class DamageCollider : MonoBehaviour
     public float lightningDamage = 0;//闪电伤害
     public float holyDamage = 0;//神圣伤害
     [Header("Contect Point")]
-    private Vector3 contectPoint; //伤害接触点的位置
+    protected Vector3 contectPoint; //伤害接触点的位置
 
     [Header("Character Damaged")]
     protected List<CharacterManager> charactersDamaged = new List<CharacterManager>(); //已经被这个伤害碰撞器造成过伤害的角色列表，用于避免重复伤害
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void Awake()
+    {
+        
+    }
+
+    protected virtual void OnTriggerEnter(Collider other)
     {
         CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
 
