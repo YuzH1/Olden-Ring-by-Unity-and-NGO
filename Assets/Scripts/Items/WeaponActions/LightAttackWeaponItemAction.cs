@@ -18,6 +18,11 @@ namespace SG
             }
 
             //检查是否有阻碍
+            // //检查是否正在执行其他动作（防止攻击动画被打断重置）
+            // if(playerPerformingAction.isPerformingAction)
+            // {
+            //     return;
+            // }
 
             if(playerPerformingAction.playerNetworkManager.currentStamina.Value <= 0)
             {

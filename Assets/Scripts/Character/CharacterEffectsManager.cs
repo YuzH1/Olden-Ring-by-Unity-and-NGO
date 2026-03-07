@@ -11,6 +11,12 @@ namespace SG
         //静态处理效果（如增加或移除Buff等）
         CharacterManager character;
 
+        
+
+        [Header("VFX")]
+        [SerializeField] GameObject bloodSplatterVFX;
+        
+
         protected virtual void Awake()
         {
             character = GetComponent<CharacterManager>();
@@ -22,7 +28,21 @@ namespace SG
             effect.ProcessEffect(character);
         }
             
-        
+        public void PlayBloodSplatterVFX(Vector3 contactPoint)
+        {
+            //如果有人物血迹特效，播放这个版本，
+            if(bloodSplatterVFX != null)
+            {
+                GameObject bloodSplatter = Instantiate(bloodSplatterVFX, contactPoint, Quaternion.identity);
+            }
+            // 否则播放默认的血迹特效
+            else
+            {
+                GameObject bloodSplatter = Instantiate(WorldCharacterEffectsManager.Instance.bloodSplatterVFX, contactPoint, Quaternion.identity);
+            }
+        }
+
+
 
     }
     

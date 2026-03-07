@@ -1795,6 +1795,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &643963782 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7528446894544061042, guid: 36d4ef7a0754f1a45a01c2619249f299, type: 3}
+  m_PrefabInstance: {fileID: 3549569785046593564}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &643963786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643963782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2764ab70eca6e4ab6cc78e4ce64816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  players: []
 --- !u!1 &681706347
 GameObject:
   m_ObjectHideFlags: 0
@@ -5884,7 +5902,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7528446894544061042, guid: 36d4ef7a0754f1a45a01c2619249f299, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 643963786}
   m_SourcePrefab: {fileID: 100100000, guid: 36d4ef7a0754f1a45a01c2619249f299, type: 3}
 --- !u!114 &3907273364309506386
 MonoBehaviour:
@@ -6210,6 +6231,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4032488947618413880, guid: 672d76e5bab21df4a8be437f608621a8, type: 3}
+      propertyPath: physicalDamageSFX.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4032488947618413880, guid: 672d76e5bab21df4a8be437f608621a8, type: 3}
+      propertyPath: 'physicalDamageSFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: fbb5ba0f8f20f4ddd96f28ec955681b8, type: 3}
+    - target: {fileID: 4032488947618413880, guid: 672d76e5bab21df4a8be437f608621a8, type: 3}
+      propertyPath: 'physicalDamageSFX.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: b4b10ba670b8f494eb8ee808fa885948, type: 3}
+    - target: {fileID: 4032488947618413880, guid: 672d76e5bab21df4a8be437f608621a8, type: 3}
+      propertyPath: 'physicalDamageSFX.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 17593570c8fcd400caf55fb28f12eb58, type: 3}
+    - target: {fileID: 4032488947618413880, guid: 672d76e5bab21df4a8be437f608621a8, type: 3}
+      propertyPath: 'physicalDamageSFX.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: be2ab0616568f489aa6a1bc0ddcc03c4, type: 3}
+    - target: {fileID: 4032488947618413880, guid: 672d76e5bab21df4a8be437f608621a8, type: 3}
+      propertyPath: 'physicalDamageSFX.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: fe9978d83581c412a9f63979c335eaa7, type: 3}
     - target: {fileID: 4032656084091633909, guid: 672d76e5bab21df4a8be437f608621a8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.0597591

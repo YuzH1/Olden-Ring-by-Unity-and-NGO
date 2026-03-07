@@ -6,9 +6,13 @@ public class WorldCharacterEffectsManager : MonoBehaviour
 {
     public static WorldCharacterEffectsManager Instance;
 
+    [Header("VFX")]
+    public GameObject bloodSplatterVFX;
+    
     [Header("Damage")]
     public TakeDamageEffect takeDamageEffect;
     [SerializeField] List<InstantCharacterEffect> instantEffectsList; //即时效果列表
+
 
     private void Awake()
     {

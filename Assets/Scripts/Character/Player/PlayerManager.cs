@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 
 namespace SG
@@ -62,6 +63,8 @@ namespace SG
         {
             base.OnNetworkSpawn();
 
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback; //当有新客户端连接时，服务器会调用这个函数，参数clientID是新连接的客户端的ID
+
             // 如果是拥有者（本地玩家），可以执行一些特定的初始化逻辑，例如设置摄像机跟随等
             if(IsOwner)
             {
@@ -96,6 +99,26 @@ namespace SG
                 LoadGameDataFromCurrentCharacterData(ref WorldSaveGameManager.Instance.currentCharacterData); //如果是客户端但不是服务器，从保存数据中加载角色数据
             }
         }
+
+        private void OnClientConnectedCallback(ulong clientID)//当有新客户端连接时，服务器会调用这个函数，参数clientID是新连接的客户端的ID
+        {
+            //维护一个list跟踪游戏中的玩家，当有新玩家连接时，将其添加到list中
+            WorldGameSessionManager.Instance.AddPlayerToActivePlayersList(this); //将当前玩家添加到游戏会话管理器的玩家列表中
+            
+            if(!IsServer && IsOwner)//如果
+            {
+                foreach(var player in WorldGameSessionManager.Instance.players)
+                {
+                    if(player != this) //对于游戏会话中的每个玩家，如果不是当前玩家（新连接的玩家），则调用函数来加载他们的数据
+                    {
+                        player.LoadOtherPlayerCharacterWhenJoiningServer(); //调用函数来加载其他玩家的数据
+                    }
+                }
+            }
+
+           
+        }
+
 
         public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
         {
@@ -172,6 +195,17 @@ namespace SG
            
         }
 
+        private void LoadOtherPlayerCharacterWhenJoiningServer()
+        {
+            //同步武器
+            playerNetworkManager.OnCurrentRightHandWeaponChanged(0, playerNetworkManager.currentRightHandWeaponID.Value); //调用一次函数来加载当前右手武器数据和模型
+            playerNetworkManager.OnCurrentLeftHandWeaponChanged(0, playerNetworkManager.currentLeftHandWeaponID.Value); //调用一次函数来加载当前左手武器数据和模型
+
+            //TODO: 同步装备等
+        }
+        
+        
+        
         //Debug, 之后删除
         private void DebugMenu()
         {

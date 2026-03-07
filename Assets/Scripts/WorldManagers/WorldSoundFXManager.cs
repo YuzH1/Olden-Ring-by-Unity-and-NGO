@@ -6,6 +6,10 @@ namespace SG
     {
         public static WorldSoundFXManager instance;
 
+        [Header("Damage SFX")]
+        public AudioClip[] physicalDamageSFX;
+        
+
         [Header("Action SFX")]
         public AudioClip rollSFX;
         
@@ -26,6 +30,14 @@ namespace SG
             DontDestroyOnLoad(gameObject);
         }
 
-
+        public AudioClip ChooseRandomSFXFromArray(AudioClip[] sfxArray)
+        {
+            if(sfxArray.Length == 0)
+            {
+                return null;
+            }
+            int randomIndex = Random.Range(0, sfxArray.Length);
+            return sfxArray[randomIndex];
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace SG
         public string damageAnimation;//手动选择的受击动画的名称，只有当manuallySelectDamageAnimation为true时才会使用这个字段
         
         [Header("Sound FX")]
-        public bool wiillPlayDamageSFX = true; //是否播放受击音效
+        public bool willPlayDamageSFX = true; //是否播放受击音效
         public AudioClip elementalDamageSFX; //根据伤害类型播放不同的受击音效，比如火焰伤害播放火焰受击音效，闪电伤害播放闪电受击音效等
 
         [Header("Direction Damage Taken From")]
@@ -57,7 +57,14 @@ namespace SG
             //根据伤害类型播放不同的受击动画和音效
             //检查额外效果，中毒流血等
             //播放受击特效，比如血液飞溅、火焰爆炸等
+            PlayDamageVFX(character);
+
             //播放受击音效
+            PlayDamageSFX(character);
+            // if(willPlayDamageSFX)
+            // {
+            //     PlayDamageSFX(character);
+            // }
 
             //如果敌人为AI，寻找下一个目标锁定
 
@@ -90,6 +97,29 @@ namespace SG
         
             //计算韧性伤害，检查是否打破韧性
         }
+    
+        private void PlayDamageVFX(CharacterManager character)
+        {
+            //根据不同伤害类型播放不同效果
+            //火焰伤害播放火焰特效，闪电伤害播放闪电特效等
+
+            character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint); //播放血迹飞溅特效，传入伤害接触点的位置
+
+        }
+
+        private void PlayDamageSFX(CharacterManager character)
+        {
+            //从物理伤害音效数组中随机选择一个音效
+            AudioClip phsicalDamageSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.physicalDamageSFX); 
+
+            character.characterSoundFXManager.PlaySoundFX(phsicalDamageSFX);
+            //根据不同伤害类型播放不同音效
+            //火焰伤害播放火焰受击音效，闪电伤害播放闪电受击音效等
+
+
+
+        }
+    
     }
 
 }
