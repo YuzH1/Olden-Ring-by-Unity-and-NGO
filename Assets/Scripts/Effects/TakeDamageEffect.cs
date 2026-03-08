@@ -124,8 +124,8 @@ namespace SG
             if(!character.IsOwner)
                 return;
             
-            // if(character.isDead.Value)
-            //     return;
+            if(character.isDead.Value)
+                return;
 
             //TODO:当被打断时计算
             poiseIsBroken = true;

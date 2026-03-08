@@ -20,6 +20,9 @@ namespace SG
         public NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<float> moveAmount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+        [Header("Target")]
+        public NetworkVariable<ulong> currentTargetNetworkObjectID = new NetworkVariable<ulong>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);//存储当前锁定目标的网络ID，初始值为0表示没有目标
+
         [Header("Flags")]
         public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -56,6 +59,24 @@ namespace SG
                 {
                     currentHealth.Value = maxHealth.Value; //确保当前生命值不会超过最大生命值
                 }
+            }
+        }
+
+        public void OnLockOnTargetIDChanged(ulong oldID, ulong newID)
+        {
+            if(!IsOwner)
+            {
+                //当锁定目标发生变化时，如果当前客户端不是拥有者，那么就根据新的网络ID来更新当前锁定的目标
+                character.characterCombatManager.currentTarget = NetworkManager.Singleton.SpawnManager.SpawnedObjects[newID].GetComponent<CharacterManager>();
+            }
+
+        }
+
+        public void OnIsLockedOnChanged(bool oldValue, bool isLockedOn)
+        {
+            if(!isLockedOn)
+            {
+                character.characterCombatManager.currentTarget = null;//如果锁定状态变为false，清除当前锁定目标
             }
         }
 

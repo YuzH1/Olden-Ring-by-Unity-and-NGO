@@ -88,6 +88,10 @@ namespace SG
             //数据
             playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP; //检查生命值是否为0，触发死亡事件
 
+            //锁定
+            playerNetworkManager.isLockedOn.OnValueChanged += playerNetworkManager.OnIsLockedOnChanged; //当锁定状态变化时，更新锁定目标
+            playerNetworkManager.currentTargetNetworkObjectID.OnValueChanged += playerNetworkManager.OnLockOnTargetIDChanged; //当当前锁定目标的网络对象ID变化时，更新当前锁定目标的数据和模型
+
             //装备
             playerNetworkManager.currentRightHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentRightHandWeaponChanged; //当当前右手武器ID变化时，更新右手武器数据和模型
             playerNetworkManager.currentLeftHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentLeftHandWeaponChanged; //当当前左手武器ID变化时，更新左手武器数据和模型    
@@ -138,6 +142,7 @@ namespace SG
 
             if(IsOwner)
             {
+                isDead.Value = false; //将死亡状态设置为false，表示角色已经复活了
                 playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value; //将当前生命值设置为最大生命值，确保角色重生时是满血状态
                 playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value; //将当前耐力值设置为最大耐力值，确保角色重生时是满耐力状态
                 
@@ -202,6 +207,13 @@ namespace SG
             playerNetworkManager.OnCurrentLeftHandWeaponChanged(0, playerNetworkManager.currentLeftHandWeaponID.Value); //调用一次函数来加载当前左手武器数据和模型
 
             //TODO: 同步装备等
+
+            //TODO: 同步锁定 ✅️
+            if(playerNetworkManager.isLockedOn.Value)
+            {
+                //调用一次函数来加载当前锁定目标的数据和模型
+                playerNetworkManager.OnLockOnTargetIDChanged(0, playerNetworkManager.currentTargetNetworkObjectID.Value); 
+            }
         }
         
         

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -33,7 +34,10 @@ namespace SG
         [SerializeField] private float lockOnRadius = 20f;
         [SerializeField] private float minimumViewableAngle = -50f;//锁定目标的最小视角，超过这个角度的目标不能被锁定
         [SerializeField] private float maximumViewableAngle = 50f;//锁定目标的最大视角，超过这个角度的目标不能被锁定
-        [SerializeField] private float maximumLockOnDistance = 20f;//锁定目标的最大距离，超过这个距离的目标不能被锁定
+        [SerializeField] private float lockOnTargetFlollowSpeed = 0.2f;//锁定目标时摄像机跟随的速度
+        private List<CharacterManager> availableTargets = new List<CharacterManager>();//存储当前可锁定的目标列表
+        public CharacterManager nearestLockOnTarget;
+
 
         private void Awake()
         {
@@ -75,26 +79,53 @@ namespace SG
 
         private void HandleRotations()
         {
-            //如果锁定目标，强制摄像机朝向目标旋转
+            //TODO:如果锁定目标，强制摄像机朝向目标旋转 ✅️
+            if(player.playerNetworkManager.isLockedOn.Value)
+            {
+                //主要玩家相机朝向锁定目标的方向旋转
+                Vector3 rotationDirection = player.playerCombatManager.currentTarget.characterCombatManager.lockOnTransform.position - transform.position;
+                rotationDirection.Normalize();
+                rotationDirection.y = 0;//保持水平旋转
+
+                Quaternion targetRotation = Quaternion.LookRotation(rotationDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnTargetFlollowSpeed);
+
+                //计算从摄像机枢轴到锁定目标的方向
+                rotationDirection = player.playerCombatManager.currentTarget.characterCombatManager.lockOnTransform.position - cameraPivotTransform.position;
+                rotationDirection.Normalize();
+
+                targetRotation = Quaternion.LookRotation(rotationDirection);
+                cameraPivotTransform.transform.rotation = Quaternion.Slerp(cameraPivotTransform.rotation, targetRotation, lockOnTargetFlollowSpeed);
+
+                //保存当前的旋转角度，以便在取消锁定后继续使用
+                leftAndRightLookAngle = transform.eulerAngles.y;
+                upAndDownLookAngle = transform.eulerAngles.x;
+            
+            
+            }
             //否则正常旋转
-
             //普通旋转
-            leftAndRightLookAngle += PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed * Time.deltaTime;
-            upAndDownLookAngle -= PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed * Time.deltaTime;
-            //限制上下视角
-            upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
+            else
+            {
+                leftAndRightLookAngle += PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed * Time.deltaTime;
+                upAndDownLookAngle -= PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed * Time.deltaTime;
+                //限制上下视角
+                upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
 
-            Vector3 cameraRotation = Vector3.zero;
-            Quaternion targetRotation;
+                Vector3 cameraRotation = Vector3.zero;
+                Quaternion targetRotation;
 
-            cameraRotation.y = leftAndRightLookAngle;
-            targetRotation = Quaternion.Euler(cameraRotation);//创建目标旋转四元数
-            transform.rotation = targetRotation;//应用旋转
+                cameraRotation.y = leftAndRightLookAngle;
+                targetRotation = Quaternion.Euler(cameraRotation);//创建目标旋转四元数
+                transform.rotation = targetRotation;//应用旋转
 
-            cameraRotation = Vector3.zero;
-            cameraRotation.x = upAndDownLookAngle;
-            targetRotation = Quaternion.Euler(cameraRotation);
-            cameraPivotTransform.transform.localRotation = targetRotation;
+                cameraRotation = Vector3.zero;
+                cameraRotation.x = upAndDownLookAngle;
+                targetRotation = Quaternion.Euler(cameraRotation);
+                cameraPivotTransform.transform.localRotation = targetRotation;
+                
+            }
+            
         }
 
         private void HandleCollisions()
@@ -172,15 +203,14 @@ namespace SG
                     if(lockOnTarget.transform.root == player.transform.root)//如果目标是玩家自己，跳过
                         continue;
 
-                    if(distanceFromTarget > maximumLockOnDistance)//如果目标超过最大锁定距离，跳过
-                        continue;
                     
+                    //如果目标在视野之外或被环境阻挡。检查下一个潜在目标
                     if(viewableAngle > minimumViewableAngle && viewableAngle < maximumViewableAngle)
                     {
                         RaycastHit hit;
 
                         //检查目标是否被墙体等遮挡
-                        //TODO:添加layermask检查环境 √
+                        //TODO:添加layermask检查环境 ✅️
                         if(Physics.Linecast(player.playerCombatManager.lockOnTransform.position, 
                             lockOnTarget.characterCombatManager.lockOnTransform.position, 
                             out hit,
@@ -191,12 +221,41 @@ namespace SG
                         }
                         else
                         {
-                            Debug.Log("找到一个可锁定目标: " + lockOnTarget.name + " 距离: " + distanceFromTarget + " 视角: " + viewableAngle);
+                            //将目标加入潜在目标列表
+                            availableTargets.Add(lockOnTarget);//将符合条件的目标加入列表
                         }
                     }
                 }
             }
 
+            //在潜在目标列表中找到最近的目标，并锁定
+            for(int j = 0; j < availableTargets.Count; j++)
+            {
+                // 处理可用目标
+                if(availableTargets[j] != null)
+                {
+                    float distanceFromTarget = Vector3.Distance(player.transform.position, availableTargets[j].transform.position);
+                    
+
+                    if(distanceFromTarget < shortestDistance)
+                    {
+                        shortestDistance = distanceFromTarget;
+                        nearestLockOnTarget = availableTargets[j];
+                    }
+                }
+                else
+                {
+                    ClearLockOnTargets();
+                    player.playerNetworkManager.isLockedOn.Value = false;//如果没有可锁定目标，确保锁定状态为false
+                }
+            }
+
+        }
+
+        public void ClearLockOnTargets()
+        {
+            nearestLockOnTarget = null;
+            availableTargets.Clear();
         }
 
     }

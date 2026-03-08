@@ -55,5 +55,7 @@ namespace SG
             player.playerNetworkManager.currentStamina.Value -= Mathf.RoundToInt(staminaDeducted);
         }
 
+        
+
     }
 }

@@ -279,12 +279,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3124662399
-  InScenePlacedSourceGlobalObjectIdHash: 3590192380
+  GlobalObjectIdHash: 2335234364
+  InScenePlacedSourceGlobalObjectIdHash: 298822454
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
+  SynchronizeTransform: 0
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
@@ -318,7 +318,7 @@ MonoBehaviour:
   isGrounded: 1
   applyRootMotion: 0
   canRotate: 1
-  canMove: 1
+  canMove: 0
   respawnCharacter: 0
   switchRightWeapon: 0
   playerAnimatorManager: {fileID: 0}
@@ -353,6 +353,8 @@ MonoBehaviour:
   verticalMovement:
     m_InternalValue: 0
   moveAmount:
+    m_InternalValue: 0
+  currentTargetNetworkObjectID:
     m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
@@ -539,7 +541,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f583134eaf1a384b89bae31803a6393, type: 3}
   m_Name: 
@@ -601,6 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727c37d63918273408bac31596db682a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SG.PlayerCombatManager
+  ShowTopMostFoldoutHeaderGroup: 1
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 5315082039689275718}

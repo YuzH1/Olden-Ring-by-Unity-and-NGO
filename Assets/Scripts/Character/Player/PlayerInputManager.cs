@@ -203,6 +203,8 @@ namespace SG
             if(lockOnInput && player.playerNetworkManager.isLockedOn.Value)
             {
                 lockOnInput = false;
+                PlayerCamera.instance.ClearLockOnTargets();
+                player.playerNetworkManager.isLockedOn.Value = false;//更新网络变量，通知所有客户端取消锁定
                 //取消锁定
                 return;
             }
@@ -216,6 +218,12 @@ namespace SG
                 //启用锁定
                 PlayerCamera.instance.HandleLocatingLockOnTargets();
 
+                if(PlayerCamera.instance.nearestLockOnTarget != null)
+                {
+                    //设置此目标位当前锁定目标
+                    player.playerCombatManager.SetTarget(PlayerCamera.instance.nearestLockOnTarget);
+                    player.playerNetworkManager.isLockedOn.Value = true;//更新网络变量，通知所有客户端当前处于锁定状态
+                }
             }
         }
 
