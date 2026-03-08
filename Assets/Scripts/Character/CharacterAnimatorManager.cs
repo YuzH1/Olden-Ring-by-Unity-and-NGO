@@ -1,5 +1,9 @@
 using UnityEngine;
 using Unity.Netcode;
+using System.Collections.Generic;
+using System;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 namespace SG
 {
@@ -7,8 +11,29 @@ namespace SG
     {
         CharacterManager character;
 
-        int verticalParameterHash;
-        int horizontalParameterHash;
+
+        int verticalParameterHash;//Animator参数的哈希值，使用哈希值可以提高性能，因为在运行时直接使用字符串会比较慢，而使用哈希值可以更快地访问Animator参数
+        int horizontalParameterHash;//Animator参数的哈希值，使用哈希值可以提高性能，因为在运行时直接使用字符串会比较慢，而使用哈希值可以更快地访问Animator参数
+        
+        [Header("Damage Animations")]
+        public string lastDamageAnimationPlayed;//上一次播放的受击动画的名称，用于避免重复播放同一个受击动画
+
+        [SerializeField] string hit_Forward_Medium_01 = "Hit_Forward_Medium_01";
+        [SerializeField] string hit_Forward_Medium_02 = "Hit_Forward_Medium_02";
+
+        [SerializeField] string hit_Backward_Medium_01 = "Hit_Backward_Medium_01";
+        [SerializeField] string hit_Backward_Medium_02 = "Hit_Backward_Medium_02";
+
+        [SerializeField] string hit_Left_Medium_01 = "Hit_Left_Medium_01";
+        [SerializeField] string hit_Left_Medium_02 = "Hit_Left_Medium_02";
+
+        [SerializeField] string hit_Right_Medium_01 = "Hit_Right_Medium_01";
+        [SerializeField] string hit_Right_Medium_02 = "Hit_Right_Medium_02";
+
+        public List<string> forward_Medium_Damage {get; private set;} = new List<string>();
+        public List<string> backward_Medium_Damage {get; private set;} = new List<string>();
+        public List<string> left_Medium_Damage {get; private set;} = new List<string>();
+        public List<string> right_Medium_Damage {get; private set;} = new List<string>();
 
         protected virtual void Awake()
         {
@@ -16,6 +41,51 @@ namespace SG
 
             verticalParameterHash = Animator.StringToHash("Vertical");
             horizontalParameterHash = Animator.StringToHash("Horizontal");
+        }
+
+        protected virtual void Start()
+        {
+            forward_Medium_Damage.Add(hit_Forward_Medium_01);
+            forward_Medium_Damage.Add(hit_Forward_Medium_02);
+
+            backward_Medium_Damage.Add(hit_Backward_Medium_01);
+            backward_Medium_Damage.Add(hit_Backward_Medium_02);
+
+            left_Medium_Damage.Add(hit_Left_Medium_01);
+            left_Medium_Damage.Add(hit_Left_Medium_02);
+
+            right_Medium_Damage.Add(hit_Right_Medium_01);
+            right_Medium_Damage.Add(hit_Right_Medium_02);
+        }
+
+        public string GetRandomAnimationFromList(List<string> animationList)
+        {
+            if(animationList.Count == 0)
+            {
+                Debug.LogWarning("动画列表为空，无法获取随机动画");
+                return null;
+            }
+
+            List<String> finalList = new List<string>();
+
+            foreach(string animation in animationList)
+            {
+                finalList.Add(animation);
+            }
+
+            //检查我们是否已经播放过这个动画，如果播放过不让他重复
+            finalList.Remove(lastDamageAnimationPlayed);
+
+            for(int i = finalList.Count - 1; i > -1; i--)
+            {
+                if(finalList[i] == null)
+                {
+                    finalList.RemoveAt(i);
+                }
+            }
+
+            int randomVlaue = UnityEngine.Random.Range(0, finalList.Count);
+            return finalList[randomVlaue];
         }
 
         public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue)
@@ -46,7 +116,7 @@ namespace SG
             bool canRotate = false, //这个参数可以用来控制角色在执行动作时是否可以旋转，默认为false，表示在执行动作时不允许旋转；如果为true，则允许旋转
             bool canMove = false) //这个参数可以用来控制角色在执行动作时是否可以移动，默认为false，表示在执行动作时不允许移动；如果为true，则允许移动
         {
-            //Debug.Log("Playing action animation: " + targetAnimation + ", isPerformingAction: " + isPerformingAction);
+            Debug.Log("正在播放动作动画: " + targetAnimation );
             character.applyRootMotion = applyRootMotion;//如果正在执行动作，启用根运动，让动画控制角色移动；否则禁用根运动，允许代码控制角色移动
             character.animator.CrossFade(targetAnimation, 0.2f);//平滑过渡到目标动画，0.2f是过渡时间，可以根据需要调整
             //可以用于停止角色尝试移动或攻击等，确保动作的完整性和连贯性

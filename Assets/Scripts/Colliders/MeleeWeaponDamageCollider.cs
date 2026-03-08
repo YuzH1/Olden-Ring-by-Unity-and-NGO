@@ -70,6 +70,7 @@ namespace SG
             damageEffect.lightningDamage = lightningDamage;
             damageEffect.holyDamage = holyDamage;
             damageEffect.contactPoint = contectPoint; //将伤害接触点的位置传递给伤害效果
+            damageEffect.angleHitFrom = Vector3.SignedAngle(characterCausingDamage.transform.forward, damageTarget.transform.forward, Vector3.up); //计算伤害来源的角度，并传递给伤害效果
 
             switch(characterCausingDamage.characterCombatManager.currentAttackType)
             {

@@ -16,7 +16,7 @@ namespace SG
                 playerPerformingAction.playerNetworkManager.currentWeaponBeingUsedID.Value = weaponPerformingAction.itemID; //更新网络变量，通知所有客户端当前正在使用的武器发生了变化
             }
 
-            Debug.Log("Attempting to perform weapon action: " + actionID + " with weapon: " + weaponPerformingAction.itemName);
+            // Debug.Log("Attempting to perform weapon action: " + actionID + " with weapon: " + weaponPerformingAction.itemName);
         }
     }
 
