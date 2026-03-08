@@ -46,6 +46,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSlot: 1
   currentWeaponModel: {fileID: 0}
+--- !u!1 &8916821867750879557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2013622972320984341}
+  m_Layer: 7
+  m_Name: Lock On Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2013622972320984341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8916821867750879557}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.15, y: -0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3425189658388317364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3547251526276436738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -345,6 +376,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -7011284792763705418, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 2013622972320984341}
     - targetCorrespondingSourceObject: {fileID: 3780837713738550241, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2974980245139398852}
@@ -650,6 +684,11 @@ CapsuleCollider:
   m_Height: 0.4
   m_Direction: 0
   m_Center: {x: 0.16, y: 0.02, z: 0}
+--- !u!4 &3425189658388317364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -7011284792763705418, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
+  m_PrefabInstance: {fileID: 3547251526276436738}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3536258676901874518 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -9211815070973405100, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
@@ -717,7 +756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3590192380
+  GlobalObjectIdHash: 1421416317
   InScenePlacedSourceGlobalObjectIdHash: 3590192380
   DeferredDespawnTick: 0
   Ownership: 1
@@ -751,6 +790,7 @@ MonoBehaviour:
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
+  characterSoundFXManager: {fileID: 0}
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
@@ -794,6 +834,8 @@ MonoBehaviour:
   isSprinting:
     m_InternalValue: 0
   isJumping:
+    m_InternalValue: 0
+  isLockedOn:
     m_InternalValue: 0
   endurance:
     m_InternalValue: 10
@@ -932,6 +974,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c20cce1be71d56e4a9689bd012bdefb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
 --- !u!114 &4949411199777525177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1027,7 +1078,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727c37d63918273408bac31596db682a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SG.PlayerCombatManager
+  currentTarget: {fileID: 0}
   currentAttackType: 0
+  lockOnTransform: {fileID: 2013622972320984341}
   currentWeaponBeingUsed: {fileID: 0}
 --- !u!54 &8893580713255527888
 Rigidbody:

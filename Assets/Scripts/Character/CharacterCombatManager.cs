@@ -4,7 +4,15 @@ namespace SG
 {
     public class CharacterCombatManager : MonoBehaviour
     {
+        [Header("Attack Target")]
+        public CharacterManager currentTarget;
+
+        [Header("Attack Type")]
         public AttackType currentAttackType;//当前攻击类型，轻攻击，重攻击，战技等
+
+        [Header("Lock On Transform")]
+        public Transform lockOnTransform;//锁定目标的Transform，用于调整角色朝向和攻击方向
+
         protected virtual void Awake() {
             
         }

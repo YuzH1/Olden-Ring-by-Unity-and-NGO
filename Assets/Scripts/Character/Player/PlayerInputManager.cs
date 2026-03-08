@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,11 +25,15 @@ namespace SG
         public float cameraVerticalInput;
         public float cameraHorizontalInput;
 
+        [Header("Lock On Input")]
+        [SerializeField] bool lockOnInput = false;//存储锁定输入状态
+
         [Header("Player Action Input")]
         [SerializeField] bool dodgeInput = false;//存储闪避输入状态
         [SerializeField] bool sprintInput = false;//存储冲刺输入状态
         [SerializeField] bool jumpInput = false;//存储跳跃输入状态
         [SerializeField] bool lightAttackInput = false;//存储右手攻击输入状态
+        
 
         private void Awake()
         {
@@ -92,6 +97,9 @@ namespace SG
                 playerControls.PlayerActions.Jump.performed += ctx => jumpInput = true;
                 playerControls.PlayerActions.LightAttack.performed += ctx => lightAttackInput = true;
 
+                //锁定输入
+                playerControls.PlayerActions.LockOn.performed += ctx => lockOnInput = true;
+
                 playerControls.PlayerActions.Sprint.performed += ctx => sprintInput = true;
                 playerControls.PlayerActions.Sprint.canceled += ctx => sprintInput = false;
                 
@@ -138,6 +146,7 @@ namespace SG
             HandleSprintingInput();
             HandleJumpInput();
             HandleLightAttackInput();
+            HandleLockOnInput();
         }   
 
         //移动
@@ -174,6 +183,42 @@ namespace SG
             cameraHorizontalInput = cameraInput.x;
         }
     
+        //锁定
+        private void HandleLockOnInput()
+        {
+            //如果当前已经锁定目标，检查目标是否已死亡，如果已死亡，解锁
+            if(player.playerNetworkManager.isLockedOn.Value)
+            {
+                if(player.playerCombatManager.currentTarget == null)
+                    return;
+                
+                if(player.playerCombatManager.currentTarget.isDead.Value)
+                {
+                    player.playerNetworkManager.isLockedOn.Value = false;//如果当前目标已死亡，解锁
+                }
+
+                //尝试寻找新的锁定目标
+            }
+
+            if(lockOnInput && player.playerNetworkManager.isLockedOn.Value)
+            {
+                lockOnInput = false;
+                //取消锁定
+                return;
+            }
+
+            if(lockOnInput && !player.playerNetworkManager.isLockedOn.Value)
+            {
+                lockOnInput = false;
+                
+                //如果正在使用需要瞄准的武器，不锁定
+                
+                //启用锁定
+                PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+            }
+        }
+
         //动作
         private void HandleDodgeInput()
         {

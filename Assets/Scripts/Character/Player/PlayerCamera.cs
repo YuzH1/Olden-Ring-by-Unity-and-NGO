@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,7 +29,11 @@ namespace SG
         private float cameraDefaultZPosition;//摄像机默认位置,用于碰撞检测时恢复位置
         private float cameraTargetZPosition;//摄像机目标位置,用于碰撞检测时调整位置
 
-
+        [Header("Lock On Settings")]
+        [SerializeField] private float lockOnRadius = 20f;
+        [SerializeField] private float minimumViewableAngle = -50f;//锁定目标的最小视角，超过这个角度的目标不能被锁定
+        [SerializeField] private float maximumViewableAngle = 50f;//锁定目标的最大视角，超过这个角度的目标不能被锁定
+        [SerializeField] private float maximumLockOnDistance = 20f;//锁定目标的最大距离，超过这个距离的目标不能被锁定
 
         private void Awake()
         {
@@ -41,6 +46,7 @@ namespace SG
                 Destroy(gameObject);
             }
         }
+        
         private void Start()
         {
             DontDestroyOnLoad(gameObject); //确保在场景切换时不销毁此对象
@@ -139,5 +145,59 @@ namespace SG
             cameraObjectPosition.z = Mathf.Lerp(cameraObject.transform.localPosition.z, cameraTargetZPosition, 0.2f);//平滑过渡摄像机位置
             cameraObject.transform.localPosition = cameraObjectPosition;
         }
+    
+        public void HandleLocatingLockOnTargets()
+        {
+            float shortestDistance = Mathf.Infinity; //用于记录最近目标的距离
+            float shortestDistanceOfRightTarget = Mathf.Infinity;//用于记录锁定目标右边的最近距离目标（+）
+            float shortestDistanceOfLeftTarget = Mathf.Infinity;//用于记录锁定目标左边的最近距离（-）
+
+            //TODO:使用layermask
+            Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, WorldUtilityManager.instance.GetCharacterLayer());//在玩家周围一定范围内检测可锁定目标
+
+            for(int i = 0; i < colliders.Length; i++)
+            {
+                CharacterManager lockOnTarget = colliders[i].GetComponent<CharacterManager>();
+
+                if(lockOnTarget != null)
+                {
+                    //检查是否在视野中
+                    Vector3 lockOnTargetDirection = lockOnTarget.transform.position - player.transform.position;
+                    float distanceFromTarget = Vector3.Distance(player.transform.position, lockOnTarget.transform.position);
+                    float viewableAngle = Vector3.Angle(lockOnTargetDirection, cameraObject.transform.forward);
+
+                    if(lockOnTarget.isDead.Value)//如果目标已死亡，跳过
+                        continue;
+                    
+                    if(lockOnTarget.transform.root == player.transform.root)//如果目标是玩家自己，跳过
+                        continue;
+
+                    if(distanceFromTarget > maximumLockOnDistance)//如果目标超过最大锁定距离，跳过
+                        continue;
+                    
+                    if(viewableAngle > minimumViewableAngle && viewableAngle < maximumViewableAngle)
+                    {
+                        RaycastHit hit;
+
+                        //检查目标是否被墙体等遮挡
+                        //TODO:添加layermask检查环境 √
+                        if(Physics.Linecast(player.playerCombatManager.lockOnTransform.position, 
+                            lockOnTarget.characterCombatManager.lockOnTransform.position, 
+                            out hit,
+                            WorldUtilityManager.instance.GetEnvironmentLayer()))
+                        {
+                            //射线击中了某个物体，看不到锁定目标
+                            continue;
+                        }
+                        else
+                        {
+                            Debug.Log("找到一个可锁定目标: " + lockOnTarget.name + " 距离: " + distanceFromTarget + " 视角: " + viewableAngle);
+                        }
+                    }
+                }
+            }
+
+        }
+
     }
 }
