@@ -27,6 +27,9 @@ namespace SG
 
         [Header("Lock On Input")]
         [SerializeField] bool lockOnInput = false;//存储锁定输入状态
+        [SerializeField] bool lockOnLeftInput = false;//存储锁定左边目标输入状态
+        [SerializeField] bool lockOnRightInput = false;//存储锁定右边目标输入状态
+        private Coroutine lockOnCoroutine;//存储锁定协程的引用，用于在切换目标时停止当前的锁定协程
 
         [Header("Player Action Input")]
         [SerializeField] bool dodgeInput = false;//存储闪避输入状态
@@ -99,6 +102,8 @@ namespace SG
 
                 //锁定输入
                 playerControls.PlayerActions.LockOn.performed += ctx => lockOnInput = true;
+                playerControls.PlayerActions.SeekLeftLockOnTarget.performed += ctx => lockOnLeftInput = true;
+                playerControls.PlayerActions.SeekRightLockOnTarget.performed += ctx => lockOnRightInput = true;
 
                 playerControls.PlayerActions.Sprint.performed += ctx => sprintInput = true;
                 playerControls.PlayerActions.Sprint.canceled += ctx => sprintInput = false;
@@ -140,6 +145,12 @@ namespace SG
 
         private void HandleAllInputs()
         {
+            //如果角色已死亡，不处理输入
+            if(player.isDead.Value)
+            {
+                return;
+            }
+            
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
@@ -147,6 +158,7 @@ namespace SG
             HandleJumpInput();
             HandleLightAttackInput();
             HandleLockOnInput();
+            HandleLockOnSwitchTargetInput();
         }   
 
         //移动
@@ -172,7 +184,15 @@ namespace SG
                 return;
             //这里将horizontalInput设为0，因为在角色未锁定目标前，应该只会处于前进、后退、原地等状态，不会有左右移动的动画
             //如果没有锁定，只使用moveAmount来控制前进、后退、原地等动画的切换，horizontalInput不参与动画参数的设置
-            player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
+            if(!player.playerNetworkManager.isLockedOn.Value || player.playerNetworkManager.isSprinting.Value) //如果没有锁定目标，或者正在冲刺
+            {
+                player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount); //如果没有锁定目标，horizontalInput设为0，只有moveAmount参与动画参数的设置
+            }
+            else
+            {
+                player.playerAnimatorManager.UpdateAnimatorMovementParameters(horizontalInput, verticalInput); //如果有锁定目标，horizontalInput参与动画参数的设置               
+            }
+
             //如果有锁定目标，才使用horizontalInput来控制左右移动的动画切换
 
         }
@@ -197,7 +217,14 @@ namespace SG
                     player.playerNetworkManager.isLockedOn.Value = false;//如果当前目标已死亡，解锁
                 }
 
-                //尝试寻找新的锁定目标
+             
+
+                if(lockOnCoroutine != null)
+                {
+                    StopCoroutine(lockOnCoroutine); //如果已经有一个锁定协程在运行，先停止它，防止多个协程同时运行导致冲突
+                }
+
+                lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget()); //启动一个新的协程来寻找锁定目标   //尝试寻找新的锁定目标
             }
 
             if(lockOnInput && player.playerNetworkManager.isLockedOn.Value)
@@ -223,6 +250,41 @@ namespace SG
                     //设置此目标位当前锁定目标
                     player.playerCombatManager.SetTarget(PlayerCamera.instance.nearestLockOnTarget);
                     player.playerNetworkManager.isLockedOn.Value = true;//更新网络变量，通知所有客户端当前处于锁定状态
+                }
+            }
+        }
+
+        private void HandleLockOnSwitchTargetInput()
+        {
+            if(lockOnLeftInput)
+            {
+                lockOnLeftInput = false;
+
+                if(player.playerNetworkManager.isLockedOn.Value)
+                {
+                    PlayerCamera.instance.HandleLocatingLockOnTargets();//切换到左边目标
+
+                    if(PlayerCamera.instance.leftLockOnTarget != null)
+                    {
+                        //设置此目标位当前锁定目标
+                        player.playerCombatManager.SetTarget(PlayerCamera.instance.leftLockOnTarget);
+                    }
+                }
+            }
+
+            if(lockOnRightInput)
+            {
+                lockOnRightInput = false;
+
+                if(player.playerNetworkManager.isLockedOn.Value)
+                {
+                    PlayerCamera.instance.HandleLocatingLockOnTargets();//切换到右边目标
+
+                    if(PlayerCamera.instance.rightLockOnTarget != null)
+                    {
+                        //设置此目标位当前锁定目标
+                        player.playerCombatManager.SetTarget(PlayerCamera.instance.rightLockOnTarget);
+                    }
                 }
             }
         }

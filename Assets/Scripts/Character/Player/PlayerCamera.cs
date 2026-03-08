@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -35,8 +36,14 @@ namespace SG
         [SerializeField] private float minimumViewableAngle = -50f;//锁定目标的最小视角，超过这个角度的目标不能被锁定
         [SerializeField] private float maximumViewableAngle = 50f;//锁定目标的最大视角，超过这个角度的目标不能被锁定
         [SerializeField] private float lockOnTargetFlollowSpeed = 0.2f;//锁定目标时摄像机跟随的速度
+        [SerializeField] private float setCameraHeightSpeed = 0.05f;//调整摄像机高度的速度
+        [SerializeField] float unlockCameraHeight = 1.65f;//取消锁定时摄像机的高度
+        [SerializeField] float lockOnCameraHeight = 2.3f;//锁定目标时摄像机的高度
+        private Coroutine cameraLockOnHeightCoroutine;//用于调整锁定目标时摄像机高度的协程
         private List<CharacterManager> availableTargets = new List<CharacterManager>();//存储当前可锁定的目标列表
         public CharacterManager nearestLockOnTarget;
+        public CharacterManager leftLockOnTarget;
+        public CharacterManager rightLockOnTarget;
 
 
         private void Awake()
@@ -181,7 +188,10 @@ namespace SG
         {
             float shortestDistance = Mathf.Infinity; //用于记录最近目标的距离
             float shortestDistanceOfRightTarget = Mathf.Infinity;//用于记录锁定目标右边的最近距离目标（+）
-            float shortestDistanceOfLeftTarget = Mathf.Infinity;//用于记录锁定目标左边的最近距离（-）
+            float shortestDistanceOfLeftTarget = -Mathf.Infinity;//用于记录锁定目标左边的最近距离（-）
+
+            //每次重新扫描前先清空，避免旧帧目标残留导致切换异常
+            ClearLockOnTargets();
 
             //TODO:使用layermask
             Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, WorldUtilityManager.instance.GetCharacterLayer());//在玩家周围一定范围内检测可锁定目标
@@ -242,6 +252,31 @@ namespace SG
                         shortestDistance = distanceFromTarget;
                         nearestLockOnTarget = availableTargets[j];
                     }
+                    //如果已经有一个最近目标了，继续寻找右边和左边的目标
+                    if(player.playerNetworkManager.isLockedOn.Value)
+                    {
+                        //计算目标相对于玩家的相对位置
+                        Vector3 relativeEnemyPosition = player.transform.InverseTransformPoint(availableTargets[j].transform.position);
+                        //相对位置的x值，负数表示在左边，正数表示在右边
+                        var distanceFromLeftTarget = relativeEnemyPosition.x;
+                        var distanceFromRightTarget = relativeEnemyPosition.x;
+
+                        //如果这个目标就是当前锁定的目标，跳过
+                        if(availableTargets[j] == player.playerCombatManager.currentTarget)
+                            continue;
+
+                        if(relativeEnemyPosition.x <= 0 && distanceFromLeftTarget > shortestDistanceOfLeftTarget)
+                        {
+                            shortestDistanceOfLeftTarget = distanceFromLeftTarget;
+                            leftLockOnTarget = availableTargets[j];
+                        }
+                        else if(relativeEnemyPosition.x >= 0 && distanceFromRightTarget < shortestDistanceOfRightTarget)
+                        {
+                            shortestDistanceOfRightTarget = distanceFromRightTarget;
+                            rightLockOnTarget = availableTargets[j];
+                        }
+                        
+                    }
                 }
                 else
                 {
@@ -252,10 +287,89 @@ namespace SG
 
         }
 
+        public void SetLockCameraHeight()
+        {
+            if(cameraLockOnHeightCoroutine != null)
+            {
+                StopCoroutine(cameraLockOnHeightCoroutine);
+
+            }
+            cameraLockOnHeightCoroutine = StartCoroutine(SetCameraHeight());
+        }
+
         public void ClearLockOnTargets()
         {
             nearestLockOnTarget = null;
+            leftLockOnTarget = null;
+            rightLockOnTarget = null;
             availableTargets.Clear();
+        }
+
+        public IEnumerator WaitThenFindNewTarget()
+        {
+            while(player.isPerformingAction)
+            {
+                yield return null;
+            }
+            ClearLockOnTargets();
+            HandleLocatingLockOnTargets();
+
+            if(nearestLockOnTarget != null)
+            {
+                player.playerCombatManager.SetTarget(nearestLockOnTarget);
+                player.playerNetworkManager.isLockedOn.Value = true;
+            }
+
+            yield return null;
+        }
+
+        public IEnumerator SetCameraHeight()
+        {
+            float duration = 1;
+            float timer = 0;
+
+            Vector3 velocity = Vector3.zero;
+            Vector3 newLockedCameraHeight = new Vector3(cameraObject.transform.localPosition.x, lockOnCameraHeight);
+            Vector3 newUnLockedCameraHeight = new Vector3(cameraObject.transform.localPosition.x, unlockCameraHeight);
+
+            while(timer < duration)
+            {
+                timer += Time.deltaTime;
+
+                if(player != null)
+                {
+                    if(player.playerCombatManager.currentTarget != null)
+                    {
+                        cameraPivotTransform.transform.localPosition = 
+                            Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
+                        cameraPivotTransform.transform.localRotation = 
+                            Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFlollowSpeed);
+                    }
+                    else
+                    {
+                        cameraPivotTransform.transform.localPosition = 
+                            Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnLockedCameraHeight, ref velocity, setCameraHeightSpeed);
+                        
+                    }
+                }
+                
+                yield return null;
+            }
+
+            if(player != null)
+            {
+                if(player.playerCombatManager.currentTarget != null)
+                {
+                    cameraPivotTransform.transform.localPosition = newLockedCameraHeight;
+                    cameraPivotTransform.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                }
+                else
+                {
+                    cameraPivotTransform.transform.localPosition = newUnLockedCameraHeight;
+                    
+                }
+            }
+            yield return null;
         }
 
     }

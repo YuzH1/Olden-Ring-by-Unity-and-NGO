@@ -16,6 +16,9 @@ namespace SG
         protected bool fallingVelocityAsBeenSet = false;//一个标志，表示是否已经设置了下落速度，防止在每帧都设置下落速度，导致角色无法正常跳跃或落地
         protected float inAirTimer = 0;//一个计时器，用于记录角色在空中的时间，可以用于实现一些基于空中时间的逻辑，比如二段跳、长按跳跃等
 
+        [Header("Flags")]
+        public bool isRolling = false;
+
         protected virtual void Awake()
         {
             // Base locomotion initialization can go here

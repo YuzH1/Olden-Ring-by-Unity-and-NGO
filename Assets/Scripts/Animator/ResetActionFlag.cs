@@ -23,6 +23,7 @@ namespace SG
             // 避免在翻滚动画的前半部分就禁用根运动，导致翻滚动画无法正常播放
             //character.animator.applyRootMotion = false;
             character.applyRootMotion = false;//禁用根运动，让代码控制角色移动，确保角色位置正常
+            character.characterLocomotionManager.isRolling = false;//重置滚动状态，允许角色再次滚动
 
             if(character.IsOwner)
             {

@@ -93,17 +93,61 @@ namespace SG
             // Implementation for updating animator parameters
             //方法1：直接设置Animator参数，这种方法简单直接，但可能会导致动画切换不够平滑，特别是在输入值变化较大时
             //0.1f是阻尼时间，Time.deltaTime确保每帧都平滑过渡
-            float horizontal = horizontalValue;
-            float vertical = verticalValue;
+            float snappedHorizontal;
+            float SnappedVertical;
             
-            if(character.characterNetworkManager.isSprinting.Value)
+            if(horizontalValue > 0 && horizontalValue <= 0.5f)
             {
-                vertical = 2f;//如果正在冲刺，将垂直输入值设为2，触发冲刺动画
+                snappedHorizontal = 0.5f;//如果水平输入值在0到0.5之间，将其设为0.5，触发轻微移动动画
+            }
+            else if(horizontalValue > 0.5f && horizontalValue <= 1f)
+            {
+                snappedHorizontal = 1f;//如果水平输入值大于0.5，将其设为1，触发快速移动动画
+            }
+            else if(horizontalValue < 0 && horizontalValue >= -0.5f)
+            {
+                snappedHorizontal = -0.5f;//如果水平输入值在-0.5到0之间，将其设为-0.5，触发轻微移动动画
+            }
+            else if(horizontalValue < -0.5f && horizontalValue >= -1f)
+            {
+                snappedHorizontal = -1f;//如果水平输入值小于-0.5，将其设为-1，触发快速移动动画
+            }
+            else
+            {
+                snappedHorizontal = 0;
+            }
+
+            if(verticalValue > 0 && verticalValue <= 0.5f)
+            {
+                SnappedVertical = 0.5f;//如果垂直输入值在0到0.5之间，将其设为0.5，触发轻微移动动画
+            }
+            else if(verticalValue > 0.5f && verticalValue <= 1f)
+            {
+                SnappedVertical = 1f;//如果垂直输入值大于0.5，将其设为1，触发快速移动动画
+            }
+            else if(verticalValue < 0 && verticalValue >= -0.5f)
+            {
+                SnappedVertical = -0.5f;//如果垂直输入值在-0.5到0之间，将其设为-0.5，触发轻微移动动画
+            }
+            else if(verticalValue < -0.5f && verticalValue >= -1f)
+            {
+                SnappedVertical = -1f;//如果垂直输入值小于-0.5，将其设为-1，触发快速移动动画
+            }
+            else
+            {
+                SnappedVertical = 0;
             }
 
 
-            character.animator.SetFloat(horizontalParameterHash, horizontal, 0.1f, Time.deltaTime);
-            character.animator.SetFloat(verticalParameterHash, vertical, 0.1f, Time.deltaTime);
+
+            if(character.characterNetworkManager.isSprinting.Value)
+            {
+                SnappedVertical = 2f;//如果正在冲刺，将垂直输入值设为2，触发冲刺动画
+            }
+
+
+            character.animator.SetFloat(horizontalParameterHash, snappedHorizontal, 0.1f, Time.deltaTime);
+            character.animator.SetFloat(verticalParameterHash, SnappedVertical, 0.1f, Time.deltaTime);
 
 
 

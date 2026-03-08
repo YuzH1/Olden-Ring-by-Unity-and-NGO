@@ -55,8 +55,16 @@ namespace SG
                 moveAmount = player.characterNetworkManager.moveAmount.Value;
 
                 //如果没有锁定目标，则水平输入设为0，只使用moveAmount来控制前进、后退、原地等动画的切换
-                player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount);
                 //如果锁定目标，则传递正常的水平与垂直输入值
+                if(!player.playerNetworkManager.isLockedOn.Value || player.playerNetworkManager.isSprinting.Value) //如果没有锁定目标，或者正在冲刺
+                {
+                    player.playerAnimatorManager.UpdateAnimatorMovementParameters(0, moveAmount); //如果没有锁定目标，horizontalInput设为0，只有moveAmount参与动画参数的设置
+                }
+                else
+                {
+                    player.playerAnimatorManager.UpdateAnimatorMovementParameters(horizontalMovement, verticalMovement); //如果有锁定目标，horizontalInput参与动画参数的设置
+                }
+
             }
 
         }
@@ -140,26 +148,67 @@ namespace SG
 
         private void HandleRotation()
         {
+            if(player.isDead.Value)
+                return;//如果角色死亡，直接返回，不执行旋转逻辑
             if(!player.canRotate)
                 return;//如果角色不能旋转，直接返回，不执行旋转逻辑
-            targetRotationDirection = Vector3.zero;//目标方向初始化为零向量
-            //根据摄像机的前方向乘以垂直输入来确定前后方向
-            targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
-            //根据摄像机的右方向乘以水平输入来确定左右方向
-            targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
-            targetRotationDirection.Normalize();//归一化，防止斜着走比直着走快
-            targetRotationDirection.y = 0;//确保y轴不变，防止角色倾斜
-
-            if(targetRotationDirection == Vector3.zero)
+            if(player.playerNetworkManager.isLockedOn.Value || player.playerLocomotionManager.isRolling) //如果锁定目标，或者正在滚动
             {
-                targetRotationDirection = transform.forward;//如果没有输入，则保持当前朝向
+                if(player.playerNetworkManager.isSprinting.Value)
+                {
+                    Vector3 targetDirection = Vector3.zero;//目标方向初始化为零向量
+                    targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;//根据摄像机的前方向乘以垂直输入来确定前后方向
+                    targetDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;//根据摄像机的右方向乘以水平输入来确定左右方向
+                    targetDirection.Normalize();//归一化，防止斜着走比直着走快
+                    targetDirection.y = 0;//确保y轴不变，防止角色倾
+
+                    if(targetDirection == Vector3.zero)
+                    {
+                        targetDirection = transform.forward;//如果没有输入，则保持当前朝向
+                    }
+
+                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);//计算目标旋转，使角色面向目标方向，四元数表示旋转
+                    Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);//平滑旋转角色，使用插值函数
+                    transform.rotation = finalRotation;
+
+                }
+                else
+                {
+                    if(player.playerCombatManager.currentTarget == null)
+                        return;
+
+                    Vector3 targetDirection;
+                    targetDirection = player.playerCombatManager.currentTarget.transform.position - transform.position;//目标方向是从角色位置指向目标位置的向量
+                    targetDirection.y = 0;//确保y轴不变，防止角色倾斜
+                    targetDirection.Normalize();//归一化，防止斜着走比直着走快
+                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);//计算目标旋转，使角色面向目标方向，四元数表示旋转
+                    Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);//平滑旋转角色，使用插值函数
+                    transform.rotation = finalRotation;
+                }
+            }
+            else
+            {
+                targetRotationDirection = Vector3.zero;//目标方向初始化为零向量
+                //根据摄像机的前方向乘以垂直输入来确定前后方向
+                targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+                //根据摄像机的右方向乘以水平输入来确定左右方向
+                targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+                targetRotationDirection.Normalize();//归一化，防止斜着走比直着走快
+                targetRotationDirection.y = 0;//确保y轴不变，防止角色倾斜
+
+                if(targetRotationDirection == Vector3.zero)
+                {
+                    targetRotationDirection = transform.forward;//如果没有输入，则保持当前朝向
+                }
+
+                //计算目标旋转，使角色面向目标方向，四元数表示旋转
+                Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
+                //平滑旋转角色，使用插值函数
+                Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = targetRotation;
+                
             }
 
-            //计算目标旋转，使角色面向目标方向，四元数表示旋转
-            Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
-            //平滑旋转角色，使用插值函数
-            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
-            transform.rotation = targetRotation;
 
         }
 
@@ -219,11 +268,13 @@ namespace SG
                 rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;//根据摄像机的右方向乘以水平输入来确定左右方向
 
                 rollDirection.y = 0;
+                rollDirection.Normalize();//归一化，防止斜着走比直着走快
                 Quaternion playerRotation = Quaternion.LookRotation(rollDirection);//计算玩家朝向，面向闪避方向
                 player.transform.rotation = playerRotation;//旋转玩家，使其面向闪避方向
                 
                 //播放一个滚动动画
                 player.playerAnimatorManager.PlayTargetActionAnimation("Roll_Forward_01", true, true);
+                player.playerLocomotionManager.isRolling = true;//设置滚动状态为true，表示正在滚动
             }
             else
             {

@@ -55,7 +55,14 @@ namespace SG
             player.playerNetworkManager.currentStamina.Value -= Mathf.RoundToInt(staminaDeducted);
         }
 
-        
+        public override void SetTarget(CharacterManager newTarget)
+        {
+            base.SetTarget(newTarget);
+
+            if(player.IsOwner)
+            {
+                PlayerCamera.instance.SetLockCameraHeight();            }
+        }
 
     }
 }
