@@ -215,16 +215,16 @@ namespace SG
                 if(player.playerCombatManager.currentTarget.isDead.Value)
                 {
                     player.playerNetworkManager.isLockedOn.Value = false;//如果当前目标已死亡，解锁
+                    if(lockOnCoroutine != null)
+                    {
+                        StopCoroutine(lockOnCoroutine); //如果已经有一个锁定协程在运行，先停止它，防止多个协程同时运行导致冲突
+                    }
+
+                    lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget()); //启动一个新的协程来寻找锁定目标   //尝试寻找新的锁定目标
                 }
 
              
 
-                if(lockOnCoroutine != null)
-                {
-                    StopCoroutine(lockOnCoroutine); //如果已经有一个锁定协程在运行，先停止它，防止多个协程同时运行导致冲突
-                }
-
-                lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget()); //启动一个新的协程来寻找锁定目标   //尝试寻找新的锁定目标
             }
 
             if(lockOnInput && player.playerNetworkManager.isLockedOn.Value)

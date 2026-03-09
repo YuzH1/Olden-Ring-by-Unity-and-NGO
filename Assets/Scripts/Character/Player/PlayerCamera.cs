@@ -38,7 +38,7 @@ namespace SG
         [SerializeField] private float lockOnTargetFlollowSpeed = 0.2f;//锁定目标时摄像机跟随的速度
         [SerializeField] private float setCameraHeightSpeed = 0.05f;//调整摄像机高度的速度
         [SerializeField] float unlockCameraHeight = 1.65f;//取消锁定时摄像机的高度
-        [SerializeField] float lockOnCameraHeight = 2.3f;//锁定目标时摄像机的高度
+        [SerializeField] float lockOnCameraHeight = 2f;//锁定目标时摄像机的高度
         private Coroutine cameraLockOnHeightCoroutine;//用于调整锁定目标时摄像机高度的协程
         private List<CharacterManager> availableTargets = new List<CharacterManager>();//存储当前可锁定的目标列表
         public CharacterManager nearestLockOnTarget;
@@ -342,8 +342,8 @@ namespace SG
                     {
                         cameraPivotTransform.transform.localPosition = 
                             Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
-                        cameraPivotTransform.transform.localRotation = 
-                            Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFlollowSpeed);
+                        // cameraPivotTransform.transform.localRotation = 
+                        //     Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFlollowSpeed);
                     }
                     else
                     {
@@ -361,7 +361,7 @@ namespace SG
                 if(player.playerCombatManager.currentTarget != null)
                 {
                     cameraPivotTransform.transform.localPosition = newLockedCameraHeight;
-                    cameraPivotTransform.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                    // cameraPivotTransform.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 }
                 else
                 {
