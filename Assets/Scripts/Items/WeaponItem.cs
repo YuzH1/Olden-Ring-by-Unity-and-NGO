@@ -29,9 +29,12 @@ namespace SG
 
         //武器伤害修正
         [Header("Attack Modifiers")]
-        public float light_Attack_01_Multiplier = 1.1f;//轻攻击伤害倍率
+        public float light_Attack_01_Multiplier = 1f;//轻攻击伤害倍率
+        public float light_Attack_02_Multiplier = 1.2f;//轻攻击02伤害倍率
         public float heavy_Attack_01_Multiplier = 1.5f;//重攻击伤害倍率
+        public float heavy_Attack_02_Multiplier = 1.7f;//重攻击02伤害倍率
         public float charge_Heavy_Attack_01_Multiplier = 2.0f;//蓄力重攻击伤害倍率
+        public float charge_Heavy_Attack_02_Multiplier = 2.5f;//蓄力重攻击02伤害倍率
 
         //锋利，厚重，轻便
 

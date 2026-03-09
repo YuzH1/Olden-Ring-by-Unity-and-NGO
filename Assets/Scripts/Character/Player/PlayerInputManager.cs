@@ -121,12 +121,12 @@ namespace SG
 
                 //攻击输入
                     //轻攻击
-                playerControls.PlayerActions.LightAttack.performed += ctx => lightAttackInput = true;
+                playerControls.PlayerActions.RightLightAttack.performed += ctx => lightAttackInput = true;
                     //重攻击
-                playerControls.PlayerActions.HeavyAttack.performed += ctx => HeavyAttackInput = true;
+                playerControls.PlayerActions.RightHeavyAttack.performed += ctx => HeavyAttackInput = true;
                     //重攻击蓄力
-                playerControls.PlayerActions.ChargeHeavyAttack.performed += ctx => ChargeHeavyAttackInput = true;
-                playerControls.PlayerActions.ChargeHeavyAttack.canceled += ctx => ChargeHeavyAttackInput = false; 
+                playerControls.PlayerActions.RightChargeHeavyAttack.performed += ctx => ChargeHeavyAttackInput = true;
+                playerControls.PlayerActions.RightChargeHeavyAttack.canceled += ctx => ChargeHeavyAttackInput = false; 
 
                 //锁定输入
                 playerControls.PlayerActions.LockOn.performed += ctx => lockOnInput = true;

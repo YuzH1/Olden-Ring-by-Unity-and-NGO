@@ -190,6 +190,7 @@ namespace SG
             //决定，如果我们的攻击能被格挡
             //告诉网络“Attacking”标志被激活（为了反击和格挡等）
             character.characterCombatManager.currentAttackType = attackType;//更新当前攻击类型，这样其他系统就可以根据这个信息来决定伤害、格挡等逻辑
+            character.characterCombatManager.lastAttackAnimationPerformed = targetAnimation;//更新最后一次播放的攻击动画，这样我们就可以在需要的时候避免重复播放同一个攻击动画
             character.applyRootMotion = applyRootMotion;//如果正在执行动作，启用根运动，让动画控制角色移动；否则禁用根运动，允许代码控制角色移动
             character.animator.CrossFade(targetAnimation, 0.2f);//平滑过渡到目标动画，0.2f是过渡时间，可以根据需要调整
             character.isPerformingAction = isPerformingAction;//更新角色的动作状态标志
@@ -203,5 +204,13 @@ namespace SG
                 applyRootMotion);
         }
 
+        public virtual void EnableCanDoCombo()
+        {
+            
+        }
+        public virtual void DisableCanDoCombo()
+        {
+            
+        }
     }
 }

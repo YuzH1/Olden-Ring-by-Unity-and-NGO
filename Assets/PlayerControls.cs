@@ -212,7 +212,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Light Attack"",
+                    ""name"": ""Right Light Attack"",
                     ""type"": ""PassThrough"",
                     ""id"": ""708670e7-882f-4e6c-b3fa-7e99315abd37"",
                     ""expectedControlType"": ""Button"",
@@ -221,7 +221,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Heavy Attack"",
+                    ""name"": ""Right Heavy Attack"",
                     ""type"": ""Button"",
                     ""id"": ""39ebf685-a574-452e-a7ef-bb4bcab9a242"",
                     ""expectedControlType"": """",
@@ -230,7 +230,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Charge Heavy Attack"",
+                    ""name"": ""Right Charge Heavy Attack"",
                     ""type"": ""PassThrough"",
                     ""id"": ""02783de6-6b37-49b0-8683-1b0db7e25116"",
                     ""expectedControlType"": ""Button"",
@@ -327,7 +327,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Light Attack"",
+                    ""action"": ""Right Light Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -338,7 +338,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Light Attack"",
+                    ""action"": ""Right Light Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -437,7 +437,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Heavy Attack"",
+                    ""action"": ""Right Heavy Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -448,7 +448,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Heavy Attack"",
+                    ""action"": ""Right Heavy Attack"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -459,7 +459,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Heavy Attack"",
+                    ""action"": ""Right Heavy Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -470,7 +470,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Heavy Attack"",
+                    ""action"": ""Right Heavy Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -481,7 +481,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Charge Heavy Attack"",
+                    ""action"": ""Right Charge Heavy Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -492,7 +492,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Charge Heavy Attack"",
+                    ""action"": ""Right Charge Heavy Attack"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -503,7 +503,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Charge Heavy Attack"",
+                    ""action"": ""Right Charge Heavy Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -514,7 +514,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Charge Heavy Attack"",
+                    ""action"": ""Right Charge Heavy Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -663,9 +663,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_LockOn = m_PlayerActions.FindAction("Lock On", throwIfNotFound: true);
-        m_PlayerActions_LightAttack = m_PlayerActions.FindAction("Light Attack", throwIfNotFound: true);
-        m_PlayerActions_HeavyAttack = m_PlayerActions.FindAction("Heavy Attack", throwIfNotFound: true);
-        m_PlayerActions_ChargeHeavyAttack = m_PlayerActions.FindAction("Charge Heavy Attack", throwIfNotFound: true);
+        m_PlayerActions_RightLightAttack = m_PlayerActions.FindAction("Right Light Attack", throwIfNotFound: true);
+        m_PlayerActions_RightHeavyAttack = m_PlayerActions.FindAction("Right Heavy Attack", throwIfNotFound: true);
+        m_PlayerActions_RightChargeHeavyAttack = m_PlayerActions.FindAction("Right Charge Heavy Attack", throwIfNotFound: true);
         m_PlayerActions_SeekLeftLockOnTarget = m_PlayerActions.FindAction("Seek Left Lock On Target", throwIfNotFound: true);
         m_PlayerActions_SeekRightLockOnTarget = m_PlayerActions.FindAction("Seek Right Lock On Target", throwIfNotFound: true);
         m_PlayerActions_SwitchRightWeapon = m_PlayerActions.FindAction("Switch Right Weapon", throwIfNotFound: true);
@@ -860,9 +860,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_LockOn;
-    private readonly InputAction m_PlayerActions_LightAttack;
-    private readonly InputAction m_PlayerActions_HeavyAttack;
-    private readonly InputAction m_PlayerActions_ChargeHeavyAttack;
+    private readonly InputAction m_PlayerActions_RightLightAttack;
+    private readonly InputAction m_PlayerActions_RightHeavyAttack;
+    private readonly InputAction m_PlayerActions_RightChargeHeavyAttack;
     private readonly InputAction m_PlayerActions_SeekLeftLockOnTarget;
     private readonly InputAction m_PlayerActions_SeekRightLockOnTarget;
     private readonly InputAction m_PlayerActions_SwitchRightWeapon;
@@ -895,17 +895,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @LockOn => m_Wrapper.m_PlayerActions_LockOn;
         /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/LightAttack".
+        /// Provides access to the underlying input action "PlayerActions/RightLightAttack".
         /// </summary>
-        public InputAction @LightAttack => m_Wrapper.m_PlayerActions_LightAttack;
+        public InputAction @RightLightAttack => m_Wrapper.m_PlayerActions_RightLightAttack;
         /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/HeavyAttack".
+        /// Provides access to the underlying input action "PlayerActions/RightHeavyAttack".
         /// </summary>
-        public InputAction @HeavyAttack => m_Wrapper.m_PlayerActions_HeavyAttack;
+        public InputAction @RightHeavyAttack => m_Wrapper.m_PlayerActions_RightHeavyAttack;
         /// <summary>
-        /// Provides access to the underlying input action "PlayerActions/ChargeHeavyAttack".
+        /// Provides access to the underlying input action "PlayerActions/RightChargeHeavyAttack".
         /// </summary>
-        public InputAction @ChargeHeavyAttack => m_Wrapper.m_PlayerActions_ChargeHeavyAttack;
+        public InputAction @RightChargeHeavyAttack => m_Wrapper.m_PlayerActions_RightChargeHeavyAttack;
         /// <summary>
         /// Provides access to the underlying input action "PlayerActions/SeekLeftLockOnTarget".
         /// </summary>
@@ -960,15 +960,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LockOn.started += instance.OnLockOn;
             @LockOn.performed += instance.OnLockOn;
             @LockOn.canceled += instance.OnLockOn;
-            @LightAttack.started += instance.OnLightAttack;
-            @LightAttack.performed += instance.OnLightAttack;
-            @LightAttack.canceled += instance.OnLightAttack;
-            @HeavyAttack.started += instance.OnHeavyAttack;
-            @HeavyAttack.performed += instance.OnHeavyAttack;
-            @HeavyAttack.canceled += instance.OnHeavyAttack;
-            @ChargeHeavyAttack.started += instance.OnChargeHeavyAttack;
-            @ChargeHeavyAttack.performed += instance.OnChargeHeavyAttack;
-            @ChargeHeavyAttack.canceled += instance.OnChargeHeavyAttack;
+            @RightLightAttack.started += instance.OnRightLightAttack;
+            @RightLightAttack.performed += instance.OnRightLightAttack;
+            @RightLightAttack.canceled += instance.OnRightLightAttack;
+            @RightHeavyAttack.started += instance.OnRightHeavyAttack;
+            @RightHeavyAttack.performed += instance.OnRightHeavyAttack;
+            @RightHeavyAttack.canceled += instance.OnRightHeavyAttack;
+            @RightChargeHeavyAttack.started += instance.OnRightChargeHeavyAttack;
+            @RightChargeHeavyAttack.performed += instance.OnRightChargeHeavyAttack;
+            @RightChargeHeavyAttack.canceled += instance.OnRightChargeHeavyAttack;
             @SeekLeftLockOnTarget.started += instance.OnSeekLeftLockOnTarget;
             @SeekLeftLockOnTarget.performed += instance.OnSeekLeftLockOnTarget;
             @SeekLeftLockOnTarget.canceled += instance.OnSeekLeftLockOnTarget;
@@ -1004,15 +1004,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LockOn.started -= instance.OnLockOn;
             @LockOn.performed -= instance.OnLockOn;
             @LockOn.canceled -= instance.OnLockOn;
-            @LightAttack.started -= instance.OnLightAttack;
-            @LightAttack.performed -= instance.OnLightAttack;
-            @LightAttack.canceled -= instance.OnLightAttack;
-            @HeavyAttack.started -= instance.OnHeavyAttack;
-            @HeavyAttack.performed -= instance.OnHeavyAttack;
-            @HeavyAttack.canceled -= instance.OnHeavyAttack;
-            @ChargeHeavyAttack.started -= instance.OnChargeHeavyAttack;
-            @ChargeHeavyAttack.performed -= instance.OnChargeHeavyAttack;
-            @ChargeHeavyAttack.canceled -= instance.OnChargeHeavyAttack;
+            @RightLightAttack.started -= instance.OnRightLightAttack;
+            @RightLightAttack.performed -= instance.OnRightLightAttack;
+            @RightLightAttack.canceled -= instance.OnRightLightAttack;
+            @RightHeavyAttack.started -= instance.OnRightHeavyAttack;
+            @RightHeavyAttack.performed -= instance.OnRightHeavyAttack;
+            @RightHeavyAttack.canceled -= instance.OnRightHeavyAttack;
+            @RightChargeHeavyAttack.started -= instance.OnRightChargeHeavyAttack;
+            @RightChargeHeavyAttack.performed -= instance.OnRightChargeHeavyAttack;
+            @RightChargeHeavyAttack.canceled -= instance.OnRightChargeHeavyAttack;
             @SeekLeftLockOnTarget.started -= instance.OnSeekLeftLockOnTarget;
             @SeekLeftLockOnTarget.performed -= instance.OnSeekLeftLockOnTarget;
             @SeekLeftLockOnTarget.canceled -= instance.OnSeekLeftLockOnTarget;
@@ -1312,26 +1312,26 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLockOn(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Light Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Right Light Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLightAttack(InputAction.CallbackContext context);
+        void OnRightLightAttack(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Heavy Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Right Heavy Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnRightHeavyAttack(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Charge Heavy Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Right Charge Heavy Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnChargeHeavyAttack(InputAction.CallbackContext context);
+        void OnRightChargeHeavyAttack(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Seek Left Lock On Target" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

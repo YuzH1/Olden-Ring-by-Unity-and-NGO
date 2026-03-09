@@ -9,12 +9,17 @@ namespace SG
         PlayerManager player;
         public WeaponItem currentWeaponBeingUsed;//当前正在使用的武器，可以是近战武器或远程武器
 
+        [Header("Flags")]
+        public bool canComboWithMainHandWeapon = false;//是否可以使用主手武器进行战斗，默认为false，只有当玩家装备了主手武器时才会设置为true
+        //public bool canComboWithOffHandWeapon = false;//两种情况：主副手同类武器，不同类武器，不同攻击模组
+
         protected override void Awake()
         {
             base.Awake();
 
             player = GetComponent<PlayerManager>();
         }
+        
         public void PerformWeaponBasedAction(WeaponItemAction weaponAction, WeaponItem weaponPerformingAction)
         {
             if (player.IsOwner)
@@ -64,6 +69,8 @@ namespace SG
                 PlayerCamera.instance.SetLockCameraHeight();            
             }
         }
+
+        
 
     }
 }

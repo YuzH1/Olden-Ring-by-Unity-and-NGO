@@ -24,6 +24,7 @@ namespace SG
             //character.animator.applyRootMotion = false;
             character.applyRootMotion = false;//禁用根运动，让代码控制角色移动，确保角色位置正常
             character.characterLocomotionManager.isRolling = false;//重置滚动状态，允许角色再次滚动
+            character.characterAnimatorManager.DisableCanDoCombo();//重置连击状态，防止角色在新状态下还能继续连击
 
             if(character.IsOwner)
             {
