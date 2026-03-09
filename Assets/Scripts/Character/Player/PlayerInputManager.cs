@@ -35,8 +35,13 @@ namespace SG
         [SerializeField] bool dodgeInput = false;//存储闪避输入状态
         [SerializeField] bool sprintInput = false;//存储冲刺输入状态
         [SerializeField] bool jumpInput = false;//存储跳跃输入状态
-        [SerializeField] bool lightAttackInput = false;//存储右手攻击输入状态
-        
+
+        [Header("Light Attack Inputs")]
+        [SerializeField] bool lightAttackInput = false;//存储右手轻攻击输入状态
+
+        [Header("Heavy Attack Inputs")]
+        [SerializeField] bool HeavyAttackInput = false;//存储重攻击输入状态
+        [SerializeField] bool ChargeHeavyAttackInput = false;//存储重攻击按住输入状态
 
         private void Awake()
         {
@@ -98,7 +103,15 @@ namespace SG
                 playerControls.PlayerCamera.Movement.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += ctx => dodgeInput = true;
                 playerControls.PlayerActions.Jump.performed += ctx => jumpInput = true;
+
+                //攻击输入
+                    //轻攻击
                 playerControls.PlayerActions.LightAttack.performed += ctx => lightAttackInput = true;
+                    //重攻击
+                playerControls.PlayerActions.HeavyAttack.performed += ctx => HeavyAttackInput = true;
+                    //重攻击蓄力
+                playerControls.PlayerActions.ChargeHeavyAttack.performed += ctx => ChargeHeavyAttackInput = true;
+                playerControls.PlayerActions.ChargeHeavyAttack.canceled += ctx => ChargeHeavyAttackInput = false; 
 
                 //锁定输入
                 playerControls.PlayerActions.LockOn.performed += ctx => lockOnInput = true;
@@ -156,9 +169,11 @@ namespace SG
             HandleDodgeInput();
             HandleSprintingInput();
             HandleJumpInput();
-            HandleLightAttackInput();
             HandleLockOnInput();
             HandleLockOnSwitchTargetInput();
+            HandleLightAttackInput();
+            HandleHeavyAttackInput();
+            HandleChargeHeavyAttackInput();
         }   
 
         //移动
@@ -229,10 +244,11 @@ namespace SG
 
             if(lockOnInput && player.playerNetworkManager.isLockedOn.Value)
             {
+                //取消锁定
                 lockOnInput = false;
                 PlayerCamera.instance.ClearLockOnTargets();
+                player.playerCombatManager.SetTarget(null);//清除当前目标并触发摄像机高度恢复
                 player.playerNetworkManager.isLockedOn.Value = false;//更新网络变量，通知所有客户端取消锁定
-                //取消锁定
                 return;
             }
 
@@ -352,5 +368,34 @@ namespace SG
             }
         }
 
+        private void HandleHeavyAttackInput()
+        {
+            if(HeavyAttackInput)
+            {
+                HeavyAttackInput = false; //重置攻击输入状态，防止持续触发攻击动作
+
+                //TODO:如果在menu或者ui界面，不触发攻击动作（return）
+
+                //如果在游戏中，尝试触发攻击动作（调用玩家的攻击方法）
+                player.playerNetworkManager.SetCharacterActionHand(true); //设置当前使用右手动作，更新网络变量，通知所有客户端当前使用右手动作
+
+                //TODO:如果双手握持武器，该怎样做
+
+                player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.OH_RT_Action, player.playerInventoryManager.currentRightHandWeapon); //调用玩家战斗管理器的函数，传入右手武器的攻击动作和右手武器数据，执行攻击动作
+            }
+        }
+
+        private void HandleChargeHeavyAttackInput()
+        {
+            //只当我们在需要蓄力的重攻击动作中，并且按住攻击键时，才执行蓄力逻辑
+            if(player.isPerformingAction)
+            {
+                if(player.playerNetworkManager.isUsingRightHand.Value)
+                {
+                    player.playerNetworkManager.isChargingAttack.Value = ChargeHeavyAttackInput; //更新网络变量，通知所有客户端当前是否正在蓄力重攻击
+                }
+            }
+            
+        }
     }
 }

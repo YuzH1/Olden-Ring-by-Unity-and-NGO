@@ -5654,12 +5654,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 892288408561635210, guid: 5974981ffa3ed0142b6605db9519f2ee, type: 3}
       propertyPath: weaponItemActions.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 892288408561635210, guid: 5974981ffa3ed0142b6605db9519f2ee, type: 3}
       propertyPath: 'weaponItemActions.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: 53021a696081e1b42a24237a5680916c, type: 2}
+    - target: {fileID: 892288408561635210, guid: 5974981ffa3ed0142b6605db9519f2ee, type: 3}
+      propertyPath: 'weaponItemActions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f74723ac94474da448c7986f76a9c60e, type: 2}
     - target: {fileID: 1415579719781811424, guid: 5974981ffa3ed0142b6605db9519f2ee, type: 3}
       propertyPath: m_LocalPosition.x
       value: 858.0338
@@ -6015,6 +6019,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3290330711651164075, guid: 52a46516d9a501447b5cdcb96f9ea346, type: 3}
+      propertyPath: setCameraHeightSpeed
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 5566894930895130876, guid: 52a46516d9a501447b5cdcb96f9ea346, type: 3}
       propertyPath: m_Name
       value: Player Camera (Left & Right)

@@ -29,9 +29,15 @@ public enum WeaponModelSlot
     // Back,
 }
 
+//用来计算不同攻击类型的伤害倍率和体力消耗倍率
 public enum AttackType
 {
     LightAttack01,
+    LightAttack02,
+    HeavyAttack01,
+    ChargeHeavyAttack01,
+    HeavyAttack02,
+    ChargeHeavyAttack02,
 }
 
 

@@ -97,11 +97,48 @@ namespace SG
             playerNetworkManager.currentLeftHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentLeftHandWeaponChanged; //当当前左手武器ID变化时，更新左手武器数据和模型    
             playerNetworkManager.currentWeaponBeingUsedID.OnValueChanged += playerNetworkManager.OnCurrentWeaponBeingUsedChanged; //当当前正在使用的武器ID变化时，更新当前正在使用的武器数据
 
+            //标志
+            playerNetworkManager.isChargingAttack.OnValueChanged += playerNetworkManager.OnIsChargingAttackChanged; //当充能攻击状态发生变化时，更新角色的动画状态
+
             //在连接之后，如果是客户端但不是服务器，从保存数据中加载角色数据，确保角色数据在连接后正确加载
             if(IsOwner && !IsServer)
             {
                 LoadGameDataFromCurrentCharacterData(ref WorldSaveGameManager.Instance.currentCharacterData); //如果是客户端但不是服务器，从保存数据中加载角色数据
             }
+        }
+
+        public override void OnNetworkDespawn()//当对象被销毁时调用，例如角色死亡后，或者玩家离开游戏时
+        {
+            base.OnNetworkDespawn();
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnectedCallback; //当对象被销毁时，取消注册客户端连接回调函数，避免内存泄漏
+
+            // 如果是拥有者（本地玩家），需要取消注册之前注册的网络变量变化回调函数，避免内存泄漏和错误调用
+            if(IsOwner)
+            {
+                playerNetworkManager.vitality.OnValueChanged -= playerNetworkManager.SetNewMaxHealthValue; 
+                playerNetworkManager.endurance.OnValueChanged -= playerNetworkManager.SetNewMaxStaminaValue;
+
+                //更新UI中的数据条
+                playerNetworkManager.currentHealth.OnValueChanged -= PlayerUIManager.Instance.playerUIHudManager.SetNewHealthValue; 
+                playerNetworkManager.currentStamina.OnValueChanged -= PlayerUIManager.Instance.playerUIHudManager.SetNewStaminaValue;
+                playerNetworkManager.currentStamina.OnValueChanged -= playerStatsManager.ResetStaminaRegenerationTimer;
+            }
+            
+            //数据
+            playerNetworkManager.currentHealth.OnValueChanged -= playerNetworkManager.CheckHP; 
+
+            //锁定
+            playerNetworkManager.isLockedOn.OnValueChanged -= playerNetworkManager.OnIsLockedOnChanged;
+            playerNetworkManager.currentTargetNetworkObjectID.OnValueChanged -= playerNetworkManager.OnLockOnTargetIDChanged;
+
+            //装备
+            playerNetworkManager.currentRightHandWeaponID.OnValueChanged -= playerNetworkManager.OnCurrentRightHandWeaponChanged;
+            playerNetworkManager.currentLeftHandWeaponID.OnValueChanged -= playerNetworkManager.OnCurrentLeftHandWeaponChanged;
+            playerNetworkManager.currentWeaponBeingUsedID.OnValueChanged -= playerNetworkManager.OnCurrentWeaponBeingUsedChanged;
+
+            //标志
+            playerNetworkManager.isChargingAttack.OnValueChanged -= playerNetworkManager.OnIsChargingAttackChanged;
+
         }
 
         private void OnClientConnectedCallback(ulong clientID)//当有新客户端连接时，服务器会调用这个函数，参数clientID是新连接的客户端的ID

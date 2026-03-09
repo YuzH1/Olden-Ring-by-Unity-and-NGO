@@ -61,7 +61,8 @@ namespace SG
 
             if(player.IsOwner)
             {
-                PlayerCamera.instance.SetLockCameraHeight();            }
+                PlayerCamera.instance.SetLockCameraHeight();            
+            }
         }
 
     }

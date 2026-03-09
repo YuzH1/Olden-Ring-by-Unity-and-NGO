@@ -319,6 +319,10 @@ namespace SG
                 player.playerCombatManager.SetTarget(nearestLockOnTarget);
                 player.playerNetworkManager.isLockedOn.Value = true;
             }
+            else
+            {
+                player.playerCombatManager.SetTarget(null);//没有找到新目标，清除当前目标并恢复摄像机高度
+            }
 
             yield return null;
         }
@@ -342,8 +346,8 @@ namespace SG
                     {
                         cameraPivotTransform.transform.localPosition = 
                             Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
-                        // cameraPivotTransform.transform.localRotation = 
-                        //     Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFlollowSpeed);
+                        cameraPivotTransform.transform.localRotation = 
+                            Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFlollowSpeed);
                     }
                     else
                     {
@@ -361,7 +365,7 @@ namespace SG
                 if(player.playerCombatManager.currentTarget != null)
                 {
                     cameraPivotTransform.transform.localPosition = newLockedCameraHeight;
-                    // cameraPivotTransform.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                    cameraPivotTransform.transform.localRotation = Quaternion.Euler(0, 0, 0);
                 }
                 else
                 {

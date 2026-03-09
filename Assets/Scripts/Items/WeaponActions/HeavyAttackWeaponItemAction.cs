@@ -1,12 +1,11 @@
-using System.Buffers.Text;
 using UnityEngine;
 
 namespace SG
 {
-    [CreateAssetMenu(menuName = "Character Actions/Weapon Item Action/Light Attack Action")]
-    public class LightAttackWeaponItemAction : WeaponItemAction
+    [CreateAssetMenu(menuName = "Character Actions/Weapon Item Action/Heavy Attack Action")]
+    public class HeavyAttackWeaponItemAction : WeaponItemAction
     {
-        [SerializeField] string light_Attack_01 = "Main_Light_Attack_01";//main = 主手
+        [SerializeField] string heavy_Attack_01 = "Main_Heavy_Attack_01";//main = 主手
 
 
         public override void AttemptToPerformAction(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
@@ -35,17 +34,17 @@ namespace SG
                 return;
             }
 
-            PerformLightAttack(playerPerformingAction, weaponPerformingAction);
+            PerformHeavyAttack(playerPerformingAction, weaponPerformingAction);
 
         }
 
-        private void PerformLightAttack(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
+        private void PerformHeavyAttack(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
         {
             
-            //执行轻攻击的具体逻辑，例如播放动画、应用伤害等
+            //执行重攻击的具体逻辑，例如播放动画、应用伤害等
             if(playerPerformingAction.playerNetworkManager.isUsingRightHand.Value)
             {
-                playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01,light_Attack_01, true); //播放右手轻攻击动画
+                playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.HeavyAttack01,heavy_Attack_01, true); //播放右手重攻击动画
             }
             if(playerPerformingAction.playerNetworkManager.isUsingLeftHand.Value)
             {

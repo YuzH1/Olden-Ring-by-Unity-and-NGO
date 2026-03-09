@@ -27,6 +27,7 @@ namespace SG
         public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<bool> isLockedOn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+        public NetworkVariable<bool> isChargingAttack = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
         [Header("Stats")]
         public NetworkVariable<int> endurance = new NetworkVariable<int>(10, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -78,6 +79,20 @@ namespace SG
             {
                 character.characterCombatManager.currentTarget = null;//如果锁定状态变为false，清除当前锁定目标
             }
+        }
+
+        public void OnIsChargingAttackChanged(bool oldStatus, bool newStatus)
+        {
+            //当充能攻击状态发生变化时，如果当前客户端是拥有者，那么就根据新的状态来更新角色的动画状态
+            
+            character.animator.SetBool("isChargingAttack", newStatus);
+
+            // //当锁定状态改变时（无论是锁定还是取消锁定），调整摄像机高度
+            // if(character.IsOwner)
+            // {
+            //     PlayerCamera.instance.SetLockCameraHeight();
+            // }
+            
         }
 
         //ServerRpc是指这个方法只能由客户端调用，并且会在服务器上执行，

@@ -151,6 +151,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Heavy Attack",
+                    "type": "Button",
+                    "id": "39ebf685-a574-452e-a7ef-bb4bcab9a242",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Charge Heavy Attack",
+                    "type": "PassThrough",
+                    "id": "02783de6-6b37-49b0-8683-1b0db7e25116",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(pressPoint=0.1)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -307,6 +325,94 @@
                     "action": "Seek Right Lock On Target",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9ed280c0-470b-40e0-af68-ffdbfa0f637a",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heavy Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Ctrl + Left",
+                    "id": "0fd0b619-02eb-4411-907a-5f929072221c",
+                    "path": "OneModifier(overrideModifiersNeedToBePressedFirst=true)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heavy Attack",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "fc6f70ea-89b3-426f-bdac-4235e90b7fce",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heavy Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "84261424-12c1-4cee-a152-f1080f399946",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heavy Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "bec8faec-3ed3-46a1-ade9-33aed4165ba2",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Charge Heavy Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Ctrl + Left",
+                    "id": "558b22a3-f5ef-450e-881e-6988f75f7484",
+                    "path": "OneModifier(overrideModifiersNeedToBePressedFirst=true)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Charge Heavy Attack",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "67841386-975b-4905-878c-40db90fa9145",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Charge Heavy Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "3443c1d0-68b6-404c-b550-6c1dd64ea608",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Charge Heavy Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

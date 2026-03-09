@@ -8,8 +8,9 @@ namespace SG
         public CharacterManager characterCausingDamage;//当计算伤害时用来检查攻击来源的伤害修正
 
         [Header("Weapon Attack Modifiers")]
-        public float light_Attack_01_Modifier;//轻攻击01的伤害修正，未来会拓展为不同攻击类型的不同伤害修正
-
+        public float light_Attack_01_Modifier;//轻攻击01的伤害修正
+        public float heavy_Attack_01_Modifier;//重攻击01的伤害修正
+        public float charge_Heavy_Attack_01_Modifier;//蓄力重攻击01的伤害修正
         protected override void Awake()
         {
             base.Awake();
@@ -76,6 +77,12 @@ namespace SG
             {
                 case AttackType.LightAttack01:
                     ApplyAttackModifiers(light_Attack_01_Modifier, damageEffect);
+                    break;
+                case AttackType.HeavyAttack01:
+                    ApplyAttackModifiers(heavy_Attack_01_Modifier, damageEffect);
+                    break;
+                case AttackType.ChargeHeavyAttack01:
+                    ApplyAttackModifiers(charge_Heavy_Attack_01_Modifier, damageEffect);
                     break;
                 //如果有其他攻击类型，也在这里添加对应的伤害修正项
 

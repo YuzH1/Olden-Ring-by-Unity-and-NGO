@@ -237,6 +237,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Heavy Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""39ebf685-a574-452e-a7ef-bb4bcab9a242"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Charge Heavy Attack"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""02783de6-6b37-49b0-8683-1b0db7e25116"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(pressPoint=0.1)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -393,6 +411,94 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Seek Right Lock On Target"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ed280c0-470b-40e0-af68-ffdbfa0f637a"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Ctrl + Left"",
+                    ""id"": ""0fd0b619-02eb-4411-907a-5f929072221c"",
+                    ""path"": ""OneModifier(overrideModifiersNeedToBePressedFirst=true)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heavy Attack"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""fc6f70ea-89b3-426f-bdac-4235e90b7fce"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""84261424-12c1-4cee-a152-f1080f399946"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bec8faec-3ed3-46a1-ade9-33aed4165ba2"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Ctrl + Left"",
+                    ""id"": ""558b22a3-f5ef-450e-881e-6988f75f7484"",
+                    ""path"": ""OneModifier(overrideModifiersNeedToBePressedFirst=true)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge Heavy Attack"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""67841386-975b-4905-878c-40db90fa9145"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""3443c1d0-68b6-404c-b550-6c1dd64ea608"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge Heavy Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -498,6 +604,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_LightAttack = m_PlayerActions.FindAction("Light Attack", throwIfNotFound: true);
         m_PlayerActions_SeekLeftLockOnTarget = m_PlayerActions.FindAction("Seek Left Lock On Target", throwIfNotFound: true);
         m_PlayerActions_SeekRightLockOnTarget = m_PlayerActions.FindAction("Seek Right Lock On Target", throwIfNotFound: true);
+        m_PlayerActions_HeavyAttack = m_PlayerActions.FindAction("Heavy Attack", throwIfNotFound: true);
+        m_PlayerActions_ChargeHeavyAttack = m_PlayerActions.FindAction("Charge Heavy Attack", throwIfNotFound: true);
         // Player Camera
         m_PlayerCamera = asset.FindActionMap("Player Camera", throwIfNotFound: true);
         m_PlayerCamera_Movement = m_PlayerCamera.FindAction("Movement", throwIfNotFound: true);
@@ -691,6 +799,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_LightAttack;
     private readonly InputAction m_PlayerActions_SeekLeftLockOnTarget;
     private readonly InputAction m_PlayerActions_SeekRightLockOnTarget;
+    private readonly InputAction m_PlayerActions_HeavyAttack;
+    private readonly InputAction m_PlayerActions_ChargeHeavyAttack;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player Actions".
     /// </summary>
@@ -730,6 +840,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerActions/SeekRightLockOnTarget".
         /// </summary>
         public InputAction @SeekRightLockOnTarget => m_Wrapper.m_PlayerActions_SeekRightLockOnTarget;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerActions/HeavyAttack".
+        /// </summary>
+        public InputAction @HeavyAttack => m_Wrapper.m_PlayerActions_HeavyAttack;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerActions/ChargeHeavyAttack".
+        /// </summary>
+        public InputAction @ChargeHeavyAttack => m_Wrapper.m_PlayerActions_ChargeHeavyAttack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -777,6 +895,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SeekRightLockOnTarget.started += instance.OnSeekRightLockOnTarget;
             @SeekRightLockOnTarget.performed += instance.OnSeekRightLockOnTarget;
             @SeekRightLockOnTarget.canceled += instance.OnSeekRightLockOnTarget;
+            @HeavyAttack.started += instance.OnHeavyAttack;
+            @HeavyAttack.performed += instance.OnHeavyAttack;
+            @HeavyAttack.canceled += instance.OnHeavyAttack;
+            @ChargeHeavyAttack.started += instance.OnChargeHeavyAttack;
+            @ChargeHeavyAttack.performed += instance.OnChargeHeavyAttack;
+            @ChargeHeavyAttack.canceled += instance.OnChargeHeavyAttack;
         }
 
         /// <summary>
@@ -809,6 +933,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SeekRightLockOnTarget.started -= instance.OnSeekRightLockOnTarget;
             @SeekRightLockOnTarget.performed -= instance.OnSeekRightLockOnTarget;
             @SeekRightLockOnTarget.canceled -= instance.OnSeekRightLockOnTarget;
+            @HeavyAttack.started -= instance.OnHeavyAttack;
+            @HeavyAttack.performed -= instance.OnHeavyAttack;
+            @HeavyAttack.canceled -= instance.OnHeavyAttack;
+            @ChargeHeavyAttack.started -= instance.OnChargeHeavyAttack;
+            @ChargeHeavyAttack.performed -= instance.OnChargeHeavyAttack;
+            @ChargeHeavyAttack.canceled -= instance.OnChargeHeavyAttack;
         }
 
         /// <summary>
@@ -1116,6 +1246,20 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSeekRightLockOnTarget(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Heavy Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHeavyAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Charge Heavy Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChargeHeavyAttack(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player Camera" which allows adding and removing callbacks.

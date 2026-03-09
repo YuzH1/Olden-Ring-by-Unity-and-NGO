@@ -30,6 +30,8 @@ namespace SG
         //武器伤害修正
         [Header("Attack Modifiers")]
         public float light_Attack_01_Multiplier = 1.1f;//轻攻击伤害倍率
+        public float heavy_Attack_01_Multiplier = 1.5f;//重攻击伤害倍率
+        public float charge_Heavy_Attack_01_Multiplier = 2.0f;//蓄力重攻击伤害倍率
 
         //锋利，厚重，轻便
 
@@ -37,12 +39,15 @@ namespace SG
         public int baseStaminaCost = 20;
         //体力消耗修正
         public float lightAttackStaminaCostMultiplier = 0.9f;//轻攻击体力消耗倍率
+        public float heavyAttackStaminaCostMultiplier = 1.2f;//重攻击体力消耗倍率
+        public float chargeHeavyAttackStaminaCostMultiplier = 1.5f;//蓄力重攻击体力消耗倍率
         //锋利，厚重，轻便
 
 
         //物品基础动作（轻攻击，重攻击，防御，战技）
         [Header("Actions")]
         public WeaponItemAction OH_RB_Action;//单手rb攻击动作
+        public WeaponItemAction OH_RT_Action;//单手rt攻击动作
 
         //战灰
 
