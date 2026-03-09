@@ -63,7 +63,7 @@ namespace SG
                 return;
             }
 
-            player.playerAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, true, true, true);
+            player.playerAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, false, true, true);
 
 
             //艾尔登法环切换武器逻辑
@@ -167,7 +167,80 @@ namespace SG
                 return;
             }
 
-            player.playerAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false);
+            player.playerAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false, false, true, true);
+
+
+            //艾尔登法环切换武器逻辑
+            //1.如果除了主武器之外还有其他武器，则切换到其他武器，而不是切换回空手状态
+            //2.如果只有主武器，切换到空手状态，然后跳过空槽位直接切换回主武器状态，不要在有多个空槽位时遍历所有空槽位才切换回主武器
+
+            WeaponItem selectedWeapon = null;
+
+            //禁用双持模式如果没有双持武器
+            //检查武器索引
+
+            //切换到下一个武器时，索引增加1
+            player.playerInventoryManager.leftHandWeaponIndex += 1;
+
+            //如果武器索引超过了武器槽位的数量，则重置为0
+            if(player.playerInventoryManager.leftHandWeaponIndex < 0 || player.playerInventoryManager.leftHandWeaponIndex > 2)
+            {
+                player.playerInventoryManager.leftHandWeaponIndex = 0;
+
+                //如果找到了下一个武器，或者已经检查了所有武器槽位，则切换到选中的武器（可能是空手状态）
+                float weaponCount = 0;
+                WeaponItem firstWeapon = null;
+                int firstWeaponPosition = 0;
+
+                for(int i = 0; i < player.playerInventoryManager.weaponsInLeftHandSlots.Length; i++)
+                {
+                    if(player.playerInventoryManager.weaponsInLeftHandSlots[i].itemID != WorldItemDatabase.instance.unarmedWeapon.itemID)
+                    {
+                        weaponCount += 1;//统计武器数量
+
+                        if(firstWeapon == null)
+                        {
+                            firstWeapon = player.playerInventoryManager.weaponsInLeftHandSlots[i];//记录第一个武器槽位的信息，以便在没有其他武器可切换时切换回这个武器
+                            firstWeaponPosition = i;
+                        }
+                    }
+                }
+                if(weaponCount <= 1)
+                {
+                    player.playerInventoryManager.leftHandWeaponIndex = -1;//如果没有其他武器可切换了，则重置索引为-1，这样下次切换时就会切换回第一个武器槽位的武器
+                    selectedWeapon = WorldItemDatabase.instance.unarmedWeapon;//切换回空手状态
+                    player.playerNetworkManager.currentLeftHandWeaponID.Value = selectedWeapon.itemID;//为所有已连接的客户端发送切换武器的ID
+                }
+                else
+                {
+                    player.playerInventoryManager.leftHandWeaponIndex = firstWeaponPosition;//如果没有其他武器可切换了，则重置索引为第一个武器槽位的位置，这样下次切换时就会切换回第一个武器槽位的武器
+                    player.playerNetworkManager.currentLeftHandWeaponID.Value = firstWeapon.itemID;//为所有已连接的客户端发送切换武器的ID
+                }
+
+                return;
+            }
+
+            //根据新的武器索引获取新的武器数据
+            foreach(WeaponItem weapon in player.playerInventoryManager.weaponsInLeftHandSlots)
+            {
+                //检查是不是空武器槽
+                if(player.playerInventoryManager.weaponsInLeftHandSlots[player.playerInventoryManager.leftHandWeaponIndex].itemID != WorldItemDatabase.instance.unarmedWeapon.itemID)
+                {
+                    //如果不是空武器槽，则切换到该武器
+                    selectedWeapon = player.playerInventoryManager.weaponsInLeftHandSlots[player.playerInventoryManager.leftHandWeaponIndex];
+                    
+                    //为所有已连接的客户端发送切换武器的ID
+                    player.playerNetworkManager.currentLeftHandWeaponID.Value = player.playerInventoryManager.weaponsInLeftHandSlots[player.playerInventoryManager.leftHandWeaponIndex].itemID;
+
+                    return;
+                }
+
+            }
+
+            if(selectedWeapon == null && player.playerInventoryManager.leftHandWeaponIndex <= 2)
+            {
+                SwitchRightWeapon(); //如果没有找到下一个武器，并且当前索引还没有超过武器槽位的数量，则继续切换到下一个武器
+            }
         }
         public void LoadLeftWeapon()
         {

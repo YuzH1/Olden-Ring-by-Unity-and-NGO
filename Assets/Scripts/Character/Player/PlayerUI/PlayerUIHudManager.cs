@@ -1,11 +1,19 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SG
 {
     public class PlayerUIHudManager : MonoBehaviour
     {
+        [Header("Stat Bars")]
         [SerializeField] UI_StatBar healthBar;
         [SerializeField] UI_StatBar staminaBar;
+        
+        [Header("Quick Slots")]
+        [SerializeField] Image rightWeaponQuickSlotIcon;
+        [SerializeField] Image leftWeaponQuickSlotIcon;
+        
 
         public void RefreshHUD()
         {
@@ -33,6 +41,56 @@ namespace SG
         public void SetMaxHealthValue(int maxHealth)
         {
             healthBar.SetMaxStat(maxHealth);
+        }
+
+        public void SetRightWeaponQuickSlotIcon(int weaponID)
+        {
+            WeaponItem weapon = WorldItemDatabase.instance.GetWeaponByID(weaponID);
+
+            if(weapon == null)
+            {
+                Debug.LogWarning("在数据库中未找到 " + weaponID );
+                rightWeaponQuickSlotIcon.enabled = false;
+                rightWeaponQuickSlotIcon.sprite = null;
+                return;
+            }
+            
+            if(weapon.itemIcon == null)
+            {
+                Debug.LogWarning("此武器：" + weaponID + " 没有在数据库中设置图标");
+                rightWeaponQuickSlotIcon.enabled = false;
+                rightWeaponQuickSlotIcon.sprite = null;
+                return;
+            }
+
+            rightWeaponQuickSlotIcon.sprite = weapon.itemIcon;
+            rightWeaponQuickSlotIcon.enabled = true;
+            
+        }
+
+        public void SetLeftWeaponQuickSlotIcon(int weaponID)
+        {
+            WeaponItem weapon = WorldItemDatabase.instance.GetWeaponByID(weaponID);
+
+            if(weapon == null)
+            {
+                Debug.LogWarning("在数据库中未找到 " + weaponID );
+                leftWeaponQuickSlotIcon.enabled = false;
+                leftWeaponQuickSlotIcon.sprite = null;
+                return;
+            }
+            
+            if(weapon.itemIcon == null)
+            {
+                Debug.LogWarning("此武器：" + weaponID + " 没有在数据库中设置图标");
+                leftWeaponQuickSlotIcon.enabled = false;
+                leftWeaponQuickSlotIcon.sprite = null;
+                return;
+            }
+
+            leftWeaponQuickSlotIcon.sprite = weapon.itemIcon;
+            leftWeaponQuickSlotIcon.enabled = true;
+            
         }
 
     }

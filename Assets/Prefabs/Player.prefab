@@ -1042,17 +1042,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ecd4fe2c15d9c94880cd5921c08c9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRightHandWeapon: {fileID: 11400000, guid: 2eb8a383e68da65468e26bd32a365472, type: 2}
+  currentRightHandWeapon: {fileID: 11400000, guid: a391227a1f6f6c744ac80f1b43f807dd, type: 2}
   currentLeftHandWeapon: {fileID: 11400000, guid: a391227a1f6f6c744ac80f1b43f807dd, type: 2}
   weaponsInRightHandSlots:
-  - {fileID: 11400000, guid: 2eb8a383e68da65468e26bd32a365472, type: 2}
   - {fileID: 11400000, guid: a391227a1f6f6c744ac80f1b43f807dd, type: 2}
+  - {fileID: 11400000, guid: 2eb8a383e68da65468e26bd32a365472, type: 2}
   - {fileID: 11400000, guid: a391227a1f6f6c744ac80f1b43f807dd, type: 2}
   rightHandWeaponIndex: 0
   weaponsInLeftHandSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: a391227a1f6f6c744ac80f1b43f807dd, type: 2}
+  - {fileID: 11400000, guid: 2eb8a383e68da65468e26bd32a365472, type: 2}
+  - {fileID: 11400000, guid: a391227a1f6f6c744ac80f1b43f807dd, type: 2}
   leftHandWeaponIndex: 0
 --- !u!114 &-5421604843377718957
 MonoBehaviour:

@@ -60,6 +60,11 @@ namespace SG
             WeaponItem newWeapon =  Instantiate(WorldItemDatabase.instance.GetWeaponByID(newWeaponID)); //根据新的武器ID从物品数据库中获取对应的武器数据
             player.playerInventoryManager.currentRightHandWeapon = newWeapon; //更新玩家的当前右手武器数据
             player.playerEquipmentManager.LoadRightWeapon(); //加载新的右手武器模型和属性
+
+            if(player.IsOwner)
+            {
+                PlayerUIManager.Instance.playerUIHudManager.SetRightWeaponQuickSlotIcon(newWeaponID); //如果这是本地玩家，更新UI中右手武器快捷栏的图标，确保它显示正确的武器图标
+            }
         }
         
         public void OnCurrentLeftHandWeaponChanged(int oldWeaponID, int newWeaponID)
@@ -67,6 +72,11 @@ namespace SG
             WeaponItem newWeapon =  Instantiate(WorldItemDatabase.instance.GetWeaponByID(newWeaponID)); //根据新的武器ID从物品数据库中获取对应的武器数据
             player.playerInventoryManager.currentLeftHandWeapon = newWeapon; //更新玩家的当前左手武器数据
             player.playerEquipmentManager.LoadLeftWeapon(); //加载新的左手武器模型和属性
+
+            if(player.IsOwner)
+            {
+                PlayerUIManager.Instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon(newWeaponID); //如果这是本地玩家，更新UI中左手武器快捷栏的图标，确保它显示正确的武器图标
+            }
         }
 
         public void OnCurrentWeaponBeingUsedChanged(int oldWeaponID, int newWeaponID)

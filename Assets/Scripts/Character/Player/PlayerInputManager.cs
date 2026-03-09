@@ -36,12 +36,18 @@ namespace SG
         [SerializeField] bool sprintInput = false;//存储冲刺输入状态
         [SerializeField] bool jumpInput = false;//存储跳跃输入状态
 
+        [Header("Switch Inputs")]
+        [SerializeField] bool switchRightWeaponInput = false;//存储切换右手武器输入状态
+        [SerializeField] bool switchLeftWeaponInput = false;//存储切换左手武器输入状态
+
         [Header("Light Attack Inputs")]
         [SerializeField] bool lightAttackInput = false;//存储右手轻攻击输入状态
 
         [Header("Heavy Attack Inputs")]
         [SerializeField] bool HeavyAttackInput = false;//存储重攻击输入状态
         [SerializeField] bool ChargeHeavyAttackInput = false;//存储重攻击按住输入状态
+
+        
 
         private void Awake()
         {
@@ -99,10 +105,19 @@ namespace SG
             {
                 playerControls = new PlayerControls();
 
+                //订阅输入事件，使用lambda表达式来获取输入值并存储在相应的变量中
+
+                //移动输入
                 playerControls.PlayerMovement.Movement.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
+
+                //动作输入
                 playerControls.PlayerActions.Dodge.performed += ctx => dodgeInput = true;
                 playerControls.PlayerActions.Jump.performed += ctx => jumpInput = true;
+
+                //切换输入
+                playerControls.PlayerActions.SwitchRightWeapon.performed += ctx => switchRightWeaponInput = true;
+                playerControls.PlayerActions.SwitchLeftWeapon.performed += ctx => switchLeftWeaponInput = true;
 
                 //攻击输入
                     //轻攻击
@@ -174,9 +189,13 @@ namespace SG
             HandleLightAttackInput();
             HandleHeavyAttackInput();
             HandleChargeHeavyAttackInput();
+            HandleSwitchRightWeaponInput();
+            HandleSwitchLeftWeaponInput();
+
         }   
 
-        //移动
+        #region 移动
+     
         private void HandlePlayerMovementInput()
         {
             verticalInput = movementInput.y;
@@ -218,7 +237,10 @@ namespace SG
             cameraHorizontalInput = cameraInput.x;
         }
     
-        //锁定
+        #endregion
+
+        #region 锁定
+
         private void HandleLockOnInput()
         {
             //如果当前已经锁定目标，检查目标是否已死亡，如果已死亡，解锁
@@ -305,7 +327,10 @@ namespace SG
             }
         }
 
-        //动作
+        #endregion
+
+        #region 动作
+  
         private void HandleDodgeInput()
         {
             //这里可以根据需要添加闪避输入的处理逻辑，例如监听特定按键的按下事件来触发闪避动作
@@ -351,6 +376,32 @@ namespace SG
             }
         }
     
+        #endregion
+
+        #region 切换
+
+        private void HandleSwitchRightWeaponInput()
+        {
+            if(switchRightWeaponInput)
+            {
+                switchRightWeaponInput = false;
+                player.playerEquipmentManager.SwitchRightWeapon();
+            }
+        }
+
+        private void HandleSwitchLeftWeaponInput()
+        {
+            if(switchLeftWeaponInput)
+            {
+                switchLeftWeaponInput = false;
+                player.playerEquipmentManager.SwitchLeftWeapon();
+            }
+        }
+            
+        #endregion
+
+        #region 攻击
+
         private void HandleLightAttackInput()
         {
             if(lightAttackInput)
@@ -397,5 +448,7 @@ namespace SG
             }
             
         }
+        #endregion
+
     }
 }

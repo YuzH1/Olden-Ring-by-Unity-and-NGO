@@ -135,6 +135,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Heavy Attack",
+                    "type": "Button",
+                    "id": "39ebf685-a574-452e-a7ef-bb4bcab9a242",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Charge Heavy Attack",
+                    "type": "PassThrough",
+                    "id": "02783de6-6b37-49b0-8683-1b0db7e25116",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(pressPoint=0.1)",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Seek Left Lock On Target",
                     "type": "Button",
                     "id": "71f8e8e1-856e-4514-87c7-74f18f06d6c4",
@@ -153,21 +171,21 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Heavy Attack",
+                    "name": "Switch Right Weapon",
                     "type": "Button",
-                    "id": "39ebf685-a574-452e-a7ef-bb4bcab9a242",
+                    "id": "d526a0d3-8539-42cb-9158-a81395016610",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Charge Heavy Attack",
-                    "type": "PassThrough",
-                    "id": "02783de6-6b37-49b0-8683-1b0db7e25116",
-                    "expectedControlType": "Button",
+                    "name": "Switch Left Weapon",
+                    "type": "Button",
+                    "id": "9ed34f01-4dec-4f96-991f-a7cf9b2cd5ee",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Hold(pressPoint=0.1)",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -413,6 +431,50 @@
                     "action": "Charge Heavy Attack",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "a91375ad-60d5-4ca7-97a1-e3a2a8e98dbe",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch Right Weapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3723ec12-addf-4bfe-8ac1-e5f121a367df",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch Right Weapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "79d2d64d-c89d-47c1-8049-39e2490f7cd0",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch Left Weapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30d2752f-4e05-4341-82df-f09764f4f3ab",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch Left Weapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
