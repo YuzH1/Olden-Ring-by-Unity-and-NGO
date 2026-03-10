@@ -193,7 +193,7 @@ namespace SG
             //每次重新扫描前先清空，避免旧帧目标残留导致切换异常
             ClearLockOnTargets();
 
-            //TODO:使用layermask
+            //TODO:使用layermask✅️
             Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, WorldUtilityManager.instance.GetCharacterLayer());//在玩家周围一定范围内检测可锁定目标
 
             for(int i = 0; i < colliders.Length; i++)

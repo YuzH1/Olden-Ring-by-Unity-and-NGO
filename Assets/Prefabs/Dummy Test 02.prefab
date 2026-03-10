@@ -208,21 +208,21 @@ GameObject:
   - component: {fileID: 7421105555366893660}
   - component: {fileID: 3741736230593588634}
   - component: {fileID: 9065578556840038647}
-  - component: {fileID: 2479048713997001152}
-  - component: {fileID: 4385084405252965004}
-  - component: {fileID: 1515453032004615105}
-  - component: {fileID: 3874663269902029985}
-  - component: {fileID: 4047237986942020406}
-  - component: {fileID: 2050292371653718975}
-  - component: {fileID: 9166798694646135507}
-  - component: {fileID: 7889583726043720066}
-  - component: {fileID: 6912754437649863557}
-  - component: {fileID: 2679563502284017680}
   - component: {fileID: 6141058932462219670}
   - component: {fileID: 3321209373701990038}
   - component: {fileID: 3348189979138869138}
+  - component: {fileID: 8708259964390943765}
+  - component: {fileID: -9037433862056729456}
+  - component: {fileID: -6573708431979675885}
+  - component: {fileID: 8820068207758845478}
+  - component: {fileID: 7372301411785180040}
+  - component: {fileID: 1543693221294245830}
+  - component: {fileID: -2136473807978479809}
+  - component: {fileID: 9145256014392404389}
+  - component: {fileID: 7791248405979158643}
+  - component: {fileID: 3269469478120773038}
   m_Layer: 6
-  m_Name: Dummy Test
+  m_Name: Dummy Test 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,15 +236,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523556115678814875}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.24857, y: -0, z: 0.62265}
+  m_LocalRotation: {x: 0, y: 0.90348494, z: 0, w: 0.42861974}
+  m_LocalPosition: {x: 7.408, y: 3.068, z: -8.875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8922293881607792444}
   - {fileID: 1197930507705123812}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 129.24, z: 0}
 --- !u!95 &3741736230593588634
 Animator:
   serializedVersion: 7
@@ -274,13 +274,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2335234364
-  InScenePlacedSourceGlobalObjectIdHash: 298822454
+  GlobalObjectIdHash: 4029498915
+  InScenePlacedSourceGlobalObjectIdHash: 4029498915
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -292,322 +292,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &2479048713997001152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 485b26bd794e0194dab7f1e3d38bc119, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  isDead:
-    m_InternalValue: 0
-  characterController: {fileID: 0}
-  animator: {fileID: 0}
-  characterNetworkManager: {fileID: 0}
-  characterEffectsManager: {fileID: 0}
-  characterAnimatorManager: {fileID: 0}
-  characterCombatManager: {fileID: 0}
-  characterSoundFXManager: {fileID: 0}
-  isPerformingAction: 0
-  isGrounded: 1
-  applyRootMotion: 0
-  canRotate: 1
-  canMove: 0
-  respawnCharacter: 0
-  switchRightWeapon: 0
-  playerAnimatorManager: {fileID: 0}
-  playerLocomotionManager: {fileID: 0}
-  playerNetworkManager: {fileID: 0}
-  playerStatsManager: {fileID: 0}
-  playerInventoryManager: {fileID: 0}
-  playerEquipmentManager: {fileID: 0}
-  playerCombatManager: {fileID: 0}
---- !u!114 &4385084405252965004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef63b3b614c35a441b4d2d57e1f3d835, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  networkPosition:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  networkRotation:
-    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
-  networkPositionVelocity: {x: 0, y: 0, z: 0}
-  networkPositionSmoothTime: 0.1
-  networkRotationSmoothTime: 0.1
-  horizontalMovement:
-    m_InternalValue: 0
-  verticalMovement:
-    m_InternalValue: 0
-  moveAmount:
-    m_InternalValue: 0
-  currentTargetNetworkObjectID:
-    m_InternalValue: 0
-  isSprinting:
-    m_InternalValue: 0
-  isJumping:
-    m_InternalValue: 0
-  isLockedOn:
-    m_InternalValue: 0
-  endurance:
-    m_InternalValue: 10
-  vitality:
-    m_InternalValue: 10
-  maxStamina:
-    m_InternalValue: 0
-  currentStamina:
-    m_InternalValue: 0
-  maxHealth:
-    m_InternalValue: 0
-  currentHealth:
-    m_InternalValue: 0
-  characterName:
-    m_InternalValue:
-      utf8LengthInBytes: 6
-      bytes:
-        offset0000:
-          byte0000: 80
-          byte0001: 108
-          byte0002: 97
-          byte0003: 121
-          byte0004: 101
-          byte0005: 114
-          byte0006: 0
-          byte0007: 0
-          byte0008: 0
-          byte0009: 0
-          byte0010: 0
-          byte0011: 0
-          byte0012: 0
-          byte0013: 0
-          byte0014: 0
-          byte0015: 0
-        offset0016:
-          byte0000: 0
-          byte0001: 0
-          byte0002: 0
-          byte0003: 0
-          byte0004: 0
-          byte0005: 0
-          byte0006: 0
-          byte0007: 0
-          byte0008: 0
-          byte0009: 0
-          byte0010: 0
-          byte0011: 0
-          byte0012: 0
-          byte0013: 0
-          byte0014: 0
-          byte0015: 0
-        offset0032:
-          byte0000: 0
-          byte0001: 0
-          byte0002: 0
-          byte0003: 0
-          byte0004: 0
-          byte0005: 0
-          byte0006: 0
-          byte0007: 0
-          byte0008: 0
-          byte0009: 0
-          byte0010: 0
-          byte0011: 0
-          byte0012: 0
-          byte0013: 0
-          byte0014: 0
-          byte0015: 0
-        byte0048: 0
-        byte0049: 0
-        byte0050: 0
-        byte0051: 0
-        byte0052: 0
-        byte0053: 0
-        byte0054: 0
-        byte0055: 0
-        byte0056: 0
-        byte0057: 0
-        byte0058: 0
-        byte0059: 0
-        byte0060: 0
-        byte0061: 0
-  currentWeaponBeingUsedID:
-    m_InternalValue: 0
-  currentRightHandWeaponID:
-    m_InternalValue: 0
-  currentLeftHandWeaponID:
-    m_InternalValue: 0
-  isUsingRightHand:
-    m_InternalValue: 0
-  isUsingLeftHand:
-    m_InternalValue: 0
---- !u!114 &1515453032004615105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 393af07a50ec4944fb87758c58289045, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravityForce: -15
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  groundCheckRadius: 0.3
-  yVelocity: {x: 0, y: 0, z: 0}
-  groundedYVelocity: -20
-  fallStartYVelocity: -5
-  verticalMovement: 0
-  horizontalMovement: 0
-  moveAmount: 0
-  walkingSpeed: 1.4
-  runningSpeed: 3.5
-  sprintSpeed: 7
-  rotationSpeed: 15
-  sprintStaminaCost: 2
-  rollDirection: {x: 0, y: 0, z: 0}
-  rollStaminaCost: 20
-  jumpHeight: 1.5
-  jumpForwardVelocity: 5
-  freeFallForwardVelocity: 3
-  jumpStaminaCost: 15
---- !u!114 &3874663269902029985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c20cce1be71d56e4a9689bd012bdefb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lastDamageAnimationPlayed: 
-  hit_Forward_Medium_01: Hit_Forward_Medium_01
-  hit_Forward_Medium_02: Hit_Forward_Medium_02
-  hit_Backward_Medium_01: Hit_Backward_Medium_01
-  hit_Backward_Medium_02: Hit_Backward_Medium_02
-  hit_Left_Medium_01: Hit_Left_Medium_01
-  hit_Left_Medium_02: Hit_Left_Medium_02
-  hit_Right_Medium_01: Hit_Right_Medium_01
-  hit_Right_Medium_02: Hit_Right_Medium_02
---- !u!114 &4047237986942020406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75841831d0bb12c4a966f8990fe6256c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2050292371653718975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cef6b230882e80841940c99f8b896bec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  staminaRegenerationAmount: 2
-  staminaRegenerationDelay: 2
---- !u!114 &9166798694646135507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f583134eaf1a384b89bae31803a6393, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bloodSplatterVFX: {fileID: 0}
-  effectToTest: {fileID: 11400000, guid: 5079b0d2b3318d64fba20cb9f693ad9d, type: 2}
-  applyEffect: 0
---- !u!114 &7889583726043720066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ecd4fe2c15d9c94880cd5921c08c9ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentRightHandWeapon: {fileID: 11400000, guid: 2eb8a383e68da65468e26bd32a365472, type: 2}
-  currentLeftHandWeapon: {fileID: 11400000, guid: a391227a1f6f6c744ac80f1b43f807dd, type: 2}
-  weaponsInRightHandSlots:
-  - {fileID: 11400000, guid: 2eb8a383e68da65468e26bd32a365472, type: 2}
-  - {fileID: 11400000, guid: a391227a1f6f6c744ac80f1b43f807dd, type: 2}
-  - {fileID: 11400000, guid: a391227a1f6f6c744ac80f1b43f807dd, type: 2}
-  rightHandWeaponIndex: 0
-  weaponsInLeftHandSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  leftHandWeaponIndex: 0
---- !u!114 &6912754437649863557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ceff7bebb62fca4c9c746893570c21e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightHandSlot: {fileID: 0}
-  leftHandSlot: {fileID: 0}
-  rightHandWeaponManager: {fileID: 0}
-  leftHandWeaponManager: {fileID: 0}
-  rightHandWeaponModel: {fileID: 0}
-  leftHandWeaponModel: {fileID: 0}
---- !u!114 &2679563502284017680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 727c37d63918273408bac31596db682a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SG.PlayerCombatManager
-  ShowTopMostFoldoutHeaderGroup: 1
-  currentTarget: {fileID: 0}
-  currentAttackType: 0
-  lockOnTransform: {fileID: 5315082039689275718}
-  currentWeaponBeingUsed: {fileID: 0}
 --- !u!54 &6141058932462219670
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -757,6 +441,204 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8708259964390943765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ce1681e9d69a1429d4f2d05a8d8174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
+  isDead:
+    m_InternalValue: 0
+  characterController: {fileID: 0}
+  animator: {fileID: 0}
+  characterNetworkManager: {fileID: 0}
+  characterEffectsManager: {fileID: 0}
+  characterAnimatorManager: {fileID: 0}
+  characterCombatManager: {fileID: 0}
+  characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
+  isPerformingAction: 0
+  isGrounded: 1
+  applyRootMotion: 0
+  canRotate: 1
+  canMove: 1
+--- !u!114 &-9037433862056729456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b0cc79bef6be7447b3730ef6d2216a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterNetworkManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  networkPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkRotation:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
+  networkPositionVelocity: {x: 0, y: 0, z: 0}
+  networkPositionSmoothTime: 0.1
+  networkRotationSmoothTime: 0.1
+  horizontalMovement:
+    m_InternalValue: 0
+  verticalMovement:
+    m_InternalValue: 0
+  moveAmount:
+    m_InternalValue: 0
+  currentTargetNetworkObjectID:
+    m_InternalValue: 0
+  isSprinting:
+    m_InternalValue: 0
+  isJumping:
+    m_InternalValue: 0
+  isLockedOn:
+    m_InternalValue: 0
+  isChargingAttack:
+    m_InternalValue: 0
+  endurance:
+    m_InternalValue: 10
+  vitality:
+    m_InternalValue: 10
+  maxStamina:
+    m_InternalValue: 100
+  currentStamina:
+    m_InternalValue: 100
+  maxHealth:
+    m_InternalValue: 100
+  currentHealth:
+    m_InternalValue: 100
+--- !u!114 &-6573708431979675885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034886c70c027fd4fa2918ab7ac3be26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterCombatManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimationPerformed: 
+  currentTarget: {fileID: 0}
+  currentAttackType: 0
+  lockOnTransform: {fileID: 5315082039689275718}
+--- !u!114 &8820068207758845478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c2dcdbcfb2cd4642ad40baccd8f3705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterLocomotionManager
+  gravityForce: -5.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  groundCheckRadius: 1
+  yVelocity: {x: 0, y: 0, z: 0}
+  groundedYVelocity: -20
+  fallStartYVelocity: -5
+  isRolling: 0
+--- !u!114 &7372301411785180040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7861c518f0e02647973b8f1042f84fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterAnimatorManager
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
+--- !u!114 &1543693221294245830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 560f48c92456d2d46bfc3764248d8276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterSoundFXManager
+--- !u!114 &-2136473807978479809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb51a7fcff6454a498762d2a1c4f0cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterStatsManager
+  staminaRegenerationAmount: 2
+  staminaRegenerationDelay: 2
+--- !u!114 &9145256014392404389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b57852d3fa9ba4da1dc6bbc12d17ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterEffectsManager
+  bloodSplatterVFX: {fileID: 0}
+--- !u!114 &7791248405979158643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed79388fe32ab94408edab92ca9d923e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterInventoryManager
+--- !u!114 &3269469478120773038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3093b353255693f459473e0f5c976a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterEquipmentManager
 --- !u!1 &826075643269684406
 GameObject:
   m_ObjectHideFlags: 0
