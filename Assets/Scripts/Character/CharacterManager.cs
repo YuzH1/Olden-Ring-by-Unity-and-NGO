@@ -25,6 +25,9 @@ namespace SG
         [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
         [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
 
+        [Header("Character Group")]
+        public CharacterGroup characterGroup;
+
         [Header("Flags")]
         public bool isPerformingAction = false;//这个标志可以用来控制角色在执行动作时不能移动或攻击等，确保动作的完整性和连贯性
         
@@ -77,6 +80,11 @@ namespace SG
                     characterNetworkManager.networkRotationSmoothTime);//旋转插值
             }
 
+        }
+
+        protected virtual void FixedUpdate()//在物理更新周期调用，适合处理物理相关的逻辑，比如角色移动、碰撞检测等
+        {
+            // Base character fixed update logic can go here
         }
 
         protected virtual void LateUpdate()//在Update之后调用，适合处理摄像机跟随等需要在所有对象更新后执行的逻辑

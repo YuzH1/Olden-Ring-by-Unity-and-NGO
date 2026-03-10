@@ -6,7 +6,7 @@ namespace SG
 {
     public class CharacterCombatManager : NetworkBehaviour
     {
-        CharacterManager character;
+        protected CharacterManager character;
 
         [Header("Last Attack Animation Performed")]
         public string lastAttackAnimationPerformed;

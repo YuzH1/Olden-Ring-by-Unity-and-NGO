@@ -212,8 +212,8 @@ GameObject:
   - component: {fileID: 3321209373701990038}
   - component: {fileID: 3348189979138869138}
   - component: {fileID: 8708259964390943765}
+  - component: {fileID: 4090805003121274973}
   - component: {fileID: -9037433862056729456}
-  - component: {fileID: -6573708431979675885}
   - component: {fileID: 8820068207758845478}
   - component: {fileID: 7372301411785180040}
   - component: {fileID: 1543693221294245830}
@@ -464,11 +464,34 @@ MonoBehaviour:
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
   characterLocomotionManager: {fileID: 0}
+  characterGroup: 1
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
+  aiCharacterCombatManager: {fileID: 0}
+  currentState: {fileID: 11400000, guid: 4181ef1f305a30c4e80280193bb14300, type: 2}
+--- !u!114 &4090805003121274973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd6f3a78ecdcac46aa9df0f21ee06fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.AICharacterCombatManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimationPerformed: 
+  currentTarget: {fileID: 0}
+  currentAttackType: 0
+  lockOnTransform: {fileID: 5315082039689275718}
+  detectionRadius: 15
+  minimumDetectionAngle: -35
+  maximumDetectionAngle: 35
 --- !u!114 &-9037433862056729456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,23 +540,6 @@ MonoBehaviour:
     m_InternalValue: 100
   currentHealth:
     m_InternalValue: 100
---- !u!114 &-6573708431979675885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 034886c70c027fd4fa2918ab7ac3be26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterCombatManager
-  ShowTopMostFoldoutHeaderGroup: 1
-  lastAttackAnimationPerformed: 
-  currentTarget: {fileID: 0}
-  currentAttackType: 0
-  lockOnTransform: {fileID: 5315082039689275718}
 --- !u!114 &8820068207758845478
 MonoBehaviour:
   m_ObjectHideFlags: 0
