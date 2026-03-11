@@ -21,6 +21,13 @@ namespace SG
             if(!aiCharacter.navMeshAgent.enabled)
                 aiCharacter.navMeshAgent.enabled = true;
 
+            //如果目标在视野范围之外，转向目标
+            if(aiCharacter.aiCharacterCombatManager.viewableAngle < aiCharacter.aiCharacterCombatManager.minimumFOV 
+                || aiCharacter.aiCharacterCombatManager.viewableAngle > aiCharacter.aiCharacterCombatManager.maximumFOV)
+            {
+                aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+            }
+
             aiCharacter.aiCharacterLocomotionManager.RotateTowrdsAgent(aiCharacter);//旋转朝向目标
 
             //如果到了目标位置的战斗范围，切换到战斗状态

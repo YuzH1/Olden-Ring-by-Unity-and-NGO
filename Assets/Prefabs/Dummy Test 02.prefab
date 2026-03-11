@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 4090805003121274973}
   - component: {fileID: 4458833625063940737}
   - component: {fileID: -8296052789635096233}
-  - component: {fileID: 7372301411785180040}
+  - component: {fileID: -6248568728572391452}
   - component: {fileID: 1543693221294245830}
   - component: {fileID: -2136473807978479809}
   - component: {fileID: 9145256014392404389}
@@ -256,7 +256,7 @@ Animator:
   m_GameObject: {fileID: 523556115678814875}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0ad932253e8dc8841948afa5d1a0d051, type: 3}
-  m_Controller: {fileID: 9100000, guid: 86ada077b7c52964fa166303978f8a4d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7ca4ebb36e4ad5443ac7691fd8be3daa, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -495,9 +495,11 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 5315082039689275718}
+  viewableAngle: 0
+  targetDirection: {x: 0, y: 0, z: 0}
   detectionRadius: 10
-  minimumDetectionAngle: -35
-  maximumDetectionAngle: 35
+  minimumFOV: -35
+  maximumFOV: 35
 --- !u!114 &4458833625063940737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,7 +571,7 @@ MonoBehaviour:
   groundedYVelocity: -20
   fallStartYVelocity: -5
   isRolling: 0
---- !u!114 &7372301411785180040
+--- !u!114 &-6248568728572391452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -578,9 +580,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 523556115678814875}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7861c518f0e02647973b8f1042f84fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 138d4e03f091b044c9a306f9f3c0702c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterAnimatorManager
+  m_EditorClassIdentifier: Assembly-CSharp::SG.AICharacterAnimatorManager
   lastDamageAnimationPlayed: 
   hit_Forward_Medium_01: Hit_Forward_Medium_01
   hit_Forward_Medium_02: Hit_Forward_Medium_02

@@ -177,6 +177,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: -3279003018169450748, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 068b891fe967b1c45850c97d1092abe0, type: 2}
     - target: {fileID: -3091424283633995617, guid: 3c00f2f6f9915c6479b8cc6281cf8ddd, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -792,6 +796,7 @@ MonoBehaviour:
   characterCombatManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
   characterLocomotionManager: {fileID: 0}
+  characterGroup: 0
   isPerformingAction: 0
   isGrounded: 1
   applyRootMotion: 0
@@ -826,6 +831,8 @@ MonoBehaviour:
   networkPositionVelocity: {x: 0, y: 0, z: 0}
   networkPositionSmoothTime: 0.1
   networkRotationSmoothTime: 0.1
+  isMoving:
+    m_InternalValue: 0
   horizontalMovement:
     m_InternalValue: 0
   verticalMovement:
@@ -1085,10 +1092,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SG.PlayerCombatManager
   ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimationPerformed: 
   currentTarget: {fileID: 0}
   currentAttackType: 0
   lockOnTransform: {fileID: 2013622972320984341}
   currentWeaponBeingUsed: {fileID: 0}
+  canComboWithMainHandWeapon: 0
 --- !u!54 &8893580713255527888
 Rigidbody:
   m_ObjectHideFlags: 0

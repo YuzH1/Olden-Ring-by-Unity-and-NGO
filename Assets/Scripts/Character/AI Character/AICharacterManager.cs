@@ -43,7 +43,9 @@ namespace SG
         {
             base.FixedUpdate();
 
-            ProcessStateMachine();//在每个物理更新周期调用这个方法，确保状态机的逻辑能够及时处理和响应角色的状态变化
+
+            if(IsOwner)
+                ProcessStateMachine();//在每个物理更新周期调用这个方法，确保状态机的逻辑能够及时处理和响应角色的状态变化
         }
 
         private void ProcessStateMachine()//用来处理状态机的逻辑
@@ -58,6 +60,12 @@ namespace SG
             //确保NavMeshAgent始终与角色保持在同一位置，避免由于物理碰撞或其他因素导致NavMeshAgent与角色分离，从而影响导航和路径计算的准确性
             navMeshAgent.transform.localPosition = Vector3.zero;
             navMeshAgent.transform.localRotation = Quaternion.identity;
+
+            if(aiCharacterCombatManager.currentTarget != null)
+            {
+                aiCharacterCombatManager.targetDirection = aiCharacterCombatManager.currentTarget.transform.position - transform.position;
+                aiCharacterCombatManager.viewableAngle = WorldUtilityManager.instance.GetAngleOfTarget(transform, aiCharacterCombatManager.targetDirection);
+            }
 
             if(navMeshAgent.enabled)
             {
