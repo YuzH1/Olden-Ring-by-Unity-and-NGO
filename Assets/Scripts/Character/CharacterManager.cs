@@ -92,6 +92,19 @@ namespace SG
             // Base character late update logic can go here
         }
 
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+
+            characterNetworkManager.isMoving.OnValueChanged += characterNetworkManager.OnIsMovingChanged; //订阅isMoving网络变量的值变化事件，当isMoving的值发生变化时，调用OnIsMovingChanged方法来处理相关逻辑，比如切换动画状态等
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+            characterNetworkManager.isMoving.OnValueChanged -= characterNetworkManager.OnIsMovingChanged;
+        }
+
         public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
         {
             if (IsOwner)

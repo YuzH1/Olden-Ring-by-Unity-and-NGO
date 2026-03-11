@@ -10,8 +10,7 @@ namespace SG
             // Idle state logic here
             if(aICharacter.characterCombatManager.currentTarget != null)
             {
-                Debug.Log("AI have a target");
-                return this;
+                return SwitchState(aICharacter, aICharacter.pursueTargetState);   
             }
             else
             {

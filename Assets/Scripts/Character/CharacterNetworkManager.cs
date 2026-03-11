@@ -16,6 +16,7 @@ namespace SG
         public float networkRotationSmoothTime = 0.1f;//旋转平滑时间参数
 
         [Header("Animation")]
+        public NetworkVariable<bool> isMoving = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<float> horizontalMovement = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
         public NetworkVariable<float> moveAmount = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -93,6 +94,12 @@ namespace SG
             //     PlayerCamera.instance.SetLockCameraHeight();
             // }
             
+        }
+
+        public void OnIsMovingChanged(bool oldValue, bool newValue)
+        {
+            //当移动状态发生变化时，如果当前客户端是拥有者，那么就根据新的状态来更新角色的动画状态
+            character.animator.SetBool("isMoving", isMoving.Value);
         }
 
         //ServerRpc是指这个方法只能由客户端调用，并且会在服务器上执行，

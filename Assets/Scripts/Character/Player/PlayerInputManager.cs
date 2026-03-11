@@ -216,6 +216,15 @@ namespace SG
             //引用动画参数，根据输入值来控制动画的切换
             if(player == null)
                 return;
+
+            if(moveAmount != 0)
+            {
+                player.playerNetworkManager.isMoving.Value = true; //如果有移动输入，设置网络变量isMoving为true，通知所有客户端角色正在移动
+            }
+            else
+            {
+                player.playerNetworkManager.isMoving.Value = false; //如果没有移动输入，设置网络变量isMoving为false，通知所有客户端角色停止移动
+            }
             //这里将horizontalInput设为0，因为在角色未锁定目标前，应该只会处于前进、后退、原地等状态，不会有左右移动的动画
             //如果没有锁定，只使用moveAmount来控制前进、后退、原地等动画的切换，horizontalInput不参与动画参数的设置
             if(!player.playerNetworkManager.isLockedOn.Value || player.playerNetworkManager.isSprinting.Value) //如果没有锁定目标，或者正在冲刺

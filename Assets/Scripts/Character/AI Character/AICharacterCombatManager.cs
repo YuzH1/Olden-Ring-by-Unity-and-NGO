@@ -5,7 +5,7 @@ namespace SG
     public class AICharacterCombatManager : CharacterCombatManager
     {
         [Header("Detection")]
-        [SerializeField] float detectionRadius = 15f;
+        [SerializeField] float detectionRadius = 10f;
         [SerializeField] float minimumDetectionAngle = -35f;//最小检测角度，单位为度，表示AI角色能够检测到目标的视野范围
         [SerializeField] float maximumDetectionAngle = 35f;//最大检测角度，单位为度，表示AI角色能够检测到目标的视野范围
 
