@@ -18,8 +18,10 @@ namespace SG
         [Header("States")]
         public AIIdleState idleState;
         public AIPursueTargetState pursueTargetState;
-        //战斗状态
-        //攻击状态
+        public AICombatStanceState combatStanceState;
+        public AIAttackState attackState;
+        
+        
         
 
         protected override void Awake()
@@ -33,10 +35,19 @@ namespace SG
             //使用scriptable object实例化状态，确保每个AI角色都有独立的状态实例，避免不同角色之间状态共享导致的逻辑错误
             idleState = Instantiate(idleState);
             pursueTargetState = Instantiate(pursueTargetState);
+            combatStanceState = Instantiate(combatStanceState);
+            attackState = Instantiate(attackState);
 
             currentState = idleState;//初始状态设置为idleState
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            
+            aiCharacterCombatManager.HandleActionRecovery(this);//在每个更新周期调用这个方法，确保AI角色的行动恢复逻辑能够及时处理和响应角色的状态变化
+        }
 
 
         protected override void FixedUpdate()

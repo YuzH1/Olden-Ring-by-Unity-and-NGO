@@ -15,7 +15,7 @@ namespace SG
             else
             {
                 aiCharacter.aiCharacterCombatManager.FindATargetVialineOfSight(aiCharacter);
-                Debug.Log("AI is looking for a target");
+                // Debug.Log("AI is looking for a target");
                 return this;
             }
 

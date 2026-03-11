@@ -88,7 +88,7 @@ namespace SG
             return finalList[randomVlaue];
         }
 
-        public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue)
+        public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue)//tuto中用了issprinting为第三参数，这里不影响
         {
             // Implementation for updating animator parameters
             //方法1：直接设置Animator参数，这种方法简单直接，但可能会导致动画切换不够平滑，特别是在输入值变化较大时

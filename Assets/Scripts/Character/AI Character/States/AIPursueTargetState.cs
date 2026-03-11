@@ -31,6 +31,14 @@ namespace SG
             aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);//旋转朝向目标
 
             //如果到了目标位置的战斗范围，切换到战斗状态
+            // if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.combatStanceState.maximumEngagementRadius)
+            // {
+            //     return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+            // }
+            if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance)
+            {
+                return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+            }
 
             //如果目标不可到达，或目标距离过远，回到老巢
 

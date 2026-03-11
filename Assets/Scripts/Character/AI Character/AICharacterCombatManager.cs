@@ -5,6 +5,9 @@ namespace SG
     public class AICharacterCombatManager : CharacterCombatManager
     {
 
+        [Header("Action Recovery")]
+        public float actionRecoveryTimer = 0f;//这个计时器用来控制AI角色在执行攻击动作后需要等待多久才能进行下一次行动，这样可以避免AI角色连续执行攻击动作而没有任何间隔，增加了战斗的节奏感和策略性
+
         [Header("Target Info")]
         public float distanceFromTarget;
         public float viewableAngle;
@@ -14,6 +17,9 @@ namespace SG
         [SerializeField] float detectionRadius = 10f;
         public float minimumFOV = -35f;//最小检测角度，单位为度，表示AI角色能够检测到目标的视野范围
         public float maximumFOV = 35f;//最大检测角度，单位为度，表示AI角色能够检测到目标的视野范围
+
+        [Header("Attack Rotation")]
+        public float attackRotationSpeed = 25f;
 
         public void FindATargetVialineOfSight(AICharacterManager aiCharacter)
         {
@@ -108,7 +114,54 @@ namespace SG
 
         }
     
+        public void HandleActionRecovery(AICharacterManager aiCharacter)
+        {
+            if(actionRecoveryTimer > 0)
+            {
+                if(!aiCharacter.isPerformingAction)
+                {
+                    actionRecoveryTimer -= Time.deltaTime;
+                }
+            }
+        }
     
-    
+        public void RotateTowardsAgent(AICharacterManager aiCharacter)
+        {
+            if(aiCharacter.aiCharacterNetworkManager.isMoving.Value)
+            {
+                aiCharacter.transform.rotation = aiCharacter.navMeshAgent.transform.rotation;
+            }
+        }
+
+        public void RotateTowardsTargetWhileAttacking(AICharacterManager aiCharacter)//在攻击的时候调用
+        {
+            if(currentTarget == null)
+                return;
+            
+            // 1.检查是否能旋转
+            if(!aiCharacter.canRotate)
+                return;
+            
+            //如果正在执行攻击动作，才允许旋转朝向目标，这样可以确保在攻击过程中角色能够正确地对准目标
+            if(!aiCharacter.isPerformingAction)
+                return;
+            // 2.以特殊的速度在特殊的帧中旋转朝向目标
+            Vector3 direction = currentTarget.transform.position - aiCharacter.transform.position;
+            direction.y = 0;
+            direction.Normalize();
+
+            if(direction == Vector3.zero)
+            {
+                direction = aiCharacter.transform.forward;
+            }
+
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            aiCharacter.transform.rotation = Quaternion.Slerp(
+                aiCharacter.transform.rotation, 
+                targetRotation, 
+                attackRotationSpeed * Time.deltaTime);
+
+        }
     }
 }

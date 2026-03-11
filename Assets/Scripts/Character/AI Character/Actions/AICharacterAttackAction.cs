@@ -23,7 +23,7 @@ namespace SG
 
         public void AttemptToPerformAttack(AICharacterManager aiCharacter)
         {
-            aiCharacter.characterAnimatorManager.PlayTargetAttackActionAnimation(attackType,attackAnimation, true);
+            aiCharacter.characterAnimatorManager.PlayTargetAttackActionAnimation(attackType, attackAnimation, true);
 
         }
     }

@@ -26,7 +26,7 @@ namespace SG
         protected bool hasRolledForComboChance = false;//指示AI角色是否已经为当前攻击动作掷骰子决定是否执行连击的标志
 
         [Header("Engagement Distance")]
-        [SerializeField] protected float maximumEngagementRadius = 5f;//AI角色与目标之间的最大仇恨半径，超过这个距离AI角色将不再追逐目标
+        public float maximumEngagementRadius = 5f;//AI角色与目标之间的最大仇恨半径，超过这个距离AI角色将不再追逐目标
 
 
         public override AIState Tick(AICharacterManager aiCharacter)
@@ -46,6 +46,8 @@ namespace SG
                 
             }
             // 旋转朝向目标
+            //在战斗状态中，AI角色需要始终朝向目标，以确保攻击动作能够正确地对准目标，并且在移动时也能保持正确的朝向
+            aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
             //如果目标不再出现，回到空闲状态
             if(aiCharacter.aiCharacterCombatManager.currentTarget == null)
@@ -57,10 +59,11 @@ namespace SG
             }
             else
             {
-                // 检测恢复时间
                 // 传递攻击到攻击状态
-                // 如果可以执行连击，掷骰子决定是否执行连击
+                aiCharacter.attackState.currentAttack = choosenAttack;
+                
                 // 切换状态
+                return SwitchState(aiCharacter, aiCharacter.attackState);//切换到攻击状态
             }
 
             // 如果目标离开攻击范围，切换回追逐状态
@@ -124,6 +127,7 @@ namespace SG
                     previousAttack = choosenAttack;
                     choosenAttack = attack;
                     hasAttack = true;
+                    return;
                 }
             }
 
