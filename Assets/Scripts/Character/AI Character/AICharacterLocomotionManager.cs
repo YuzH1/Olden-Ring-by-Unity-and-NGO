@@ -5,7 +5,7 @@ namespace SG
 {
     public class AICharacterLocomotionManager : CharacterLocomotionManager
     {
-        public void RotateTowrdsAgent(AICharacterManager aiCharacter)
+        public void RotateTowardsAgent(AICharacterManager aiCharacter)
         {
             if(aiCharacter.aiCharacterNetworkManager.isMoving.Value)
             {

@@ -61,10 +61,12 @@ namespace SG
             navMeshAgent.transform.localPosition = Vector3.zero;
             navMeshAgent.transform.localRotation = Quaternion.identity;
 
+            //更新与当前目标相关的战斗信息，如距离、角度和方向，这些信息对于AI角色的决策和行为选择至关重要
             if(aiCharacterCombatManager.currentTarget != null)
             {
                 aiCharacterCombatManager.targetDirection = aiCharacterCombatManager.currentTarget.transform.position - transform.position;
                 aiCharacterCombatManager.viewableAngle = WorldUtilityManager.instance.GetAngleOfTarget(transform, aiCharacterCombatManager.targetDirection);
+                aiCharacterCombatManager.distanceFromTarget = Vector3.Distance(transform.position, aiCharacterCombatManager.currentTarget.transform.position);
             }
 
             if(navMeshAgent.enabled)

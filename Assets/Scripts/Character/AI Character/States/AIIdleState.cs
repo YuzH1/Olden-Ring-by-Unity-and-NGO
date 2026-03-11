@@ -5,16 +5,16 @@ namespace SG
     [CreateAssetMenu(menuName = "A.I/States/Idle")]
     public class AIIdleState : AIState
     {
-        public override AIState Tick(AICharacterManager aICharacter)
+        public override AIState Tick(AICharacterManager aiCharacter)
         {
             // Idle state logic here
-            if(aICharacter.characterCombatManager.currentTarget != null)
+            if(aiCharacter.characterCombatManager.currentTarget != null)
             {
-                return SwitchState(aICharacter, aICharacter.pursueTargetState);   
+                return SwitchState(aiCharacter, aiCharacter.pursueTargetState);   
             }
             else
             {
-                aICharacter.aiCharacterCombatManager.FindATargetVialineOfSight(aICharacter);
+                aiCharacter.aiCharacterCombatManager.FindATargetVialineOfSight(aiCharacter);
                 Debug.Log("AI is looking for a target");
                 return this;
             }
@@ -22,7 +22,7 @@ namespace SG
 
         }
 
-        private void FindTargetVialineOfSight(AICharacterManager aICharacter)
+        private void FindTargetVialineOfSight(AICharacterManager aiCharacter)
         {
             // Implement logic to find target within line of sight
         }

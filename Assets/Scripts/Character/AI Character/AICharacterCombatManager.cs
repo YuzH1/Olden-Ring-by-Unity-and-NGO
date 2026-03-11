@@ -6,6 +6,7 @@ namespace SG
     {
 
         [Header("Target Info")]
+        public float distanceFromTarget;
         public float viewableAngle;
         public Vector3 targetDirection;
 

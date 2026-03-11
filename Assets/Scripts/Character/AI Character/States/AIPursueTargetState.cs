@@ -28,7 +28,7 @@ namespace SG
                 aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
             }
 
-            aiCharacter.aiCharacterLocomotionManager.RotateTowrdsAgent(aiCharacter);//旋转朝向目标
+            aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);//旋转朝向目标
 
             //如果到了目标位置的战斗范围，切换到战斗状态
 
