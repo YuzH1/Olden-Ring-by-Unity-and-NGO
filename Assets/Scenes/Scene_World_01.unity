@@ -325,15 +325,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3345368}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.4001994, y: 0, z: 6.72}
+  m_LocalRotation: {x: -0, y: 0.6866613, z: -0, w: 0.7269775}
+  m_LocalPosition: {x: -3.4995196, y: 0, z: 6.0779552}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 642527448}
   - {fileID: 166869085}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 86.733, z: 0}
 --- !u!1 &5735328
 GameObject:
   m_ObjectHideFlags: 0
@@ -8183,6 +8183,67 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406330509}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &415831869
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4122565486106794100, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_Name
+      value: ZombieBoss_Brute_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366386355382544937, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4896957989116589784, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 4129637962
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
 --- !u!1 &417157158
 GameObject:
   m_ObjectHideFlags: 0
@@ -34305,7 +34366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2033638617}
   m_Layer: 0
-  m_Name: Construct (1)
+  m_Name: Boss Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37775,3 +37836,4 @@ SceneRoots:
   - {fileID: 2060008838}
   - {fileID: 5185023917140500570}
   - {fileID: 3345371}
+  - {fileID: 415831869}
