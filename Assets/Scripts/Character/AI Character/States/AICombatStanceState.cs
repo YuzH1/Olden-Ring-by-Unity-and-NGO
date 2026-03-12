@@ -53,6 +53,13 @@ namespace SG
             if(aiCharacter.aiCharacterCombatManager.currentTarget == null)
                 return SwitchState(aiCharacter, aiCharacter.idleState);
 
+            // 如果目标死亡，回到空闲状态
+            if(aiCharacter.aiCharacterCombatManager.currentTarget.isDead.Value)
+            {
+                aiCharacter.aiCharacterCombatManager.currentTarget = null;
+                return SwitchState(aiCharacter, aiCharacter.idleState);
+            }
+
             if(!hasAttack)
             {
                 GetNewAttack(aiCharacter);

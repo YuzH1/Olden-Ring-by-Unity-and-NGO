@@ -91,6 +91,7 @@ namespace SG
         {
             base.OnNetworkSpawn();
 
+            characterNetworkManager.OnIsMovingChanged(false, characterNetworkManager.isMoving.Value); //在网络对象生成时，手动调用一次OnIsMovingChanged方法，确保动画状态正确设置，即使isMoving的值没有发生变化
             characterNetworkManager.isMoving.OnValueChanged += characterNetworkManager.OnIsMovingChanged; //订阅isMoving网络变量的值变化事件，当isMoving的值发生变化时，调用OnIsMovingChanged方法来处理相关逻辑，比如切换动画状态等
         }
 
