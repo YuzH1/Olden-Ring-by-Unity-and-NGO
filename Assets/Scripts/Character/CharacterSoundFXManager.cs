@@ -6,6 +6,12 @@ namespace SG
     {
         private AudioSource audioSource;
 
+        [Header("Damage Grunts")]//受击呻吟音效
+        [SerializeField] protected AudioClip[] damageGrunts;
+
+        [Header("Attack Grunts")]//攻击呻吟音效
+        [SerializeField] protected AudioClip[] attackGrunts;
+
 
         protected virtual void Awake()
         {
@@ -35,6 +41,16 @@ namespace SG
         public void PlayRollSoundFX()
         {
             audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
+        }
+
+        public virtual void PlayDamageGrunts()
+        {
+            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(damageGrunts));
+        }
+
+        public virtual void PlayAttackGrunts()
+        {
+            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(attackGrunts));
         }
 
     }

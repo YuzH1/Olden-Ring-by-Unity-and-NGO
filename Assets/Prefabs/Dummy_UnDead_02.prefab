@@ -467,10 +467,6 @@ MonoBehaviour:
   characterLocomotionManager: {fileID: 0}
   characterGroup: 1
   isPerformingAction: 0
-  isGrounded: 1
-  applyRootMotion: 0
-  canRotate: 1
-  canMove: 1
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
@@ -551,6 +547,9 @@ MonoBehaviour:
   groundedYVelocity: -20
   fallStartYVelocity: -5
   isRolling: 0
+  canRotate: 1
+  canMove: 1
+  isGrounded: 1
 --- !u!114 &5884006816027919043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,6 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 138d4e03f091b044c9a306f9f3c0702c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SG.AICharacterAnimatorManager
+  applyRootMotion: 0
   lastDamageAnimationPlayed: 
   hit_Forward_Medium_01: Hit_Forward_Medium_01
   hit_Forward_Medium_02: Hit_Forward_Medium_02
@@ -614,6 +614,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 560f48c92456d2d46bfc3764248d8276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SG.CharacterSoundFXManager
+  damageGrunts:
+  - {fileID: 8300000, guid: bc203dbc3debd804eb1acc164c25fd03, type: 3}
+  - {fileID: 8300000, guid: be712583640b5e34dbfd26f6c66bcb11, type: 3}
+  - {fileID: 8300000, guid: 806d84f48d028dd4995acacfd3c82108, type: 3}
+  attackGrunts:
+  - {fileID: 8300000, guid: 2d90b821652d97548967f220f2ad90be, type: 3}
+  - {fileID: 8300000, guid: b22ef378d6e1e704ca3e6de15d2838c4, type: 3}
+  - {fileID: 8300000, guid: 19b5b4e19422f80449a0483a25a96631, type: 3}
 --- !u!114 &-2136473807978479809
 MonoBehaviour:
   m_ObjectHideFlags: 0

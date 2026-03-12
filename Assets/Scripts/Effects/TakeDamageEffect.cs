@@ -114,6 +114,7 @@ namespace SG
             AudioClip phsicalDamageSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.physicalDamageSFX); 
 
             character.characterSoundFXManager.PlaySoundFX(phsicalDamageSFX);
+            character.characterSoundFXManager.PlayDamageGrunts(); //播放受击呻吟音效
             //根据不同伤害类型播放不同音效
             //火焰伤害播放火焰受击音效，闪电伤害播放闪电受击音效等
 

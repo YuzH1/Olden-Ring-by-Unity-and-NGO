@@ -4,6 +4,7 @@ namespace SG
 {
     public class AICharacterCombatManager : CharacterCombatManager
     {
+        protected AICharacterManager aiCharacter;
 
         [Header("Action Recovery")]
         public float actionRecoveryTimer = 0f;//这个计时器用来控制AI角色在执行攻击动作后需要等待多久才能进行下一次行动，这样可以避免AI角色连续执行攻击动作而没有任何间隔，增加了战斗的节奏感和策略性
@@ -26,6 +27,7 @@ namespace SG
             base.Awake();
 
             lockOnTransform = GetComponentInChildren<LockOnTransform>().transform; //在AI角色的子对象中找到一个带有LockOnTransform组件的对象，并将其transform赋值给lockOnTransform变量，这样战斗管理器就可以使用这个transform来进行目标锁定和旋转等操作
+            aiCharacter = GetComponent<AICharacterManager>();
         }
 
         public void FindATargetVialineOfSight(AICharacterManager aiCharacter)

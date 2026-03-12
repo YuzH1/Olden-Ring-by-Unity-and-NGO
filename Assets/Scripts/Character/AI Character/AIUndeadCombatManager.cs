@@ -4,6 +4,7 @@ namespace SG
 {
     public class AIUndeadCombatManager : AICharacterCombatManager
     {
+
         [Header("Damage Colliders")]
         [SerializeField] UnDeadHandDamageCollider rightHandDamageCollider;
         [SerializeField] UnDeadHandDamageCollider leftHandDamageCollider;
@@ -30,7 +31,9 @@ namespace SG
             
         public void OpenRightHandDamageCollider()
         {
+            aiCharacter.characterSoundFXManager.PlayAttackGrunts(); //播放攻击呻吟音效
             rightHandDamageCollider.EnableDamageCollider();
+            
         }
 
         public void DisableRightHandDamageCollider()
@@ -40,6 +43,7 @@ namespace SG
 
         public void OpenLeftHandDamageCollider()
         {
+            aiCharacter.characterSoundFXManager.PlayAttackGrunts(); //播放攻击呻吟音效
             leftHandDamageCollider.EnableDamageCollider();
         }
 

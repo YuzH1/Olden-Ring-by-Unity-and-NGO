@@ -56,6 +56,9 @@ namespace SG
 
         //防御音效
 
+        [Header("Whooshes")] //攻击空挥音效
+        public AudioClip[] whooshes;
+
        
 
     }
