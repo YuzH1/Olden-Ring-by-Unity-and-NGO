@@ -17,7 +17,7 @@ namespace SG
             //HOST
             if(aiCharacter.IsOwner)
             {
-                if(!aiCharacter.isGrounded)
+                if(!aiCharacter.aiCharacterLocomotionManager.isGrounded)
                     return;
 
                 Vector3 velocity = aiCharacter.animator.deltaPosition;
@@ -30,7 +30,7 @@ namespace SG
             //CLIENT 轻量客户端预测 + 平滑纠偏
             else
             {
-                if(!aiCharacter.isGrounded)
+                if(!aiCharacter.aiCharacterLocomotionManager.isGrounded)
                     return;
 
                 Vector3 velocity = aiCharacter.navMeshAgent.velocity * Time.deltaTime;

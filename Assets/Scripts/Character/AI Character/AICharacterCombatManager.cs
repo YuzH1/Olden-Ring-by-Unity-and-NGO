@@ -21,6 +21,13 @@ namespace SG
         [Header("Attack Rotation")]
         public float attackRotationSpeed = 25f;
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            lockOnTransform = GetComponentInChildren<LockOnTransform>().transform; //在AI角色的子对象中找到一个带有LockOnTransform组件的对象，并将其transform赋值给lockOnTransform变量，这样战斗管理器就可以使用这个transform来进行目标锁定和旋转等操作
+        }
+
         public void FindATargetVialineOfSight(AICharacterManager aiCharacter)
         {
             if(currentTarget != null)
@@ -139,7 +146,7 @@ namespace SG
                 return;
             
             // 1.检查是否能旋转
-            if(!aiCharacter.canRotate)
+            if(!aiCharacter.aiCharacterLocomotionManager.canRotate)
                 return;
             
             //如果正在执行攻击动作，才允许旋转朝向目标，这样可以确保在攻击过程中角色能够正确地对准目标

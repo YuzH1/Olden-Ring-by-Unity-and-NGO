@@ -31,7 +31,7 @@ namespace SG
             {
                 return;
             }
-            if(!playerPerformingAction.isGrounded)
+            if(!playerPerformingAction.playerLocomotionManager.isGrounded)
             {
                 return;
             }

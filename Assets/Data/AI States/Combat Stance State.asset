@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef14b9ba9b39c24aa2ab61896d47b7c, type: 3}
   m_Name: Combat Stance State
   m_EditorClassIdentifier: Assembly-CSharp::SG.AICombatStanceState
-  aiCharacterAttacks: []
+  aiCharacterAttacks:
+  - {fileID: 11400000, guid: 03afab715a8d8a64dbfc627fa0be5f1d, type: 2}
+  - {fileID: 11400000, guid: 482699fe12450b841bc7bea6a937412f, type: 2}
   canPerformCombo: 0
   chanceToPerformCombo: 25
   maximumEngagementRadius: 5

@@ -89,7 +89,7 @@ namespace SG
         private void HandleGroundedMovement()
         {
 
-            if(!player.canMove)
+            if(!player.playerLocomotionManager.canMove)
                 return;//如果角色不能移动，直接返回，不执行移动逻辑
             // Grounded movement logic for the player
             //根据摄像机方向来移动
@@ -132,7 +132,7 @@ namespace SG
         private void HandleFreeFallMovement()
         {
             // Free fall movement logic for the player can be added here
-            if(!player.isGrounded)
+            if(!player.playerLocomotionManager.isGrounded)
             {
                 Vector3 freeFallDirection;
 
@@ -150,7 +150,7 @@ namespace SG
         {
             if(player.isDead.Value)
                 return;//如果角色死亡，直接返回，不执行旋转逻辑
-            if(!player.canRotate)
+            if(!player.playerLocomotionManager.canRotate)
                 return;//如果角色不能旋转，直接返回，不执行旋转逻辑
             if(player.playerNetworkManager.isLockedOn.Value || player.playerLocomotionManager.isRolling) //如果锁定目标，或者正在滚动
             {
@@ -297,7 +297,7 @@ namespace SG
             
             if(player.playerNetworkManager.isJumping.Value)
                 return;//如果已经在跳跃，不能再次跳跃
-            if(!player.isGrounded)
+            if(!player.playerLocomotionManager.isGrounded)
                 return;
 
             //播放一个跳跃动画

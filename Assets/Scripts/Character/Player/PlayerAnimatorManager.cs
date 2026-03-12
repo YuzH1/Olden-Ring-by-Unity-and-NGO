@@ -14,7 +14,7 @@ namespace SG
 
         private void OnAnimatorMove()
         {
-            if(player.applyRootMotion)
+            if(player.playerAnimatorManager.applyRootMotion)
             {
                 //如果启用根运动，让动画控制角色移动
                 //使用动画的位移来移动角色，这样可以确保角色的位置与动画的根运动一致，避免位置漂移等问题

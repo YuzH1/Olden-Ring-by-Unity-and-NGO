@@ -134,7 +134,7 @@ namespace SG
         {
             //在本地客户端执行动画播放逻辑，可以根据animationID来确定要播放哪个动画
             //然后调用角色的动画管理器来播放动画，并根据applyRootMotion参数来控制是否启用根运动
-            character.applyRootMotion = applyRootMotion;
+            character.characterAnimatorManager.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(animationID, 0.2f);
 
         }
@@ -168,7 +168,7 @@ namespace SG
         {
             //在本地客户端执行动画播放逻辑，可以根据animationID来确定要播放哪个动画
             //然后调用角色的动画管理器来播放动画，并根据applyRootMotion参数来控制是否启用根运动
-            character.applyRootMotion = applyRootMotion;
+            character.characterAnimatorManager.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(animationID, 0.2f);
 
         }

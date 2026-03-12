@@ -18,6 +18,9 @@ namespace SG
 
         [Header("Flags")]
         public bool isRolling = false;
+        public bool canRotate = true;//这个标志可以用来控制角色是否可以旋转，比如在某些动画状态下可能不允许旋转
+        public bool canMove = true;//这个标志可以用来控制角色是否可以移动，比如在某些动画状态下可能不允许移动
+        public bool isGrounded = true;//这个标志可以用来控制角色是否在地面上，地面状态可能会影响角色的移动和攻击等行为
 
         protected virtual void Awake()
         {
@@ -35,12 +38,12 @@ namespace SG
 
         protected void HandleGroundCheck()
         {
-            character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckRadius, groundLayer);
+            isGrounded = Physics.CheckSphere(character.transform.position, groundCheckRadius, groundLayer);
         }
 
         protected void HandleInAirYVelocity()
         {
-            if(character.isGrounded)
+            if(isGrounded)
             {
                 if(yVelocity.y < 0)
                 {
@@ -75,5 +78,19 @@ namespace SG
 
             Gizmos.DrawSphere(character.transform.position, groundCheckRadius);
         }
+    
+        #region 动画事件调用
+            
+        public void EnableCanRotate()
+        {
+            canRotate = true;
+        }
+
+        public void DisableCanRotate()
+        {
+            canRotate = false;
+        }
+        #endregion
+
     }
 }

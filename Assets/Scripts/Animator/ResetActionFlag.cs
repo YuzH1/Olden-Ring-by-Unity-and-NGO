@@ -13,8 +13,8 @@ namespace SG
                 character = animator.GetComponent<CharacterManager>();
             }
             character.isPerformingAction = false;//当进入一个新的动画状态时，重置动作标志，允许角色执行新的动作
-            character.canRotate = true;//重置旋转标志，允许角色旋转
-            character.canMove = true;//重置移动标志，允许角色移动
+            character.characterLocomotionManager.canRotate = true;//重置旋转标志，允许角色旋转
+            character.characterLocomotionManager.canMove = true;//重置移动标志，允许角色移动
             //防止翻滚后角色被加速，因为翻滚动画可能会有根运动，
             // 如果不禁用根运动，角色可能会在翻滚结束后继续被动画推动，导致位置异常，
             // 所以在进入新状态时禁用根运动，让代码控制角色移动，确保角色位置正常
@@ -22,7 +22,7 @@ namespace SG
             // 在事件中调用一个方法来禁用根运动，这样可以更精确地控制何时禁用根运动，
             // 避免在翻滚动画的前半部分就禁用根运动，导致翻滚动画无法正常播放
             //character.animator.applyRootMotion = false;
-            character.applyRootMotion = false;//禁用根运动，让代码控制角色移动，确保角色位置正常
+            character.characterAnimatorManager.applyRootMotion = false;//禁用根运动，让代码控制角色移动，确保角色位置正常
             character.characterLocomotionManager.isRolling = false;//重置滚动状态，允许角色再次滚动
             character.characterAnimatorManager.DisableCanDoCombo();//重置连击状态，防止角色在新状态下还能继续连击
 

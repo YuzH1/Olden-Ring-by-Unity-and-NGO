@@ -15,6 +15,9 @@ namespace SG
         int verticalParameterHash;//Animator参数的哈希值，使用哈希值可以提高性能，因为在运行时直接使用字符串会比较慢，而使用哈希值可以更快地访问Animator参数
         int horizontalParameterHash;//Animator参数的哈希值，使用哈希值可以提高性能，因为在运行时直接使用字符串会比较慢，而使用哈希值可以更快地访问Animator参数
         
+        [Header("Flags")]
+        public bool applyRootMotion = false;//这个标志可以用来控制角色是否应用根运动，根运动是指动画本身带有的位移和旋转
+
         [Header("Damage Animations")]
         public string lastDamageAnimationPlayed;//上一次播放的受击动画的名称，用于避免重复播放同一个受击动画
 
@@ -161,14 +164,14 @@ namespace SG
             bool canMove = false) //这个参数可以用来控制角色在执行动作时是否可以移动，默认为false，表示在执行动作时不允许移动；如果为true，则允许移动
         {
             Debug.Log("正在播放动作动画: " + targetAnimation );
-            character.applyRootMotion = applyRootMotion;//如果正在执行动作，启用根运动，让动画控制角色移动；否则禁用根运动，允许代码控制角色移动
+            this.applyRootMotion = applyRootMotion;//如果正在执行动作，启用根运动，让动画控制角色移动；否则禁用根运动，允许代码控制角色移动
             character.animator.CrossFade(targetAnimation, 0.2f);//平滑过渡到目标动画，0.2f是过渡时间，可以根据需要调整
             //可以用于停止角色尝试移动或攻击等，确保动作的完整性和连贯性
             //比如在受到伤害时，角色会播放一个受击动画，这时我们不希望角色在动画播放过程中还能移动或攻击，
             //所以可以设置isPerformingAction为true，来禁止其他动作的执行，直到动画结束后再将isPerformingAction设置为false
             character.isPerformingAction = isPerformingAction;//更新角色的动作状态标志
-            character.canRotate = canRotate;//更新角色的旋转能力标志
-            character.canMove = canMove;//更新角色的移动能力标志
+            character.characterLocomotionManager.canRotate = canRotate;//更新角色的旋转能力标志
+            character.characterLocomotionManager.canMove = canMove;//更新角色的移动能力标志
 
             //告诉server或host我们播放了动画，这样其他客户端就可以同步动画状态
             character.characterNetworkManager.NotifyActionAnimationServerRpc(
@@ -191,11 +194,11 @@ namespace SG
             //告诉网络“Attacking”标志被激活（为了反击和格挡等）
             character.characterCombatManager.currentAttackType = attackType;//更新当前攻击类型，这样其他系统就可以根据这个信息来决定伤害、格挡等逻辑
             character.characterCombatManager.lastAttackAnimationPerformed = targetAnimation;//更新最后一次播放的攻击动画，这样我们就可以在需要的时候避免重复播放同一个攻击动画
-            character.applyRootMotion = applyRootMotion;//如果正在执行动作，启用根运动，让动画控制角色移动；否则禁用根运动，允许代码控制角色移动
+            this.applyRootMotion = applyRootMotion;//如果正在执行动作，启用根运动，让动画控制角色移动；否则禁用根运动，允许代码控制角色移动
             character.animator.CrossFade(targetAnimation, 0.2f);//平滑过渡到目标动画，0.2f是过渡时间，可以根据需要调整
             character.isPerformingAction = isPerformingAction;//更新角色的动作状态标志
-            character.canRotate = canRotate;//更新角色的旋转能力标志
-            character.canMove = canMove;//更新角色的移动能力标志
+            character.characterLocomotionManager.canRotate = canRotate;//更新角色的旋转能力标志
+            character.characterLocomotionManager.canMove = canMove;//更新角色的移动能力标志
 
             //告诉server或host我们播放了动画，这样其他客户端就可以同步动画状态
             character.characterNetworkManager.NotifyServerAttackActionAnimationServerRpc(

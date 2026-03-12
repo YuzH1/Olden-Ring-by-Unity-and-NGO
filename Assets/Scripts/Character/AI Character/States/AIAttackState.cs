@@ -23,8 +23,9 @@ namespace SG
                 return SwitchState(aiCharacter, aiCharacter.idleState);
             
             //攻击时旋转朝向目标
-            aiCharacter.characterAnimatorManager.UpdateAnimatorMovementParameters(0, 0);
             aiCharacter.aiCharacterCombatManager.RotateTowardsTargetWhileAttacking(aiCharacter);
+
+            aiCharacter.characterAnimatorManager.UpdateAnimatorMovementParameters(0, 0);
 
             // 将movement的值设为0，停止移动
 
@@ -39,13 +40,15 @@ namespace SG
                 }
             }
 
+            if(aiCharacter.isPerformingAction)
+                return this;
+
             if(!hasPerformedAttack)
             {
                 if(aiCharacter.aiCharacterCombatManager.actionRecoveryTimer > 0)
                     return this;
                 
-                if(aiCharacter.isPerformingAction)
-                    return this;
+                
 
                 PerformAttack(aiCharacter);
 

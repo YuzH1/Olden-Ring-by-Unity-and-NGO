@@ -31,11 +31,6 @@ namespace SG
         [Header("Flags")]
         public bool isPerformingAction = false;//这个标志可以用来控制角色在执行动作时不能移动或攻击等，确保动作的完整性和连贯性
         
-        public bool isGrounded = true;//这个标志可以用来控制角色是否在地面上，地面状态可能会影响角色的移动和攻击等行为
-        public bool applyRootMotion = false;//这个标志可以用来控制角色是否应用根运动，根运动是指动画本身带有的位移和旋转
-        public bool canRotate = true;//这个标志可以用来控制角色是否可以旋转，比如在某些动画状态下可能不允许旋转
-        public bool canMove = true;//这个标志可以用来控制角色是否可以移动，比如在某些动画状态下可能不允许移动
-
 
         protected virtual void Awake()
         {
@@ -57,7 +52,7 @@ namespace SG
 
         protected virtual void Update()
         {
-            animator.SetBool("isGrounded", isGrounded);//将是否在地面上的状态传递给动画参数，可以用于实现一些基于地面状态的动画过渡，比如从空中到地面的过渡
+            animator.SetBool("isGrounded", characterLocomotionManager.isGrounded);//将是否在地面上的状态传递给动画参数，可以用于实现一些基于地面状态的动画过渡，比如从空中到地面的过渡
             // Base character update logic can go here
             if (IsOwner)
             {

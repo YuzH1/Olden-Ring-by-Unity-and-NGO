@@ -212,9 +212,9 @@ GameObject:
   - component: {fileID: 3321209373701990038}
   - component: {fileID: 3348189979138869138}
   - component: {fileID: 8708259964390943765}
-  - component: {fileID: 6846828173318815047}
   - component: {fileID: -992588294402028400}
   - component: {fileID: 3631901928268285718}
+  - component: {fileID: 5884006816027919043}
   - component: {fileID: -1964169439193007356}
   - component: {fileID: 1543693221294245830}
   - component: {fileID: -2136473807978479809}
@@ -480,31 +480,6 @@ MonoBehaviour:
   pursueTargetState: {fileID: 11400000, guid: c969ad327c9da46448f71c913484287e, type: 2}
   combatStanceState: {fileID: 11400000, guid: daa39197d74801040b0cfcf03a86e90d, type: 2}
   attackState: {fileID: 11400000, guid: d45b44fe5814bf24aaa64940a283632b, type: 2}
---- !u!114 &6846828173318815047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 523556115678814875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd6f3a78ecdcac46aa9df0f21ee06fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SG.AICharacterCombatManager
-  ShowTopMostFoldoutHeaderGroup: 1
-  lastAttackAnimationPerformed: 
-  currentTarget: {fileID: 0}
-  currentAttackType: 0
-  lockOnTransform: {fileID: 5315082039689275718}
-  actionRecoveryTimer: 0
-  distanceFromTarget: 0
-  viewableAngle: 0
-  targetDirection: {x: 0, y: 0, z: 0}
-  detectionRadius: 10
-  minimumFOV: -50
-  maximumFOV: 50
-  attackRotationSpeed: 25
 --- !u!114 &-992588294402028400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,6 +551,36 @@ MonoBehaviour:
   groundedYVelocity: -20
   fallStartYVelocity: -5
   isRolling: 0
+--- !u!114 &5884006816027919043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523556115678814875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272fe6ecdd946a949a775150035f0174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.AIUndeadCombatManager
+  ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimationPerformed: 
+  currentTarget: {fileID: 0}
+  currentAttackType: 0
+  lockOnTransform: {fileID: 0}
+  actionRecoveryTimer: 0
+  distanceFromTarget: 0
+  viewableAngle: 0
+  targetDirection: {x: 0, y: 0, z: 0}
+  detectionRadius: 10
+  minimumFOV: -35
+  maximumFOV: 35
+  attackRotationSpeed: 25
+  rightHandDamageCollider: {fileID: 5031573468552315535}
+  leftHandDamageCollider: {fileID: 4100599268305142921}
+  baseDamage: 15
+  attack01DamageModifier: 1
+  attack02DamageModifier: 1.4
 --- !u!114 &-1964169439193007356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1083,7 +1088,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2767257180920148409}
-  m_Layer: 6
+  - component: {fileID: 5031573468552315535}
+  - component: {fileID: 1978895164782109951}
+  m_Layer: 10
   m_Name: Finger_01_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1106,6 +1113,46 @@ Transform:
   - {fileID: 8116127130434803723}
   m_Father: {fileID: 648366905142199243}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5031573468552315535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2621283608523163830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d74a171417cae46bac79fa36655447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.UnDeadHandDamageCollider
+  damageCollider: {fileID: 0}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  undeadCharacterCausingDamage: {fileID: 0}
+--- !u!135 &1978895164782109951
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2621283608523163830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2744147686529359538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,7 +1280,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 642400616124283713}
-  m_Layer: 6
+  - component: {fileID: 4100599268305142921}
+  - component: {fileID: 895875968435509219}
+  m_Layer: 10
   m_Name: Finger_01_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1256,6 +1305,46 @@ Transform:
   - {fileID: 9041948792285906456}
   m_Father: {fileID: 8068242409887281215}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4100599268305142921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2807655570990109812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d74a171417cae46bac79fa36655447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SG.UnDeadHandDamageCollider
+  damageCollider: {fileID: 0}
+  physicalDamage: 0
+  magicDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  holyDamage: 0
+  undeadCharacterCausingDamage: {fileID: 0}
+--- !u!135 &895875968435509219
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2807655570990109812}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2860675451415305138
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,6 +2822,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5315082039689275718}
+  - component: {fileID: 5440501503079698947}
   m_Layer: 7
   m_Name: Lock On Target
   m_TagString: Untagged
@@ -2755,6 +2845,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6059016533606990281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5440501503079698947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617110591609991018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28a5a0ffa9c2a8843aaa43a302118248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &8826156120200605466
 GameObject:
   m_ObjectHideFlags: 0
