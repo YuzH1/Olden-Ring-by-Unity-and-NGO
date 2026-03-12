@@ -163,7 +163,7 @@ namespace SG
             bool canRotate = false, //这个参数可以用来控制角色在执行动作时是否可以旋转，默认为false，表示在执行动作时不允许旋转；如果为true，则允许旋转
             bool canMove = false) //这个参数可以用来控制角色在执行动作时是否可以移动，默认为false，表示在执行动作时不允许移动；如果为true，则允许移动
         {
-            Debug.Log("正在播放动作动画: " + targetAnimation );
+            // Debug.Log("正在播放动作动画: " + targetAnimation );
             this.applyRootMotion = applyRootMotion;//如果正在执行动作，启用根运动，让动画控制角色移动；否则禁用根运动，允许代码控制角色移动
             character.animator.CrossFade(targetAnimation, 0.2f);//平滑过渡到目标动画，0.2f是过渡时间，可以根据需要调整
             //可以用于停止角色尝试移动或攻击等，确保动作的完整性和连贯性
