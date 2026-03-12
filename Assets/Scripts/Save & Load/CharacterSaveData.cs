@@ -30,6 +30,16 @@ namespace SG
         public int vitality = 10; //角色的体质等级
         public int endurance = 10; //角色的耐力等级
 
+        [Header("Bosses")]
+        public SerializableDictionary<int, bool> bossesAwakened; //一个字典，键是Boss的ID，值是一个布尔值，表示这个Boss是否已经被唤醒
+        public SerializableDictionary<int, bool> bossesDefeated; //一个字典，键是Boss的ID，值是一个布尔值，表示这个Boss是否已经被打败
+
+        public CharacterSaveData()
+        {
+            bossesAwakened = new SerializableDictionary<int, bool>();
+            bossesDefeated = new SerializableDictionary<int, bool>();
+        }
+
 
     }
     

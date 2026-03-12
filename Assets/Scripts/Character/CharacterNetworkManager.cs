@@ -7,6 +7,10 @@ namespace SG
     {
         CharacterManager character;
 
+        [Header("Active")]
+        public NetworkVariable<bool> isActive = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+
         [Header("Position")]
         //NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner是指允许所有客户端读取，但只有拥有该对象的客户端可以写入
         public NetworkVariable<Vector3> networkPosition = new NetworkVariable<Vector3>(Vector3.zero, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -100,6 +104,11 @@ namespace SG
         {
             //当移动状态发生变化时，如果当前客户端是拥有者，那么就根据新的状态来更新角色的动画状态
             character.animator.SetBool("isMoving", isMoving.Value);
+        }
+
+        public virtual void OnIsActiveChanged(bool oldValue, bool newValue)
+        {
+            gameObject.SetActive(isActive.Value);
         }
 
         //ServerRpc是指这个方法只能由客户端调用，并且会在服务器上执行，
