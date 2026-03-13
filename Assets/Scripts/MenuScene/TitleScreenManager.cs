@@ -66,15 +66,15 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
                 loadMenuScrollRect.verticalNormalizedPosition = 1f; //1.0 = 顶部，0.0 = 底部
             }
 
-            //自动选择第一个存档槽位
-            if(firstCharacterSlotButton != null)
+            //默认优先选择返回按钮，避免进入加载菜单后焦点落在第一个槽位
+            if(loadMenuReturnButton != null)
             {
-                firstCharacterSlotButton.Select();
-            }
-            else
-            {
-                //若未设置，则选择返回按钮
                 loadMenuReturnButton.Select();
+            }
+            else if(firstCharacterSlotButton != null)
+            {
+                //若返回按钮未设置，回退到第一个槽位
+                firstCharacterSlotButton.Select();
             }
         }
 
