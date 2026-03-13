@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef14b9ba9b39c24aa2ab61896d47b7c, type: 3}
+  m_Name: Durk AI Combat Stance State
+  m_EditorClassIdentifier: Assembly-CSharp::SG.AICombatStanceState
+  aiCharacterAttacks:
+  - {fileID: 11400000, guid: dd32cf08a08fd01459919dda1568552f, type: 2}
+  - {fileID: 11400000, guid: e9a5175ff0f99e642b9a52eb3714486c, type: 2}
+  - {fileID: 11400000, guid: fbce9ab351b15b64c989bfba4cd5a322, type: 2}
+  potentialAttacks: []
+  choosenAttack: {fileID: 0}
+  previousAttack: {fileID: 0}
+  canPerformCombo: 0
+  chanceToPerformCombo: 25
+  maximumEngagementRadius: 5

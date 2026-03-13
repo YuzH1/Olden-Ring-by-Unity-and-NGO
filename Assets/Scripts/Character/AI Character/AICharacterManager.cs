@@ -82,17 +82,24 @@ namespace SG
 
             if(navMeshAgent.enabled)
             {
-                Vector3 agentDestination = navMeshAgent.destination;
-                float remainingDistance = Vector3.Distance(agentDestination, transform.position);
+                // Vector3 agentDestination = navMeshAgent.destination;
+                // float remainingDistance = Vector3.Distance(agentDestination, transform.position);
 
-                if(remainingDistance > navMeshAgent.stoppingDistance)
-                {
-                    aiCharacterNetworkManager.isMoving.Value = true;
-                }
-                else
-                {
-                    aiCharacterNetworkManager.isMoving.Value = false;
-                }
+                // if(remainingDistance > navMeshAgent.stoppingDistance)
+                // {
+                //     aiCharacterNetworkManager.isMoving.Value = true;
+                // }
+                // else
+                // {
+                //     aiCharacterNetworkManager.isMoving.Value = false;
+                // }
+
+                bool isPathReady = navMeshAgent.hasPath && !navMeshAgent.pathPending;
+                bool hasRemainingDistance = isPathReady && navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance;
+                bool hasAgentVelocity = navMeshAgent.velocity.sqrMagnitude > 0.0001f;
+
+                // 只有在路径有效且确实在移动时才同步为“正在移动”，避免高台/不可达路径误判。
+                aiCharacterNetworkManager.isMoving.Value = hasRemainingDistance && hasAgentVelocity;
             }
             else
             {

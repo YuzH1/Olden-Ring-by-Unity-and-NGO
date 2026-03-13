@@ -9,6 +9,9 @@ namespace SG
         [Header("Action Recovery")]
         public float actionRecoveryTimer = 0f;//这个计时器用来控制AI角色在执行攻击动作后需要等待多久才能进行下一次行动，这样可以避免AI角色连续执行攻击动作而没有任何间隔，增加了战斗的节奏感和策略性
 
+        [Header("Pivot")]
+        public bool enablePivot = true;//这个布尔变量用来控制AI角色是否启用pivot功能，如果启用，AI角色在追逐目标时会根据目标的位置和角度来选择合适的pivot动画进行转向，这样可以让AI角色在追逐过程中表现得更加自然和智能
+        
         [Header("Target Info")]
         public float distanceFromTarget;
         public float viewableAngle;
@@ -72,7 +75,9 @@ namespace SG
                             targetDirection = targetCharacter.transform.position - aiCharacter.transform.position;
                             viewableAngle = WorldUtilityManager.instance.GetAngleOfTarget(aiCharacter.transform, targetDirection);
                             aiCharacter.characterCombatManager.SetTarget(targetCharacter);
-                            PivotTowardsTarget(aiCharacter);
+
+                            if(enablePivot)
+                                PivotTowardsTarget(aiCharacter);
                         }
                     }
                 }

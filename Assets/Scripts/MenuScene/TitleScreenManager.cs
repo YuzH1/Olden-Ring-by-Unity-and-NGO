@@ -48,6 +48,12 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
             NetworkManager.Singleton.StartHost();
         }
 
+        public void StartNetworkAsClient()
+        {
+            // Code to start the network as client
+            NetworkManager.Singleton.StartClient();
+        }
+
         public void StartNewGame()
         {
             WorldSaveGameManager.Instance.AttemptToCreateNewGame(); //创建一个新的游戏

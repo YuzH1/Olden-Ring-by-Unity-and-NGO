@@ -15,15 +15,17 @@ namespace SG
 
         [Header("Attacks")]
         public List<AICharacterAttackAction> aiCharacterAttacks; //AI角色可以使用的攻击动作列表
-        private List<AICharacterAttackAction> potentialAttacks;//在此状态中生成的潜在攻击列表，根据当前与目标的距离和角度来筛选出适合的攻击动作
-        private AICharacterAttackAction choosenAttack;//当前选择的攻击动作
-        private AICharacterAttackAction previousAttack;//上一个攻击动作
+        [SerializeField] List<AICharacterAttackAction> potentialAttacks;//在此状态中生成的潜在攻击列表，根据当前与目标的距离和角度来筛选出适合的攻击动作
+        [SerializeField] AICharacterAttackAction choosenAttack;//当前选择的攻击动作
+        [SerializeField] AICharacterAttackAction previousAttack;//上一个攻击动作
         protected bool hasAttack = false;//指示AI角色是否已经执行了攻击动作的标志
 
         [Header("Combo")]
         [SerializeField] protected bool canPerformCombo = false;//指示AI角色是否可以执行连击的标志
         [SerializeField] protected int chanceToPerformCombo = 25;//AI角色执行连击的概率，范围从0到100
         protected bool hasRolledForComboChance = false;//指示AI角色是否已经为当前攻击动作掷骰子决定是否执行连击的标志
+
+        
 
         [Header("Engagement Distance")]
         public float maximumEngagementRadius = 5f;//AI角色与目标之间的最大仇恨半径，超过这个距离AI角色将不再追逐目标
@@ -37,11 +39,15 @@ namespace SG
             if(!aiCharacter.navMeshAgent.enabled)
                 aiCharacter.navMeshAgent.enabled = true;
 
-            if(!aiCharacter.aiCharacterNetworkManager.isMoving.Value)
+            if(aiCharacter.aiCharacterCombatManager.enablePivot)
             {
-                if(aiCharacter.aiCharacterCombatManager.viewableAngle < -30 || aiCharacter.aiCharacterCombatManager.viewableAngle > 30)
+                if(!aiCharacter.aiCharacterNetworkManager.isMoving.Value)
                 {
-                    aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+                    if(aiCharacter.aiCharacterCombatManager.viewableAngle < -30 || aiCharacter.aiCharacterCombatManager.viewableAngle > 30)
+                    {
+                        aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+                    }
+                    
                 }
                 
             }

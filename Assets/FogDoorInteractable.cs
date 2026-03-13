@@ -29,6 +29,7 @@ namespace SG
         {
             base.OnNetworkDespawn();
 
+            isActive.Value = false; //在网络销毁时将isActive设置为false，确保雾门对象被正确地禁用
             isActive.OnValueChanged -= OnIsActiveChanged; //在网络销毁时取消订阅isActive的值变化事件，避免内存泄漏
             WorldObjectManager.instance.RemoveFogDoorFromList(this); //将当前的雾门对象从WorldObjectManager的列表中移除，保持列表的准确性
         }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef14b9ba9b39c24aa2ab61896d47b7c, type: 3}
+  m_Name: Boss Zombie AI Combat Stance State
+  m_EditorClassIdentifier: Assembly-CSharp::SG.AICombatStanceState
+  aiCharacterAttacks:
+  - {fileID: 11400000, guid: 5689054ea5eda064991c0a6c94496860, type: 2}
+  - {fileID: 11400000, guid: 5275109e862fe9748aeaa08455350b7f, type: 2}
+  - {fileID: 11400000, guid: d7d44f4dff386cc459fb9d71528fb46a, type: 2}
+  - {fileID: 11400000, guid: e52142b1250964441b8b7aba593b8126, type: 2}
+  potentialAttacks: []
+  choosenAttack: {fileID: 0}
+  previousAttack: {fileID: 0}
+  canPerformCombo: 0
+  chanceToPerformCombo: 25
+  maximumEngagementRadius: 6

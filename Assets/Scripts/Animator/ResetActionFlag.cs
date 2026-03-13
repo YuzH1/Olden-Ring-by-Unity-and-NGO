@@ -29,6 +29,7 @@ namespace SG
             if(character.IsOwner)
             {
                 character.characterNetworkManager.isSprinting.Value = false;//重置冲刺状态，允许角色再次冲刺
+                character.characterNetworkManager.isInvulnerable.Value = false;//重置无敌状态，允许角色再次受到伤害
             }
             
         }

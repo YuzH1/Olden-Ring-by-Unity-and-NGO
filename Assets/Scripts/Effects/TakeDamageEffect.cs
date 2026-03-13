@@ -43,6 +43,9 @@ namespace SG
 
         public override void ProcessEffect(CharacterManager character)
         {
+            if(character.characterNetworkManager.isInvulnerable.Value)
+                return; //如果角色处于无敌状态，就不处理伤害效果了，避免出现无敌状态下受伤的情况
+
             base.ProcessEffect(character);
 
             //如果角色已经死亡了，就不再处理伤害效果了，避免出现死后受伤的情况
