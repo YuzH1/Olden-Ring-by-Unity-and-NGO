@@ -40,8 +40,8 @@ MonoBehaviour:
   OH_RB_Action: {fileID: 11400000, guid: 53021a696081e1b42a24237a5680916c, type: 2}
   OH_RT_Action: {fileID: 11400000, guid: f74723ac94474da448c7986f76a9c60e, type: 2}
   whooshes:
-  - {fileID: 8300000, guid: 9009b366b71e8d243b2a4147ea02d78a, type: 3}
-  - {fileID: 8300000, guid: d768c8defa603af4ab711f28d4d9b2ac, type: 3}
-  - {fileID: 8300000, guid: 95235fe8d821cbc4989229d43653463b, type: 3}
-  - {fileID: 8300000, guid: e8d8833608725db4c9e0561a16b52136, type: 3}
-  - {fileID: 8300000, guid: f011023dde2bbdf4aae95f7aabcf2704, type: 3}
+  - {fileID: 8300000, guid: 860648d2a9b6b114ea546610259456c6, type: 3}
+  - {fileID: 8300000, guid: 173e5de06023b564797eb4d61938f8ac, type: 3}
+  - {fileID: 8300000, guid: 54a666de488035040a9716396ba195ed, type: 3}
+  - {fileID: 8300000, guid: 12394a21d7a30ed47883f2347742244b, type: 3}
+  - {fileID: 8300000, guid: 02b69bc0317aba04188ce97676de8b1c, type: 3}

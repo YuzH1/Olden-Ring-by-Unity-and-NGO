@@ -760,7 +760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3590192380
+  GlobalObjectIdHash: 1421416317
   InScenePlacedSourceGlobalObjectIdHash: 3590192380
   DeferredDespawnTick: 0
   Ownership: 1
@@ -820,6 +820,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isActive:
+    m_InternalValue: 1
   networkPosition:
     m_InternalValue: {x: 0, y: 0, z: 0}
   networkRotation:
@@ -836,6 +838,8 @@ MonoBehaviour:
   moveAmount:
     m_InternalValue: 0
   currentTargetNetworkObjectID:
+    m_InternalValue: 0
+  isInvulnerable:
     m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
@@ -1022,6 +1026,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c39ba448713aff147bdc2b9b4126b1d8, type: 3}
   - {fileID: 8300000, guid: f549a9145c031244a89a2d36d5f18757, type: 3}
   - {fileID: 8300000, guid: 9ef3f6cb1b48c67419812b50793d9da6, type: 3}
+  attackGrunts:
+  - {fileID: 8300000, guid: c262d1f46e54cf34581445b5536060f2, type: 3}
+  - {fileID: 8300000, guid: d25aeb077fa16714bb8fc217c45dbe31, type: 3}
+  - {fileID: 8300000, guid: 18eb6943b254c344db3b95d756e0983a, type: 3}
+  - {fileID: 8300000, guid: 35cdeca1f8d40244c9838a36bc5c239d, type: 3}
+  - {fileID: 8300000, guid: 5a99d2a4f9d5dff45890e2997a8b450c, type: 3}
+  - {fileID: 8300000, guid: 61f74f6bf78a7af458d83b786df4ab1a, type: 3}
+  - {fileID: 8300000, guid: df5e8166d05ac334daaccbd43c07706a, type: 3}
+  - {fileID: 8300000, guid: 37ce22b0ae7ab0f4ab852eac83f8fcbc, type: 3}
+  - {fileID: 8300000, guid: c56c82053889f4f48b3b899c70983cd6, type: 3}
+  - {fileID: 8300000, guid: ef0e4cd0339e30e4490469c55aac50a6, type: 3}
 --- !u!114 &5489449173854239899
 MonoBehaviour:
   m_ObjectHideFlags: 0

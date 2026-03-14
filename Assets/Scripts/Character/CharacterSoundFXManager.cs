@@ -12,6 +12,21 @@ namespace SG
         [Header("Attack Grunts")]//攻击呻吟音效
         [SerializeField] protected AudioClip[] attackGrunts;
 
+        [Header("Footstep SFX")]//脚步音效
+        public AudioClip[] footstepSFX;//默认脚步音效，如果没有根据地面类型区分的脚步音效，就使用这个数组中的音效来播放脚步声
+
+        // 暂时先不使用根据地面类型区分的脚步音效数组，后续如果需要再添加这个功能
+        
+        // public AudioClip[] footstepSFXOnDirt;//在泥土上行走时播放的脚步音效数组
+        // public AudioClip[] footstepSFXOnStone;//在石头上行走时播放的脚步音效数组
+        // public AudioClip[] footstepSFXOnWood;//在木头上行走时播放的脚步音效数组
+        // public AudioClip[] footstepSFXOnGrass;//在草地上行走时播放的脚步音效数组
+        // public AudioClip[] footstepSFXOnWater;//在水面上行走时播放的脚步音效数组
+        // public AudioClip[] footstepSFXOnSand;//在沙地上行走时播放的脚步音效数组
+        // public AudioClip[] footstepSFXOnSnow; //在雪地上行走时播放的脚步音效数组
+        // public AudioClip[] footstepSFXOnMetal;//在金属上行走时播放的脚步音效数组
+        // public AudioClip[] footstepSFXOnGravel;//在碎石上行走时播放的脚步音效数组
+
 
         protected virtual void Awake()
         {
@@ -43,14 +58,25 @@ namespace SG
             audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
         }
 
-        public virtual void PlayDamageGrunts()
+        public virtual void PlayDamageGruntsSFX()
         {
+            if(damageGrunts.Length == 0)
+                return;
             PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(damageGrunts));
         }
 
-        public virtual void PlayAttackGrunts()
+        public virtual void PlayAttackGruntsSFX()
         {
+            if(attackGrunts.Length == 0)
+                return;
             PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(attackGrunts));
+        }
+
+        public virtual void PlayFootStepSFX()
+        {
+            if(footstepSFX.Length == 0)
+                return;
+            PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(footstepSFX));
         }
 
     }

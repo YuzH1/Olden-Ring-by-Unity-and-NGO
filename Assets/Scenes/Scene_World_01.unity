@@ -18733,7 +18733,7 @@ PrefabInstance:
     - target: {fileID: 613179372653223882, guid: 214662e7605c20749a29ce7dd88526a6, type: 3}
       propertyPath: characterGameObject
       value: 
-      objectReference: {fileID: 4122565486106794100, guid: d3d89e11bc766e54a8f7712c9c1b673d, type: 3}
+      objectReference: {fileID: 6181074133315776768, guid: 3002f05952ee7054db35368e5c39058b, type: 3}
     - target: {fileID: 4395493403875185228, guid: 214662e7605c20749a29ce7dd88526a6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -1285,7 +1285,7 @@ MonoBehaviour:
   pursueTargetState: {fileID: 11400000, guid: b6329d681e9441245a7ba732184ef32d, type: 2}
   combatStanceState: {fileID: 11400000, guid: c60e92d0aba5421459af7c819253d819, type: 2}
   attackState: {fileID: 11400000, guid: 90c2b860ff450c54d94fcde655a69bda, type: 2}
-  bossID: 0
+  bossID: 1
   hasBeenDefeated: 0
   hasBeenAwakened: 0
   fogDoors: []

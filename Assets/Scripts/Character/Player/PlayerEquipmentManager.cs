@@ -266,11 +266,13 @@ namespace SG
             if(player.playerNetworkManager.isUsingRightHand.Value)
             {
                 rightHandWeaponManager.meleeDamageCollider.EnableDamageCollider();
+                player.characterSoundFXManager.PlayAttackGruntsSFX();//播放攻击空挥音效
                 player.characterSoundFXManager.PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(player.playerInventoryManager.currentRightHandWeapon.whooshes));//播放攻击空挥音效
             }
             else if(player.playerNetworkManager.isUsingLeftHand.Value)
             {
                 leftHandWeaponManager.meleeDamageCollider.EnableDamageCollider();
+                player.characterSoundFXManager.PlayAttackGruntsSFX();//播放攻击空挥音效
                 player.characterSoundFXManager.PlaySoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(player.playerInventoryManager.currentLeftHandWeapon.whooshes));//播放攻击空挥音效
             }
         } 

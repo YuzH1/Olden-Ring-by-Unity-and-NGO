@@ -87,7 +87,7 @@ namespace SG
             }
         }
     
-        public void PivotTowardsTarget(AICharacterManager aiCharacter)
+        public virtual void PivotTowardsTarget(AICharacterManager aiCharacter)
         {
             //播放一个基于目标视角的pivot动画
             if(aiCharacter.isPerformingAction)
