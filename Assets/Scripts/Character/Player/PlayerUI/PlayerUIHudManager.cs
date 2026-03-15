@@ -13,6 +13,10 @@ namespace SG
         [Header("Quick Slots")]
         [SerializeField] Image rightWeaponQuickSlotIcon;
         [SerializeField] Image leftWeaponQuickSlotIcon;
+
+        [Header("Boss HP Bar")]
+        public Transform bossHPBarParent;
+        public GameObject bossHPBarPrefab;
         
 
         public void RefreshHUD()

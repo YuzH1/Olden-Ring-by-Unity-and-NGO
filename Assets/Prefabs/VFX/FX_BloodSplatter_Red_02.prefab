@@ -587,7 +587,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 100
+    maxNumParticles: 200
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -734,7 +734,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.1
+      value: 0.41
       mode: 0
       spread: 0
       speed:
@@ -4787,3 +4787,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05c8adc597ee004f9533170333ed374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  timeToDestroy: 5

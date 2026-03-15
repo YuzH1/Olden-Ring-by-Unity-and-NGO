@@ -96,6 +96,7 @@ namespace SG
             
             characterNetworkManager.isMoving.OnValueChanged += characterNetworkManager.OnIsMovingChanged; //订阅isMoving网络变量的值变化事件，当isMoving的值发生变化时，调用OnIsMovingChanged方法来处理相关逻辑，比如切换动画状态等
             characterNetworkManager.isActive.OnValueChanged += characterNetworkManager.OnIsActiveChanged; //订阅isActive网络变量的值变化事件，当isActive的值发生变化时，调用OnIsActiveChanged方法来处理相关逻辑，比如启用或禁用角色等
+            characterNetworkManager.currentHealth.OnValueChanged += characterNetworkManager.CheckHP; //任何角色血量变为0时都需要触发死亡
         }
 
         public override void OnNetworkDespawn()
@@ -103,6 +104,7 @@ namespace SG
             base.OnNetworkDespawn();
             characterNetworkManager.isMoving.OnValueChanged -= characterNetworkManager.OnIsMovingChanged;
             characterNetworkManager.isActive.OnValueChanged -= characterNetworkManager.OnIsActiveChanged;
+            characterNetworkManager.currentHealth.OnValueChanged -= characterNetworkManager.CheckHP;
         }
 
         public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)

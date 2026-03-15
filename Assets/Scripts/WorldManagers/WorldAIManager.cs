@@ -1,10 +1,8 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections;
-using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SG
 {
@@ -18,7 +16,10 @@ namespace SG
 
         [Header("Characters")]
         [SerializeField] List<AICharacterSpawner> aiCharacterSpawners;
-        [SerializeField] List<GameObject> spawnedCharacters;
+        [SerializeField] List<AICharacterManager> spawnedCharacters;
+
+        [Header("Bosses")]
+        [SerializeField] List<AIBossCharacterManager> spawnedBosses;
 
         private void Awake()
         {
@@ -43,6 +44,28 @@ namespace SG
             }
         }
 
+        public void AddCharacterToSpawnedCharactersList(AICharacterManager character)
+        {
+            if(spawnedCharacters.Contains(character))
+                return;
+            spawnedCharacters.Add(character);
+
+            // 检查这个角色是否是Boss，如果是Boss，添加到spawnedBosses列表中
+            AIBossCharacterManager bossCharacter = character as AIBossCharacterManager;
+
+            if(bossCharacter != null)
+            {
+                if(spawnedBosses.Contains(bossCharacter))
+                    return;
+                spawnedBosses.Add(bossCharacter);
+            }
+        }
+
+        public AIBossCharacterManager GetBossByID(int ID)
+        {
+            return spawnedBosses.FirstOrDefault(boss => boss.bossID == ID);
+        }
+
         private void DespawnAllCharacters()
         {
             foreach (var character in spawnedCharacters)
@@ -58,9 +81,9 @@ namespace SG
             //用来暂时禁用对象，同步在网络上
             //可以用来隐藏一些距离玩家较远的敌人
             //角色可以被划分在不同的区域中，当玩家进入某个区域时启用该区域的角色，离开时禁用
-            foreach (GameObject character in spawnedCharacters)
+            foreach (AICharacterManager character in spawnedCharacters)
             {
-                character.SetActive(false);
+                character.gameObject.SetActive(false);
             }
         }
 

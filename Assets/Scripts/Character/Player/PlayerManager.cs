@@ -85,9 +85,6 @@ namespace SG
                 
             }
             
-            //数据
-            playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP; //检查生命值是否为0，触发死亡事件
-
             //锁定
             playerNetworkManager.isLockedOn.OnValueChanged += playerNetworkManager.OnIsLockedOnChanged; //当锁定状态变化时，更新锁定目标
             playerNetworkManager.currentTargetNetworkObjectID.OnValueChanged += playerNetworkManager.OnLockOnTargetIDChanged; //当当前锁定目标的网络对象ID变化时，更新当前锁定目标的数据和模型
@@ -124,9 +121,6 @@ namespace SG
                 playerNetworkManager.currentStamina.OnValueChanged -= playerStatsManager.ResetStaminaRegenerationTimer;
             }
             
-            //数据
-            playerNetworkManager.currentHealth.OnValueChanged -= playerNetworkManager.CheckHP; 
-
             //锁定
             playerNetworkManager.isLockedOn.OnValueChanged -= playerNetworkManager.OnIsLockedOnChanged;
             playerNetworkManager.currentTargetNetworkObjectID.OnValueChanged -= playerNetworkManager.OnLockOnTargetIDChanged;

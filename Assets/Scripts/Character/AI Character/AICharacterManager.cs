@@ -1,5 +1,8 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace SG
 {
@@ -8,12 +11,15 @@ namespace SG
         [HideInInspector] public AICharacterNetworkManager aiCharacterNetworkManager;
         [HideInInspector] public AICharacterCombatManager aiCharacterCombatManager;
         [HideInInspector] public AICharacterLocomotionManager aiCharacterLocomotionManager;
-        
+
+        [Header("AI Display Name")]
+        public String aiDisplayName = "AI Character";
+
         [Header("NavMesh Agent")]
         public NavMeshAgent navMeshAgent;
 
         [Header("Current State")]
-        [SerializeField] AIState currentState;
+        [SerializeField] protected AIState currentState;
 
         [Header("States")]
         public AIIdleState idleState;
@@ -32,13 +38,23 @@ namespace SG
             aiCharacterLocomotionManager = GetComponent<AICharacterLocomotionManager>();
             navMeshAgent = GetComponentInChildren<NavMeshAgent>();
 
-            //使用scriptable object实例化状态，确保每个AI角色都有独立的状态实例，避免不同角色之间状态共享导致的逻辑错误
-            idleState = Instantiate(idleState);
-            pursueTargetState = Instantiate(pursueTargetState);
-            combatStanceState = Instantiate(combatStanceState);
-            attackState = Instantiate(attackState);
+            
+        }
 
-            currentState = idleState;//初始状态设置为idleState
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+
+            if(IsOwner)
+            {
+                //使用scriptable object实例化状态，确保每个AI角色都有独立的状态实例，避免不同角色之间状态共享导致的逻辑错误
+                idleState = Instantiate(idleState);
+                pursueTargetState = Instantiate(pursueTargetState);
+                combatStanceState = Instantiate(combatStanceState);
+                attackState = Instantiate(attackState);
+
+                currentState = idleState;//初始状态设置为idleState
+            }
         }
 
         protected override void Update()

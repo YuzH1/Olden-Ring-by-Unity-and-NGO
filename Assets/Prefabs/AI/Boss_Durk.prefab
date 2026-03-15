@@ -2046,6 +2046,7 @@ MonoBehaviour:
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
+  aiDisplayName: "\u5DE8\u4EBA \xB7 Lao Deng"
   navMeshAgent: {fileID: 0}
   currentState: {fileID: 0}
   idleState: {fileID: 11400000, guid: 9aeed084448f0d745bcb058d07208898, type: 2}
@@ -2053,10 +2054,16 @@ MonoBehaviour:
   combatStanceState: {fileID: 11400000, guid: c2af7db2a0fed8247b728767095ee7ed, type: 2}
   attackState: {fileID: 11400000, guid: 6e8f13dca6d60a940964f6133fa8d9aa, type: 2}
   bossID: 0
-  hasBeenDefeated: 0
-  hasBeenAwakened: 0
+  bossFightIsActive:
+    m_InternalValue: 0
+  hasBeenDefeated:
+    m_InternalValue: 0
+  hasBeenAwakened:
+    m_InternalValue: 0
   fogDoors: []
-  DebugWakeBossUp: 0
+  sleepAniamation: Sleep_01
+  awakenAnimation: Awaken_01
+  bossSleepState: {fileID: 11400000, guid: f73801f2e08e26a4ea5c1c6248c5c475, type: 2}
   durkSoundFXManager: {fileID: 0}
   durkCombatManager: {fileID: 0}
 --- !u!114 &6786168139189863906
@@ -2115,16 +2122,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 713935e0cfce25e4b9ad8e1c8dd179e7, type: 3}
   - {fileID: 8300000, guid: 0c480673afd26654ba140eccd99b73a2, type: 3}
   footstepSFX:
-  - {fileID: 8300000, guid: 9ea11a2d13d536e4e8441a0f5895995c, type: 3}
-  - {fileID: 8300000, guid: 203ac8b6f07070e4f93f1c1a6fff06c3, type: 3}
-  - {fileID: 8300000, guid: ac6649006dbee9e4685752e124111da7, type: 3}
-  - {fileID: 8300000, guid: f42914d98b070f741b2feee96a2988ee, type: 3}
-  - {fileID: 8300000, guid: feb62160ad1f8334ab037017b843d162, type: 3}
-  - {fileID: 8300000, guid: 001f691d110d55648871a03f446ffa08, type: 3}
-  - {fileID: 8300000, guid: 6478d7fb30f301b4fa8f74d5d1dad094, type: 3}
-  - {fileID: 8300000, guid: f1547ad8fbfa4f24d83e5a445aee860d, type: 3}
-  - {fileID: 8300000, guid: 47832b56ccba5bc408b1d5aac1871746, type: 3}
-  - {fileID: 8300000, guid: 3d132da7af60f1145a3deb6a8bc42a08, type: 3}
+  - {fileID: 8300000, guid: 828678f96ca117844b56db442d0599d5, type: 3}
+  - {fileID: 8300000, guid: 49238e502a4bcfd4f97e8d45aaa0dd62, type: 3}
   clubWhooshes:
   - {fileID: 8300000, guid: 9009b366b71e8d243b2a4147ea02d78a, type: 3}
   - {fileID: 8300000, guid: d768c8defa603af4ab711f28d4d9b2ac, type: 3}
