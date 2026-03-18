@@ -52,7 +52,7 @@ namespace SG
             character = GetComponent<CharacterManager>();
         }
 
-        public void CheckHP(int oldValue, int newValue)
+        public virtual void CheckHP(int oldValue, int newValue)
         {
             // 使用 newValue 参数而非 currentHealth.Value，避免潜在的同步问题
             if(newValue <= 0)

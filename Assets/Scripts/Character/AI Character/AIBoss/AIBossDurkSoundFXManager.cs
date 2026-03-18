@@ -5,6 +5,11 @@ namespace SG
 {
     public class AIBossDurkSoundFXManager : CharacterSoundFXManager
     {
+        [Header("BGM")]
+        public AudioClip bossIntroTrack; //Boss战斗的引入曲目，可以在Inspector中设置，确保它在游戏中正确地播放
+        public AudioClip bossLoopTrack; //Boss战斗的循环曲目
+        public AudioClip bossDefeatedTrack; //Boss被击败的曲目
+
         [Header("Wooshes")]
         public AudioClip[] clubWhooshes;//棍棒攻击挥动时的音效
 

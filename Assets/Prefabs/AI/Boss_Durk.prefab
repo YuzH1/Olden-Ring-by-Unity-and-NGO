@@ -593,7 +593,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -198160899964649314, guid: 1bd412e2ad9066f469838f28a82e79b4, type: 3}
+  - {fileID: 2100000, guid: 3f43939fcf61cac4582af3ec6eb31c49, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1816,9 +1816,9 @@ GameObject:
   - component: {fileID: -6533777766947476844}
   - component: {fileID: 6786168139189863906}
   - component: {fileID: 6365629014837044420}
+  - component: {fileID: 8773256640564402813}
   - component: {fileID: 8122379727722479919}
   - component: {fileID: 9029092470820842882}
-  - component: {fileID: 2634518813116268449}
   - component: {fileID: 6176097018857264996}
   - component: {fileID: 4853247399879156560}
   - component: {fileID: 1590316640634353694}
@@ -2063,7 +2063,11 @@ MonoBehaviour:
   fogDoors: []
   sleepAniamation: Sleep_01
   awakenAnimation: Awaken_01
+  minimumHealthPrcentageToShift: 50
+  phaseShiftAnimation: Phase_Change_01
+  phase2CombatStanceState: {fileID: 11400000, guid: 5a429427334ced04bbb5171eff3e1c57, type: 2}
   bossSleepState: {fileID: 11400000, guid: f73801f2e08e26a4ea5c1c6248c5c475, type: 2}
+  defeatMessage: LEGEND FELLED
   durkSoundFXManager: {fileID: 0}
   durkCombatManager: {fileID: 0}
 --- !u!114 &6786168139189863906
@@ -2124,6 +2128,9 @@ MonoBehaviour:
   footstepSFX:
   - {fileID: 8300000, guid: 828678f96ca117844b56db442d0599d5, type: 3}
   - {fileID: 8300000, guid: 49238e502a4bcfd4f97e8d45aaa0dd62, type: 3}
+  bossIntroTrack: {fileID: 8300000, guid: b781cc2bed4740941baae66ef5d03b75, type: 3}
+  bossLoopTrack: {fileID: 8300000, guid: f4002ce47df89284aa585df48e29aae5, type: 3}
+  bossDefeatedTrack: {fileID: 8300000, guid: e632dbbc3ddf2fe438526b8af240c75b, type: 3}
   clubWhooshes:
   - {fileID: 8300000, guid: 9009b366b71e8d243b2a4147ea02d78a, type: 3}
   - {fileID: 8300000, guid: d768c8defa603af4ab711f28d4d9b2ac, type: 3}
@@ -2140,6 +2147,60 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fc96116dc3c141440aabb5605744fea2, type: 3}
   - {fileID: 8300000, guid: fd706038486fee041947a774223dc22e, type: 3}
   roars: []
+--- !u!114 &8773256640564402813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181074133315776768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14c56559a79ad1042acf582f55cc31e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
+  isActive:
+    m_InternalValue: 1
+  networkPosition:
+    m_InternalValue: {x: 0, y: 0, z: 0}
+  networkRotation:
+    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
+  networkPositionVelocity: {x: 0, y: 0, z: 0}
+  networkPositionSmoothTime: 0.1
+  networkRotationSmoothTime: 0.1
+  isMoving:
+    m_InternalValue: 0
+  horizontalMovement:
+    m_InternalValue: 0
+  verticalMovement:
+    m_InternalValue: 0
+  moveAmount:
+    m_InternalValue: 0
+  currentTargetNetworkObjectID:
+    m_InternalValue: 0
+  isInvulnerable:
+    m_InternalValue: 0
+  isSprinting:
+    m_InternalValue: 0
+  isJumping:
+    m_InternalValue: 0
+  isLockedOn:
+    m_InternalValue: 0
+  isChargingAttack:
+    m_InternalValue: 0
+  endurance:
+    m_InternalValue: 10
+  vitality:
+    m_InternalValue: 10
+  maxStamina:
+    m_InternalValue: 100
+  currentStamina:
+    m_InternalValue: 100
+  maxHealth:
+    m_InternalValue: 100
+  currentHealth:
+    m_InternalValue: 100
 --- !u!114 &8122379727722479919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2186,60 +2247,6 @@ MonoBehaviour:
   canRotate: 1
   canMove: 1
   isGrounded: 1
---- !u!114 &2634518813116268449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6181074133315776768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d6ad3232b054764aa561c4dd5076982, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SG.AICharacterNetworkManager
-  ShowTopMostFoldoutHeaderGroup: 1
-  isActive:
-    m_InternalValue: 1
-  networkPosition:
-    m_InternalValue: {x: 0, y: 0, z: 0}
-  networkRotation:
-    m_InternalValue: {x: 0, y: 0, z: 0, w: 1}
-  networkPositionVelocity: {x: 0, y: 0, z: 0}
-  networkPositionSmoothTime: 0.1
-  networkRotationSmoothTime: 0.1
-  isMoving:
-    m_InternalValue: 0
-  horizontalMovement:
-    m_InternalValue: 0
-  verticalMovement:
-    m_InternalValue: 0
-  moveAmount:
-    m_InternalValue: 0
-  currentTargetNetworkObjectID:
-    m_InternalValue: 0
-  isInvulnerable:
-    m_InternalValue: 0
-  isSprinting:
-    m_InternalValue: 0
-  isJumping:
-    m_InternalValue: 0
-  isLockedOn:
-    m_InternalValue: 0
-  isChargingAttack:
-    m_InternalValue: 0
-  endurance:
-    m_InternalValue: 10
-  vitality:
-    m_InternalValue: 10
-  maxStamina:
-    m_InternalValue: 100
-  currentStamina:
-    m_InternalValue: 100
-  maxHealth:
-    m_InternalValue: 100
-  currentHealth:
-    m_InternalValue: 100
 --- !u!114 &6176097018857264996
 MonoBehaviour:
   m_ObjectHideFlags: 0

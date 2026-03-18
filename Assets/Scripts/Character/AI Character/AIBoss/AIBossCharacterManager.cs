@@ -20,9 +20,18 @@ namespace SG
         [SerializeField] List<FogDoorInteractable> fogDoors; //与这个Boss相关联的雾门列表，可以在Inspector中手动分配这些雾门对象，确保它们在游戏中正确地响应Boss的状态变化
         [SerializeField] string sleepAniamation = "Sleep_01"; //Boss的睡眠动画名称，可以在Inspector中设置，确保它与Animator中的动画状态名称一致
         [SerializeField] string awakenAnimation = "Awaken_01"; //Boss的唤醒动画名称，可以在Inspector中设置，确保它与Animator中的动画状态名称一致 
-        
+
+        [Header("Phase Shift")]
+        public float minimumHealthPrcentageToShift = 50; //Boss进行阶段转换的最低生命值百分比，可以在Inspector中设置，确保它在游戏中正确地触发阶段转换
+        [SerializeField] string phaseShiftAnimation = "Phase_Change_01";//Boss的阶段转换动画名称，可以在Inspector中设置，确保它与Animator中的动画状态名称一致
+        [SerializeField] AICombatStanceState phase2CombatStanceState; //Boss的第二阶段的战斗姿态状态，可以在Inspector中设置，确保它在游戏中正确地切换到这个状态
+
+
         [Header("States")]
         [SerializeField] BossSleepState bossSleepState;
+
+        [Header("Defeat MSG")]
+        [SerializeField] string defeatMessage = "LEGEND FELLED"; //击败Boss时显示的消息，可以在Inspector中设置
 
 
 
@@ -113,6 +122,10 @@ namespace SG
 
         public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
         {
+            // 播放死亡弹窗
+            PlayerUIManager.Instance.playerUIPopUpManager.SendBossDiedPopUp(defeatMessage); //调用PlayerUIManager中的方法，显示Boss死了的弹窗，确保所有客户端都能看到这个弹窗
+            
+
             if (IsOwner)
             {
                 characterNetworkManager.currentHealth.Value = 0; //将当前生命值设置为0，确保所有客户端都知道角色已经死亡
@@ -120,6 +133,11 @@ namespace SG
 
                 //重置需要重置的flag
                 bossFightIsActive.Value = false; //将Boss战斗状态设置为false，触发相关的逻辑
+
+                foreach(var fogDoor in fogDoors)
+                {
+                    fogDoor.isActive.Value = false; //当Boss被打败时，禁用相关的雾门
+                }
 
                 
 
@@ -150,6 +168,8 @@ namespace SG
 
 
             //播放死亡音效
+            WorldSoundFXManager.instance.PlayBossDefeatedTrack(GetComponent<AIBossDurkSoundFXManager>().bossDefeatedTrack); //调用WorldSoundFXManager中的方法，播放Boss被击败的音乐，确保所有客户端都能听到这个音乐
+
 
             yield return new WaitForSeconds(5); //等待5秒，确保死亡动画和音效播放完毕
 
@@ -197,6 +217,7 @@ namespace SG
         {
             if(bossFightIsActive.Value)
             {
+                WorldSoundFXManager.instance.PlayBossTrack(GetComponent<AIBossDurkSoundFXManager>().bossIntroTrack, GetComponent<AIBossDurkSoundFXManager>().bossLoopTrack); //当Boss战斗状态变为true时，播放Boss的背景音乐，确保所有客户端都能听到这个音乐
                 //在Boss HP Bar的父对象下实例化Boss HP Bar预制体，确保它在UI中正确地显示
                 GameObject bossHPBar = Instantiate(PlayerUIManager.Instance.playerUIHudManager.bossHPBarPrefab, PlayerUIManager.Instance.playerUIHudManager.bossHPBarParent); 
 
@@ -205,8 +226,20 @@ namespace SG
                 
                 //当Boss战斗状态变为true时，执行相关的逻辑，比如播放背景音乐、触发环境变化等
             }
+            else
+            {
+                WorldSoundFXManager.instance.StopBossTrack(); //当Boss战斗状态变为false时，停止播放Boss的背景音乐，确保所有客户端都能听到这个变化
+            }
         
         }
     
+        public void PhaseShift()
+        {
+            characterAnimatorManager.PlayTargetActionAnimation(phaseShiftAnimation, true); //播放阶段转换动画，第二个参数表示是否使用根运动，第三个参数表示是否允许旋转
+            //在阶段转换动画的事件中，切换Boss的攻击模式、调整Boss的属性等，确保阶段转换的效果能够正确地体现出来
+            combatStanceState = Instantiate(phase2CombatStanceState); //切换Boss的战斗姿态状态，这样它就会使用新的攻击模式了
+            currentState = combatStanceState; //将Boss的当前状态切换到战斗姿态状态，这样它就会开始使用新的攻击模式了
+        }
+
     }
 }

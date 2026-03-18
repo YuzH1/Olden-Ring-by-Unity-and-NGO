@@ -14,6 +14,12 @@ namespace SG
         [SerializeField] TextMeshProUGUI youDiedPopUpTYext; //你死了弹窗中的文本组件，用于显示提示信息的文字
         [SerializeField] CanvasGroup youDiedPopUpCanvasGroup; //你死了弹窗的CanvasGroup组件，用于控制弹窗的显示和隐藏
 
+        [Header("Boss DIED Pop-Up")]
+        [SerializeField] GameObject bossDiedPopUpGameObject; //Boss死了弹窗的GameObject
+        [SerializeField] TextMeshProUGUI bossDiedPopUpBackgroundText; //Boss死了弹窗中的背景文本组件，用于显示提示信息的文字
+        [SerializeField] TextMeshProUGUI bossDiedPopUpTText; //Boss死了弹窗中的文本组件，用于显示提示信息的文字
+        [SerializeField] CanvasGroup bossDiedPopUpCanvasGroup; //Boss死了弹窗的CanvasGroup组件，用于控制弹窗的显示和隐藏
+
         public void SendYouDiedPopUp()
         {
             //启用后期处理效果
@@ -30,6 +36,27 @@ namespace SG
             //一段时间后淡出
             //将弹窗的alpha值在1秒内从1平滑过渡到0，达到淡出的效果，延迟3秒后开始淡出
             StartCoroutine(FadeOutPopUpOverTime(youDiedPopUpCanvasGroup, 2, 5)); 
+        }
+
+        public void SendBossDiedPopUp(string bossDiedMsg)
+        {
+            //启用后期处理效果
+
+            StopAllCoroutines();
+
+            bossDiedPopUpTText.text = bossDiedMsg; //设置Boss死了弹窗的文本内容，确保它在弹窗显示时正确显示提示信息
+            bossDiedPopUpBackgroundText.text = bossDiedMsg; //设置Boss死了弹窗的背景文本内容，确保它在弹窗显示时正确显示提示信息
+
+            bossDiedPopUpGameObject.SetActive(true); //显示Boss死了弹窗
+            bossDiedPopUpCanvasGroup.alpha = 0;
+            bossDiedPopUpBackgroundText.characterSpacing = 0; //重置背景文本的字符间距，确保它在弹窗显示时正确对齐
+            //文本拉长，淡入
+            StartCoroutine(StretchPopUpOverTime(bossDiedPopUpBackgroundText, 12, 15)); //将背景文本的字符间距在1秒内从0平滑过渡到20，达到文本拉长的效果
+            StartCoroutine(FadeInPopUpOverTime(bossDiedPopUpCanvasGroup, 3)); //将弹窗的alpha值在1秒内从0平滑过渡到1，达到淡入的效果
+
+            //一段时间后淡出
+            //将弹窗的alpha值在1秒内从1平滑过渡到0，达到淡出的效果，延迟3秒后开始淡出
+            StartCoroutine(FadeOutPopUpOverTime(bossDiedPopUpCanvasGroup, 2, 5)); 
         }
 
         private IEnumerator StretchPopUpOverTime(TextMeshProUGUI text, float duration, float strechAmount)
