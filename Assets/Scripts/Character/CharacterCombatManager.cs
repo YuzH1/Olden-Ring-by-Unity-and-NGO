@@ -20,6 +20,10 @@ namespace SG
         [Header("Lock On Transform")]
         public Transform lockOnTransform;//锁定目标的Transform，用于调整角色朝向和攻击方向
 
+        [Header("Attack Flags")]
+        public bool canPerformRollingAttack = false;//是否可以执行滚动攻击，滚动攻击是一种特殊的攻击类型，只有在特定条件下才能执行，比如在翻滚的过程中或者翻滚结束后的短时间内
+        public bool canPerformBackStepAttack = false;
+
         protected virtual void Awake() 
         {
             character = GetComponent<CharacterManager>();
@@ -55,6 +59,43 @@ namespace SG
                 character.characterNetworkManager.isInvulnerable.Value = false;
         }
 
+
+        public virtual void EnableCanDoCombo()
+        {
+            
+        }
+        public virtual void DisableCanDoCombo()
+        {
+            
+        }
+
+        public void EnableCanDoRollingAttack()
+        {
+            if(character.IsOwner)
+                canPerformRollingAttack = true;
+            
+        }
+
+        public void DisableCanDoRollingAttack()
+        {
+            if(character.IsOwner)
+                canPerformRollingAttack = false;
+            
+        }
+
+        public void EnableCanDoBackStepAttack()
+        {
+            if(character.IsOwner)
+                canPerformBackStepAttack = true;
+            
+        }
+
+        public void DisableCanDoBackStepAttack()
+        {
+            if(character.IsOwner)
+                canPerformBackStepAttack = false;
+            
+        }
    
     }
     

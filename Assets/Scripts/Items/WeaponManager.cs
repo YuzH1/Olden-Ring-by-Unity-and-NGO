@@ -26,6 +26,10 @@ namespace SG
             meleeDamageCollider.heavy_Attack_02_Modifier = weapon.heavy_Attack_02_Multiplier;
             meleeDamageCollider.charge_Heavy_Attack_01_Modifier = weapon.charge_Heavy_Attack_01_Multiplier;
             meleeDamageCollider.charge_Heavy_Attack_02_Modifier = weapon.charge_Heavy_Attack_02_Multiplier;
+            meleeDamageCollider.running_Attack_01_Modifier = weapon.running_Attack_01_Multiplier;
+            meleeDamageCollider.rolling_Attack_01_Modifier = weapon.rolling_Attack_01_Multiplier;
+            meleeDamageCollider.backStep_Attack_01_Modifier = weapon.backStep_Attack_01_Multiplier;
+            meleeDamageCollider.backStep_Attack_02_Modifier = weapon.backStep_Attack_02_Multiplier;
         }
     }
     

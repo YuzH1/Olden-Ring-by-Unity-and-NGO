@@ -6516,6 +6516,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4740499590452124571, guid: 36d4ef7a0754f1a45a01c2619249f299, type: 3}
+      propertyPath: NetworkConfig.PlayerPrefab
+      value: 
+      objectReference: {fileID: 4466224658561527379, guid: f4a9f709a917a284983ed468bb5f9c11, type: 3}
     - target: {fileID: 7528446894544061042, guid: 36d4ef7a0754f1a45a01c2619249f299, type: 3}
       propertyPath: m_Name
       value: World Network Manager
@@ -7261,6 +7265,10 @@ PrefabInstance:
     - target: {fileID: 6355460050611563128, guid: 5fc900f052494f841a37cafd0d1e40b0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654521058303622817, guid: 5fc900f052494f841a37cafd0d1e40b0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000019073486
       objectReference: {fileID: 0}
     - target: {fileID: 6757232250456441036, guid: 5fc900f052494f841a37cafd0d1e40b0, type: 3}
       propertyPath: m_AnchorMax.y

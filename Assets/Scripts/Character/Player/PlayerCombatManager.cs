@@ -32,6 +32,21 @@ namespace SG
             }
         }
 
+
+
+        public override void SetTarget(CharacterManager newTarget)
+        {
+            base.SetTarget(newTarget);
+
+            if(player.IsOwner)
+            {
+                PlayerCamera.instance.SetLockCameraHeight();            
+            }
+        }
+
+
+        #region 动画事件调用
+
         public virtual void DrainStaminaBasedOnAttack()//动画事件调用
         {
             if(!player.IsOwner)
@@ -50,26 +65,64 @@ namespace SG
                 case AttackType.LightAttack01:
                     staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.lightAttackStaminaCostMultiplier;
                     break;
+                case AttackType.LightAttack02:
+                    staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.lightAttackStaminaCostMultiplier;
+                    break;
+                case AttackType.HeavyAttack01:
+                    staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.heavyAttackStaminaCostMultiplier;
+                    break;
+                case AttackType.ChargeHeavyAttack01:
+                    staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.chargeHeavyAttackStaminaCostMultiplier;
+                    break;
+                case AttackType.HeavyAttack02:
+                    staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.heavyAttackStaminaCostMultiplier;
+                    break;
+                case AttackType.ChargeHeavyAttack02:
+                    staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.chargeHeavyAttackStaminaCostMultiplier;
+                    break;
+                case AttackType.RunningAttack01:
+                    staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.runningAttackStaminaCostMultiplier;
+                    break;
+                case AttackType.RollingAttack01:
+                    staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.rollingAttackStaminaCostMultiplier;
+                    break;
+                case AttackType.BackStepAttack01:
+                    staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.backStepAttackStaminaCostMultiplier;
+                    break;
+                case AttackType.BackStepAttack02:
+                    staminaDeducted = currentWeaponBeingUsed.baseStaminaCost * currentWeaponBeingUsed.backStepAttackStaminaCostMultiplier;
+                    break;
                 //可以根据需要添加其他攻击类型的体力消耗计算
                 default:
                     break;
             }
 
             // 扣除体力
-            Debug.Log("Draining stamina: " + staminaDeducted);
+            // Debug.Log("Draining stamina: " + staminaDeducted);
             player.playerNetworkManager.currentStamina.Value -= Mathf.RoundToInt(staminaDeducted);
         }
 
-        public override void SetTarget(CharacterManager newTarget)
+        public override void EnableCanDoCombo()//动画事件调用
         {
-            base.SetTarget(newTarget);
-
-            if(player.IsOwner)
+            if (player.playerNetworkManager.isUsingRightHand.Value)
             {
-                PlayerCamera.instance.SetLockCameraHeight();            
+                player.playerCombatManager.canComboWithMainHandWeapon = true;
             }
+            else
+            {
+                //启用副手武器的连击能力，前提是玩家装备了副手武器
+            }
+
         }
 
+        public override void DisableCanDoCombo()//动画事件调用
+        {
+            player.playerCombatManager.canComboWithMainHandWeapon = false;
+            //禁用副手武器的连击能力
+            //player.playerCombatManager.canComboWithOffHandWeapon = false;
+        }
+
+        #endregion
         
 
     }

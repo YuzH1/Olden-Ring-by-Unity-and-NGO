@@ -35,6 +35,10 @@ namespace SG
         public float heavy_Attack_02_Multiplier = 1.7f;//重攻击02伤害倍率
         public float charge_Heavy_Attack_01_Multiplier = 2.0f;//蓄力重攻击伤害倍率
         public float charge_Heavy_Attack_02_Multiplier = 2.5f;//蓄力重攻击02伤害倍率
+        public float running_Attack_01_Multiplier = 1.3f;//冲刺攻击伤害倍率
+        public float rolling_Attack_01_Multiplier = 1.1f;//滚动攻击伤害倍率
+        public float backStep_Attack_01_Multiplier = 1.4f;//后跳攻击01伤害倍率
+        public float backStep_Attack_02_Multiplier = 1.6f;//后跳攻击02伤害倍率
 
         //锋利，厚重，轻便
 
@@ -44,6 +48,9 @@ namespace SG
         public float lightAttackStaminaCostMultiplier = 0.9f;//轻攻击体力消耗倍率
         public float heavyAttackStaminaCostMultiplier = 1.2f;//重攻击体力消耗倍率
         public float chargeHeavyAttackStaminaCostMultiplier = 1.5f;//蓄力重攻击体力消耗倍率
+        public float runningAttackStaminaCostMultiplier = 1.0f;//冲刺攻击体力消耗倍率
+        public float rollingAttackStaminaCostMultiplier = 0.8f;//滚动攻击体力消耗倍率
+        public float backStepAttackStaminaCostMultiplier = 1.2f;//后跳
         //锋利，厚重，轻便
 
 

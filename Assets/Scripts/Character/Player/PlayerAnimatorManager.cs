@@ -23,28 +23,6 @@ namespace SG
             }
         }
 
-        #region 动画事件调用
-
-        public override void EnableCanDoCombo()//动画事件调用
-        {
-            if (player.playerNetworkManager.isUsingRightHand.Value)
-            {
-                player.playerCombatManager.canComboWithMainHandWeapon = true;
-            }
-            else
-            {
-                //启用副手武器的连击能力，前提是玩家装备了副手武器
-            }
-
-        }
-
-        public override void DisableCanDoCombo()//动画事件调用
-        {
-            player.playerCombatManager.canComboWithMainHandWeapon = false;
-            //禁用副手武器的连击能力
-            //player.playerCombatManager.canComboWithOffHandWeapon = false;
-        }
-
-        #endregion
+        
     }
 }

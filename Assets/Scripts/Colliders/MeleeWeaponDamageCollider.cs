@@ -14,6 +14,11 @@ namespace SG
         public float heavy_Attack_02_Modifier;//重攻击02的伤害修正
         public float charge_Heavy_Attack_01_Modifier;//蓄力重攻击01的伤害修正
         public float charge_Heavy_Attack_02_Modifier;//蓄力重攻击02的伤害修正
+        public float running_Attack_01_Modifier;//冲刺攻击01的伤害修正
+        public float rolling_Attack_01_Modifier;//滚动攻击01的伤害修正
+        public float backStep_Attack_01_Modifier;//后跳攻击01的伤害修正
+        public float backStep_Attack_02_Modifier;//后跳攻击02的伤害修正
+
         protected override void Awake()
         {
             base.Awake();
@@ -95,6 +100,18 @@ namespace SG
                     break;
                 case AttackType.ChargeHeavyAttack02:
                     ApplyAttackModifiers(charge_Heavy_Attack_02_Modifier, damageEffect);
+                    break;
+                case AttackType.RunningAttack01:
+                    ApplyAttackModifiers(running_Attack_01_Modifier, damageEffect);
+                    break;
+                case AttackType.RollingAttack01:
+                    ApplyAttackModifiers(rolling_Attack_01_Modifier, damageEffect);
+                    break;
+                case AttackType.BackStepAttack01:
+                    ApplyAttackModifiers(backStep_Attack_01_Modifier, damageEffect);
+                    break;
+                case AttackType.BackStepAttack02:
+                    ApplyAttackModifiers(backStep_Attack_02_Modifier, damageEffect);
                     break;
                 //如果有其他攻击类型，也在这里添加对应的伤害修正项
 

@@ -37,8 +37,8 @@ MonoBehaviour:
   lightAttackStaminaCostMultiplier: 0.9
   heavyAttackStaminaCostMultiplier: 1.2
   chargeHeavyAttackStaminaCostMultiplier: 1.5
-  OH_RB_Action: {fileID: 0}
-  OH_RT_Action: {fileID: 0}
+  OH_RB_Action: {fileID: 11400000, guid: 80580bd928c586f48ac54a17b67dd51d, type: 2}
+  OH_RT_Action: {fileID: 11400000, guid: 493855a2fcb8b264ebcafdd2ca62ee60, type: 2}
   whooshes:
   - {fileID: 8300000, guid: 9009b366b71e8d243b2a4147ea02d78a, type: 3}
   - {fileID: 8300000, guid: d768c8defa603af4ab711f28d4d9b2ac, type: 3}

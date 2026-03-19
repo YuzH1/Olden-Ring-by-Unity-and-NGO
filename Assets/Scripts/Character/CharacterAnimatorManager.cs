@@ -207,13 +207,6 @@ namespace SG
                 applyRootMotion);
         }
 
-        public virtual void EnableCanDoCombo()
-        {
-            
-        }
-        public virtual void DisableCanDoCombo()
-        {
-            
-        }
+        
     }
 }

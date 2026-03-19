@@ -43,7 +43,7 @@ namespace SG
             //可以在这里添加一些每帧更新的逻辑
             if(player.IsOwner)//只有拥有该对象的客户端才处理移动
             {
-                GetMovementValue();
+                
                 player.characterNetworkManager.verticalMovement.Value = verticalMovement;
                 player.characterNetworkManager.horizontalMovement.Value = horizontalMovement;
                 player.characterNetworkManager.moveAmount.Value = moveAmount;
@@ -89,8 +89,14 @@ namespace SG
         private void HandleGroundedMovement()
         {
 
+            if(player.playerLocomotionManager.canMove || player.playerLocomotionManager.canRotate)
+            {
+                GetMovementValue();
+            }
+
             if(!player.playerLocomotionManager.canMove)
-                return;//如果角色不能移动，直接返回，不执行移动逻辑
+                return;//如果不能移动，直接返回，不执行移动逻辑
+                
             // Grounded movement logic for the player
             //根据摄像机方向来移动
             moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;//根据摄像机的前方向乘以垂直输入来确定前后方向

@@ -9,6 +9,9 @@ namespace SG
         [SerializeField] string heavy_Attack_01 = "Main_Heavy_Attack_01";//main = 主手
         [SerializeField] string heavy_Attack_02 = "Main_Heavy_Attack_02";
 
+        [Header("Back Step Attack Animations")]
+        [SerializeField] string backStep_Attack_02 = "Main_Backstep_Attack_02";//main = 主手
+
 
         public override void AttemptToPerformAction(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
         {
@@ -33,6 +36,13 @@ namespace SG
             }
             if(!playerPerformingAction.playerLocomotionManager.isGrounded)
             {
+                return;
+            }
+
+
+            if(playerPerformingAction.characterCombatManager.canPerformBackStepAttack)
+            {
+                PerformBackStepAttack(playerPerformingAction, weaponPerformingAction);
                 return;
             }
 
@@ -73,5 +83,15 @@ namespace SG
                 
             // }
         }
+   
+        private void PerformBackStepAttack(PlayerManager playerPerformingAction, WeaponItem weaponPerformingAction)
+        {
+            // 检查是否是双持，如果双持武器播放双持武器后跳攻击动画
+
+            // 如果不是则播放单持武器后跳攻击动画
+            playerPerformingAction.characterCombatManager.canPerformBackStepAttack = false;//重置后跳攻击标志，防止无限后跳攻击
+            playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.BackStepAttack02, backStep_Attack_02, true); //播放右手后跳攻击动画
+        }
+   
     }
 }
