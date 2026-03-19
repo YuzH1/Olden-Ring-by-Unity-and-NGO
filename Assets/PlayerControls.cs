@@ -624,6 +624,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GamePad_Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc2ae22c-bcf5-4174-ad90-3e4a06c0a2ec"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KeyBoard_ESC"",
+                    ""type"": ""Button"",
+                    ""id"": ""64891509-fc45-4548-bf8e-dd7f642732bf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -646,6 +664,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""KeyBoard_Backspace"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ceec87c-c862-436c-8c85-6a44c23e67f9"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GamePad_Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""50577eed-c8b1-4327-ad57-a4c5caba706c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""KeyBoard_ESC"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -677,6 +717,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_GamePad_X = m_UI.FindAction("GamePad_X", throwIfNotFound: true);
         m_UI_KeyBoard_Backspace = m_UI.FindAction("KeyBoard_Backspace", throwIfNotFound: true);
+        m_UI_GamePad_Menu = m_UI.FindAction("GamePad_Menu", throwIfNotFound: true);
+        m_UI_KeyBoard_ESC = m_UI.FindAction("KeyBoard_ESC", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -1160,6 +1202,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_GamePad_X;
     private readonly InputAction m_UI_KeyBoard_Backspace;
+    private readonly InputAction m_UI_GamePad_Menu;
+    private readonly InputAction m_UI_KeyBoard_ESC;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -1179,6 +1223,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/KeyBoard_Backspace".
         /// </summary>
         public InputAction @KeyBoard_Backspace => m_Wrapper.m_UI_KeyBoard_Backspace;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/GamePad_Menu".
+        /// </summary>
+        public InputAction @GamePad_Menu => m_Wrapper.m_UI_GamePad_Menu;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/KeyBoard_ESC".
+        /// </summary>
+        public InputAction @KeyBoard_ESC => m_Wrapper.m_UI_KeyBoard_ESC;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1211,6 +1263,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @KeyBoard_Backspace.started += instance.OnKeyBoard_Backspace;
             @KeyBoard_Backspace.performed += instance.OnKeyBoard_Backspace;
             @KeyBoard_Backspace.canceled += instance.OnKeyBoard_Backspace;
+            @GamePad_Menu.started += instance.OnGamePad_Menu;
+            @GamePad_Menu.performed += instance.OnGamePad_Menu;
+            @GamePad_Menu.canceled += instance.OnGamePad_Menu;
+            @KeyBoard_ESC.started += instance.OnKeyBoard_ESC;
+            @KeyBoard_ESC.performed += instance.OnKeyBoard_ESC;
+            @KeyBoard_ESC.canceled += instance.OnKeyBoard_ESC;
         }
 
         /// <summary>
@@ -1228,6 +1286,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @KeyBoard_Backspace.started -= instance.OnKeyBoard_Backspace;
             @KeyBoard_Backspace.performed -= instance.OnKeyBoard_Backspace;
             @KeyBoard_Backspace.canceled -= instance.OnKeyBoard_Backspace;
+            @GamePad_Menu.started -= instance.OnGamePad_Menu;
+            @GamePad_Menu.performed -= instance.OnGamePad_Menu;
+            @GamePad_Menu.canceled -= instance.OnGamePad_Menu;
+            @KeyBoard_ESC.started -= instance.OnKeyBoard_ESC;
+            @KeyBoard_ESC.performed -= instance.OnKeyBoard_ESC;
+            @KeyBoard_ESC.canceled -= instance.OnKeyBoard_ESC;
         }
 
         /// <summary>
@@ -1397,5 +1461,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnKeyBoard_Backspace(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GamePad_Menu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGamePad_Menu(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "KeyBoard_ESC" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnKeyBoard_ESC(InputAction.CallbackContext context);
     }
 }

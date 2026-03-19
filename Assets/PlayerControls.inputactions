@@ -538,6 +538,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GamePad_Menu",
+                    "type": "Button",
+                    "id": "bc2ae22c-bcf5-4174-ad90-3e4a06c0a2ec",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeyBoard_ESC",
+                    "type": "Button",
+                    "id": "64891509-fc45-4548-bf8e-dd7f642732bf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -560,6 +578,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "KeyBoard_Backspace",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ceec87c-c862-436c-8c85-6a44c23e67f9",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GamePad_Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "50577eed-c8b1-4327-ad57-a4c5caba706c",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyBoard_ESC",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

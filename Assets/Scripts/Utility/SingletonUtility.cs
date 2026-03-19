@@ -43,6 +43,12 @@ namespace SG
             {
                 Object selectedObject = currentSelection[index];
 
+                // Filter out stale destroyed references before reassigning Selection.
+                if (selectedObject == null)
+                {
+                    continue;
+                }
+
                 if (selectedObject == duplicateObject)
                 {
                     removedDuplicate = true;
@@ -61,6 +67,11 @@ namespace SG
             if (!removedDuplicate)
             {
                 return;
+            }
+
+            if (survivingObject != null && !updatedSelection.Contains(survivingObject))
+            {
+                updatedSelection.Add(survivingObject);
             }
 
             Selection.objects = updatedSelection.ToArray();
