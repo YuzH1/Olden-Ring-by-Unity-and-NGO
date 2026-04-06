@@ -21,9 +21,11 @@ namespace SG
                     return;
 
                 Vector3 velocity = aiCharacter.animator.deltaPosition;
+                velocity.y = 0f;
 
                 aiCharacter.characterController.Move(velocity);
                 aiCharacter.transform.rotation *= aiCharacter.animator.deltaRotation;
+                aiCharacter.aiCharacterLocomotionManager.SnapToGround(aiCharacter);
 
             }
 
@@ -34,6 +36,7 @@ namespace SG
                     return;
 
                 Vector3 velocity = aiCharacter.navMeshAgent.velocity * Time.deltaTime;
+                velocity.y = 0f;
 
                 aiCharacter.characterController.Move(velocity);
 
@@ -44,6 +47,7 @@ namespace SG
                     aiCharacter.characterNetworkManager.networkPositionSmoothTime);
                     
                 aiCharacter.transform.rotation = aiCharacter.navMeshAgent.transform.rotation;
+                aiCharacter.aiCharacterLocomotionManager.SnapToGround(aiCharacter);
             }
         }
 

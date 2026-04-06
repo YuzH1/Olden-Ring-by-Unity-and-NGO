@@ -41,6 +41,16 @@ namespace SG
             
         }
 
+                    public Vector3 GetProjectedNavMeshPosition(Vector3 worldPosition, float maxSampleDistance = 2f)
+                    {
+                        if (NavMesh.SamplePosition(worldPosition, out NavMeshHit hit, maxSampleDistance, NavMesh.AllAreas))
+                        {
+                            return hit.position;
+                        }
+
+                        return worldPosition;
+                    }
+
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();

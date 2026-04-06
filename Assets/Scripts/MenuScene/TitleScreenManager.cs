@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine.UI;
 
 namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代表项目名称
@@ -8,8 +9,10 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
     {
         public static TitleScreenManager instance; //单例实例
         [Header("Menus")]
+        [SerializeField] GameObject titleScreenBackground; //标题屏幕背景对象
         [SerializeField] GameObject titleScreenMainMenu; //标题屏幕主菜单对象
         [SerializeField] GameObject titleScreenLoadMenu; //标题屏幕加载菜单对象
+        [SerializeField] GameObject titleScreenLanMenu; //标题屏幕局域网菜单对象
         [SerializeField] ScrollRect loadMenuScrollRect; //加载菜单的 ScrollRect，用于滚动到顶部
 
         [Header("Buttons")]
@@ -44,8 +47,22 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
 
         public void StartNetworkAsHost()
         {
-            // Code to start the network as host
-            NetworkManager.Singleton.StartHost();
+            if (NetworkManager.Singleton == null)
+            {
+                // Debug.LogError("[LAN] NetworkManager.Singleton is null");
+                return;
+            }
+
+            UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+            if (transport != null)
+            {
+                ushort port = transport.ConnectionData.Port;
+                transport.SetConnectionData("127.0.0.1", port, "0.0.0.0");
+                // Debug.Log($"[LAN] Host listen address configured to 0.0.0.0:{port}");
+            }
+
+            bool started = NetworkManager.Singleton.StartHost();
+            // Debug.Log($"[LAN] StartHost result={started}");
         }
 
         public void StartNetworkAsClient()
@@ -60,6 +77,7 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
             //这里为什么能调用WOrldSaveGameManager的协程方法？
             //因为WorldSaveGameManager是单例模式，可以通过Instance访问其公共方法
         }
+
 
         public void OpenLoadGameMenu()
         {
@@ -84,16 +102,33 @@ namespace SG //命名空间：组织代码，防止命名冲突，命名：SG代
             }
         }
 
-        
-
         public void CloseLoadGameMenu()
         {
             titleScreenLoadMenu.SetActive(false); //隐藏加载菜单
             titleScreenMainMenu.SetActive(true); //显示主菜单
 
-            //自动选择加载游戏按键
+            // 自动选择加载游戏按键
             mainMenuLoadGameButton.Select();
             currentCharacterSlot = CharacterSlots.No_Slot;
+        }
+
+        public void OpenLanMenu()
+        {
+            titleScreenBackground.SetActive(false); //隐藏主菜单
+            titleScreenLanMenu.SetActive(true); //显示局域网菜单
+
+            
+        
+        }
+    
+        public void CloseLanMenu()
+        {
+            titleScreenLanMenu.SetActive(false); //隐藏局域网菜单
+            titleScreenBackground.SetActive(true); //显示主菜单
+
+            // //自动选择加载游戏按键
+            // mainMenuLoadGameButton.Select();
+            // currentCharacterSlot = CharacterSlots.No_Slot;
         }
 
         public void DisplayNoFreeSlotsPopup()

@@ -86,7 +86,10 @@ namespace SG
             }
 
             NavMeshPath path = new NavMeshPath();
-            aiCharacter.navMeshAgent.CalculatePath(aiCharacter.characterCombatManager.currentTarget.transform.position, path);
+            Vector3 projectedTargetPosition = aiCharacter.GetProjectedNavMeshPosition(
+                aiCharacter.characterCombatManager.currentTarget.transform.position,
+                aiCharacter.navMeshAgent.radius * 2f);
+            aiCharacter.navMeshAgent.CalculatePath(projectedTargetPosition, path);
             aiCharacter.navMeshAgent.SetPath(path);
 
             return this;

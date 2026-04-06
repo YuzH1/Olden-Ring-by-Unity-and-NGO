@@ -173,11 +173,15 @@ namespace SG
             character.characterLocomotionManager.canRotate = canRotate;//更新角色的旋转能力标志
             character.characterLocomotionManager.canMove = canMove;//更新角色的移动能力标志
 
-            //告诉server或host我们播放了动画，这样其他客户端就可以同步动画状态
-            character.characterNetworkManager.NotifyActionAnimationServerRpc(
-                NetworkManager.Singleton.LocalClientId, 
-                targetAnimation, 
-                applyRootMotion);
+            // 只有拥有者可以调用默认 RequireOwnership 的 ServerRpc。
+            if(character.IsOwner)
+            {
+                //告诉server或host我们播放了动画，这样其他客户端就可以同步动画状态
+                character.characterNetworkManager.NotifyActionAnimationServerRpc(
+                    NetworkManager.Singleton.LocalClientId,
+                    targetAnimation,
+                    applyRootMotion);
+            }
         }
 
         public virtual void PlayTargetAttackActionAnimation(AttackType attackType,
@@ -200,11 +204,15 @@ namespace SG
             character.characterLocomotionManager.canRotate = canRotate;//更新角色的旋转能力标志
             character.characterLocomotionManager.canMove = canMove;//更新角色的移动能力标志
 
-            //告诉server或host我们播放了动画，这样其他客户端就可以同步动画状态
-            character.characterNetworkManager.NotifyServerAttackActionAnimationServerRpc(
-                NetworkManager.Singleton.LocalClientId, 
-                targetAnimation, 
-                applyRootMotion);
+            // 只有拥有者可以调用默认 RequireOwnership 的 ServerRpc。
+            if(character.IsOwner)
+            {
+                //告诉server或host我们播放了动画，这样其他客户端就可以同步动画状态
+                character.characterNetworkManager.NotifyServerAttackActionAnimationServerRpc(
+                    NetworkManager.Singleton.LocalClientId,
+                    targetAnimation,
+                    applyRootMotion);
+            }
         }
 
         

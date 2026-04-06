@@ -13,5 +13,24 @@ namespace SG
                 aiCharacter.transform.rotation = aiCharacter.navMeshAgent.transform.rotation;
             }
         }
+
+        public void SnapToGround(AICharacterManager aiCharacter)
+        {
+            if(aiCharacter == null || aiCharacter.characterController == null)
+                return;
+
+            if(!isGrounded)
+                return;
+
+            Vector3 rayOrigin = aiCharacter.transform.position + Vector3.up * 1.5f;
+            if(Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, 5f, groundLayer))
+            {
+                float groundOffset = hit.point.y - aiCharacter.transform.position.y;
+                if(Mathf.Abs(groundOffset) > 0.01f)
+                {
+                    aiCharacter.characterController.Move(Vector3.up * groundOffset);
+                }
+            }
+        }
     }
 }
